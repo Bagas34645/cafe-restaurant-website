@@ -102,7 +102,7 @@
               @endif
             </td>
             <td>
-              <div class="btn-group" role="group">
+              <div class="btn-group gap-2" role="group">
                 <a href="{{ route('admin.contents.show', $content) }}" class="btn btn-outline-info btn-sm" title="Lihat">
                   <i class="fas fa-eye"></i>
                 </a>

@@ -62,7 +62,7 @@
               </small>
             </td>
             <td>
-              <div class="btn-group" role="group">
+              <div class="btn-group gap-2" role="group">
                 <button type="button" class="btn btn-sm btn-outline-info view-details-btn"
                   data-customer="{{ $review->customer_name }}"
                   data-email="{{ $review->customer_email }}"

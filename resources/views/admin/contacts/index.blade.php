@@ -68,7 +68,7 @@
               </small>
             </td>
             <td>
-              <div class="btn-group" role="group">
+              <div class="btn-group gap-2" role="group">
                 <button type="button" class="btn btn-sm btn-outline-primary"
                   data-bs-toggle="modal"
                   data-bs-target="#contactModal"

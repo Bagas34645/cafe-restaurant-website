@@ -65,7 +65,7 @@
               <small class="text-muted">{{ $product->created_at->format('M d, Y') }}</small>
             </td>
             <td>
-              <div class="btn-group" role="group">
+              <div class="btn-group gap-2" role="group">
                 <a href="{{ route('admin.products.show', $product) }}" class="btn btn-sm btn-outline-primary">
                   <i class="fas fa-eye"></i>
                 </a>

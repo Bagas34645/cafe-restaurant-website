@@ -55,7 +55,7 @@
               <small class="text-muted">{{ $gallery->created_at->format('M d, Y') }}</small>
             </td>
             <td>
-              <div class="btn-group" role="group">
+              <div class="btn-group gap-2" role="group">
                 <a href="{{ route('admin.galleries.show', $gallery) }}" class="btn btn-sm btn-outline-primary">
                   <i class="fas fa-eye"></i>
                 </a>
