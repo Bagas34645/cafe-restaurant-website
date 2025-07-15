@@ -271,7 +271,7 @@
     <nav class="sidebar bg-dark position-fixed d-lg-block d-none" style="width: 250px; z-index: 1000;">
       <div class="p-3">
         <h5 class="text-white">
-          <i class="fas fa-utensils me-2"></i>Admin Panel
+          <i class="fa-solid fa-user me-2"></i>Admin Panel
         </h5>
       </div>
 
@@ -288,7 +288,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">
-            <i class="fas fa-utensils me-2"></i>Product Management
+            <i class="fab fa-product-hunt me-2"></i>Product Management
           </a>
         </li>
         <li class="nav-item">
@@ -333,7 +333,7 @@
     <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMobile">
       <div class="offcanvas-header bg-dark text-white">
         <h5 class="offcanvas-title">
-          <i class="fas fa-utensils me-2"></i>Admin Panel
+          <i class="fa-solid fa-user me-2"></i>Admin Panel
         </h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
       </div>
@@ -351,7 +351,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}" href="{{ route('admin.products.index') }}">
-              <i class="fas fa-utensils me-2"></i>Product Management
+              <i class="fab fa-product-hunt me-2"></i>Product Management
             </a>
           </li>
           <li class="nav-item">
