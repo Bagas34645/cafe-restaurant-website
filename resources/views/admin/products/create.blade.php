@@ -1,0 +1,129 @@
+@extends('layouts.admin')
+
+@section('title', 'Add Product - Admin Panel')
+
+@section('content')
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1 class="h3">Add New Product</h1>
+  <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">
+    <i class="fas fa-arrow-left me-2"></i>Back to Products
+  </a>
+</div>
+
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0"><i class="fas fa-plus me-2"></i>Product Details</h5>
+      </div>
+      <div class="card-body">
+        <form action="{{ route('admin.products.store') }}" method="POST" enctype="multipart/form-data">
+          @csrf
+
+          <div class="mb-3">
+            <label for="name" class="form-label">Product Name</label>
+            <input type="text" class="form-control @error('name') is-invalid @enderror"
+              id="name" name="name" value="{{ old('name') }}" required>
+            @error('name')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control @error('description') is-invalid @enderror"
+              id="description" name="description" rows="4" required>{{ old('description') }}</textarea>
+            @error('description')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="price" class="form-label">Price ($)</label>
+              <input type="number" step="0.01" min="0" class="form-control @error('price') is-invalid @enderror"
+                id="price" name="price" value="{{ old('price') }}" required>
+              @error('price')
+              <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+            </div>
+
+            <div class="col-md-6 mb-3">
+              <label for="category" class="form-label">Category (Optional)</label>
+              <input type="text" class="form-control @error('category') is-invalid @enderror"
+                id="category" name="category" value="{{ old('category') }}"
+                placeholder="e.g., Appetizer, Main Course, Dessert">
+              @error('category')
+              <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="image" class="form-label">Product Image (Optional)</label>
+            <input type="file" class="form-control @error('image') is-invalid @enderror"
+              id="image" name="image" accept="image/*">
+            @error('image')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+            <div class="form-text">Supported formats: JPEG, PNG, JPG, GIF. Max size: 2MB</div>
+          </div>
+
+          <div class="mb-3">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="is_available" name="is_available"
+                {{ old('is_available', true) ? 'checked' : '' }}>
+              <label class="form-check-label" for="is_available">
+                Available for order
+              </label>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-end gap-2">
+            <a href="{{ route('admin.products.index') }}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save me-2"></i>Save Product
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Image Preview -->
+<div class="row justify-content-center mt-4">
+  <div class="col-lg-8">
+    <div class="card" id="preview-card" style="display: none;">
+      <div class="card-header">
+        <h6 class="mb-0">Image Preview</h6>
+      </div>
+      <div class="card-body text-center">
+        <img id="image-preview" src="" alt="Preview" class="img-fluid rounded" style="max-height: 300px;">
+      </div>
+    </div>
+  </div>
+</div>
+@endsection
+
+@push('scripts')
+<script>
+  // Image preview functionality
+  document.getElementById('image').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    const previewCard = document.getElementById('preview-card');
+    const previewImage = document.getElementById('image-preview');
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        previewImage.src = e.target.result;
+        previewCard.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    } else {
+      previewCard.style.display = 'none';
+    }
+  });
+</script>
+@endpush
