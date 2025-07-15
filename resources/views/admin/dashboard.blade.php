@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('title', 'Admin Dashboard - Cafe Restaurant')
+@section('title', 'Admin Dashboard - Sentra Durian Tegal')
 
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">

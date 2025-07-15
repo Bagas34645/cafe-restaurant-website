@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'About Us - Cafe Restaurant')
+@section('title', 'Tentang Kami - Sentra Durian Tegal')
 
 @section('content')
 <!-- About Hero Section -->
 <section class="py-5 bg-light">
   <div class="container">
     <div class="text-center mb-5">
-      <h1 class="display-4 fw-bold">About Us</h1>
-      <p class="lead text-muted">Discover our story, passion, and commitment to exceptional dining</p>
+      <h1 class="display-4 fw-bold">Tentang Kami</h1>
+      <p class="lead text-muted">Pelajari kisah kami sebagai pusat durian berkualitas terbaik di Tegal</p>
     </div>
   </div>
 </section>
@@ -18,10 +18,10 @@
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-6">
-        <h2 class="display-5 fw-bold mb-4">Our Story</h2>
-        <p class="lead mb-4">Founded in 2010, Cafe Restaurant has been serving the community with passion, dedication, and exceptional culinary experiences for over a decade.</p>
-        <p>What started as a small family business has grown into a beloved dining destination, known for our commitment to quality ingredients, innovative recipes, and warm hospitality. We believe that great food brings people together, and every dish we serve is crafted with love and attention to detail.</p>
-        <p>Our team of experienced chefs combines traditional cooking techniques with modern creativity to create dishes that satisfy both the palate and the soul.</p>
+        <h2 class="display-5 fw-bold mb-4">Kisah Kami</h2>
+        <p class="lead mb-4">Didirikan dengan visi menjadi pusat distribusi durian terbaik di Tegal, Sentra Durian Tegal telah melayani masyarakat dengan komitmen kualitas dan kepuasan pelanggan selama bertahun-tahun.</p>
+        <p>Dimulai dari kebun keluarga kecil, kami telah berkembang menjadi destinasi utama bagi pecinta durian yang mencari kualitas terbaik. Kami bangga dengan jaringan petani durian terpilih di Tegal yang menghasilkan buah dengan rasa dan aroma khas yang tak tertandingi.</p>
+        <p>Tim ahli kami memastikan setiap durian yang kami distribusikan telah melalui proses seleksi ketat untuk menjamin kepuasan dan kepercayaan pelanggan.</p>
       </div>
       <div class="col-lg-6">
         <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
@@ -36,14 +36,14 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 mx-auto text-center">
-        <h2 class="display-5 fw-bold mb-5">Our Mission</h2>
+        <h2 class="display-5 fw-bold mb-5">Misi Kami</h2>
         <div class="row">
           <div class="col-md-4 mb-4">
             <div class="card border-0 h-100">
               <div class="card-body text-center">
-                <i class="fas fa-heart fa-3x text-primary mb-3"></i>
-                <h5 class="card-title">Quality</h5>
-                <p class="card-text">We source only the finest ingredients and prepare every dish with meticulous attention to detail.</p>
+                <i class="fas fa-seedling fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Kualitas</h5>
+                <p class="card-text">Kami hanya menyediakan durian pilihan dari kebun terbaik dengan standar kualitas tinggi dan proses seleksi yang ketat.</p>
               </div>
             </div>
           </div>
@@ -51,8 +51,8 @@
             <div class="card border-0 h-100">
               <div class="card-body text-center">
                 <i class="fas fa-users fa-3x text-primary mb-3"></i>
-                <h5 class="card-title">Service</h5>
-                <p class="card-text">Our friendly staff is dedicated to providing exceptional service and creating memorable experiences.</p>
+                <h5 class="card-title">Pelayanan</h5>
+                <p class="card-text">Tim ahli kami siap memberikan pelayanan terbaik dan konsultasi untuk membantu Anda memilih durian sesuai kebutuhan.</p>
               </div>
             </div>
           </div>
@@ -60,8 +60,8 @@
             <div class="card border-0 h-100">
               <div class="card-body text-center">
                 <i class="fas fa-leaf fa-3x text-primary mb-3"></i>
-                <h5 class="card-title">Sustainability</h5>
-                <p class="card-text">We're committed to sustainable practices and supporting local farmers and suppliers.</p>
+                <h5 class="card-title">Keberlanjutan</h5>
+                <p class="card-text">Kami berkomitmen mendukung petani lokal dan praktik pertanian berkelanjutan untuk durian berkualitas terbaik.</p>
               </div>
             </div>
           </div>
@@ -75,8 +75,8 @@
 <section class="py-5">
   <div class="container">
     <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold">Meet Our Team</h2>
-      <p class="lead text-muted">The talented professionals behind your dining experience</p>
+      <h2 class="display-5 fw-bold">Tim Ahli Kami</h2>
+      <p class="lead text-muted">Para profesional berpengalaman di balik kualitas durian terbaik</p>
     </div>
 
     <div class="row">

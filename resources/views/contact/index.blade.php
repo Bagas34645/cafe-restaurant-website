@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Contact Us - Cafe Restaurant')
+@section('title', 'Kontak - Sentra Durian Tegal')
 
 @section('content')
 <!-- Contact Header -->
 <section class="py-5 bg-light">
   <div class="container">
     <div class="text-center">
-      <h1 class="display-4 fw-bold">Contact Us</h1>
-      <p class="lead text-muted">Get in touch with us for reservations, inquiries, or feedback</p>
+      <h1 class="display-4 fw-bold">Hubungi Kami</h1>
+      <p class="lead text-muted">Silakan hubungi kami untuk pemesanan, informasi, atau konsultasi durian</p>
     </div>
   </div>
 </section>
@@ -21,7 +21,7 @@
       <div class="col-lg-8 mb-5">
         <div class="card">
           <div class="card-header bg-primary text-white">
-            <h5 class="mb-0"><i class="fas fa-envelope me-2"></i>Send us a Message</h5>
+            <h5 class="mb-0"><i class="fas fa-envelope me-2"></i>Kirim Pesan</h5>
           </div>
           <div class="card-body">
             <form action="{{ route('contact.store') }}" method="POST">
@@ -80,7 +80,7 @@
                 @enderror
               </div>
 
-              <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+              <button type="submit" class="btn btn-primary btn-lg">Kirim Pesan</button>
             </form>
           </div>
         </div>
@@ -90,28 +90,28 @@
       <div class="col-lg-4">
         <div class="card">
           <div class="card-header bg-dark text-white">
-            <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Contact Information</h5>
+            <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Informasi Kontak</h5>
           </div>
           <div class="card-body">
             <div class="mb-4">
-              <h6><i class="fas fa-map-marker-alt text-primary me-2"></i>Address</h6>
-              <p class="text-muted">123 Restaurant Street<br>Downtown District<br>City, State 12345</p>
+              <h6><i class="fas fa-map-marker-alt text-primary me-2"></i>Alamat</h6>
+              <p class="text-muted">Jl. Durian Raya No. 123<br>Kecamatan Tegal Timur<br>Tegal, Jawa Tengah 52124</p>
             </div>
 
             <div class="mb-4">
-              <h6><i class="fas fa-phone text-primary me-2"></i>Phone</h6>
-              <p class="text-muted">+1 (234) 567-8900</p>
+              <h6><i class="fas fa-phone text-primary me-2"></i>Telepon</h6>
+              <p class="text-muted">+62 123 456 789</p>
             </div>
 
             <div class="mb-4">
               <h6><i class="fas fa-envelope text-primary me-2"></i>Email</h6>
-              <p class="text-muted">info@caferestaurant.com</p>
+              <p class="text-muted">info@sentradurian.com</p>
             </div>
 
             <div class="mb-4">
-              <h6><i class="fas fa-clock text-primary me-2"></i>Opening Hours</h6>
-              <p class="text-muted mb-1"><strong>Monday - Friday:</strong><br>8:00 AM - 10:00 PM</p>
-              <p class="text-muted"><strong>Saturday - Sunday:</strong><br>9:00 AM - 11:00 PM</p>
+              <h6><i class="fas fa-clock text-primary me-2"></i>Jam Buka</h6>
+              <p class="text-muted mb-1"><strong>Senin - Jumat:</strong><br>08:00 - 18:00 WIB</p>
+              <p class="text-muted"><strong>Sabtu - Minggu:</strong><br>08:00 - 20:00 WIB</p>
             </div>
           </div>
         </div>
@@ -145,8 +145,8 @@
 <section class="py-5 bg-light">
   <div class="container">
     <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold">Find Us</h2>
-      <p class="lead text-muted">Visit our restaurant for an unforgettable dining experience</p>
+      <h2 class="display-5 fw-bold">Lokasi Kami</h2>
+      <p class="lead text-muted">Kunjungi sentra durian kami untuk pengalaman berbelanja terbaik</p>
     </div>
 
     <div class="row justify-content-center">

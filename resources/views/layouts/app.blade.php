@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@yield('title', 'Cafe Restaurant')</title>
+  <title>@yield('title', 'Sentra Durian Tegal')</title>
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -65,7 +65,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="{{ route('home') }}">
-        <i class="fas fa-utensils me-2"></i>Cafe Restaurant
+        <i class="fas fa-leaf me-2"></i>Sentra Durian Tegal
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -78,19 +78,19 @@
             <a class="nav-link" href="{{ route('home') }}">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('about') }}">About</a>
+            <a class="nav-link" href="{{ route('about') }}">Tentang</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('gallery') }}">Gallery</a>
+            <a class="nav-link" href="{{ route('gallery') }}">Galeri</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('products') }}">Menu</a>
+            <a class="nav-link" href="{{ route('products') }}">Produk</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('reviews') }}">Reviews</a>
+            <a class="nav-link" href="{{ route('reviews') }}">Testimoni</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('contact') }}">Contact</a>
+            <a class="nav-link" href="{{ route('contact') }}">Kontak</a>
           </li>
           <li class="nav-item">
             <a class="nav-link btn btn-outline-light ms-2 px-3" href="{{ route('admin.login') }}">Admin</a>
@@ -124,24 +124,25 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4">
-          <h5><i class="fas fa-utensils me-2"></i>Cafe Restaurant</h5>
-          <p>Experience the finest dining with our carefully crafted menu and exceptional service in a warm, welcoming atmosphere.</p>
+          <h5><i class="fas fa-leaf me-2"></i>Sentra Durian Tegal</h5>
+          <p>Rajane Duren - Pusat Penjualan Durian Berkualitas</p>
+          <p>Sentra Durian Tegal adalah pusat informasi dan distribusi durian unggulan langsung dari kebun terbaik di Tegal. Kami berkomitmen menyediakan durian berkualitas tinggi untuk konsumsi pribadi maupun kebutuhan bisnis Anda.</p>
         </div>
         <div class="col-md-4">
-          <h5>Contact Info</h5>
-          <p><i class="fas fa-map-marker-alt me-2"></i>123 Restaurant Street, City</p>
-          <p><i class="fas fa-phone me-2"></i>+1 234 567 8900</p>
-          <p><i class="fas fa-envelope me-2"></i>info@caferestaurant.com</p>
+          <h5>Info Kontak</h5>
+          <p><i class="fas fa-map-marker-alt me-2"></i>Tegal, Jawa Tengah</p>
+          <p><i class="fas fa-phone me-2"></i>+62 123 456 789</p>
+          <p><i class="fas fa-envelope me-2"></i>info@sentradurian.com</p>
         </div>
         <div class="col-md-4">
-          <h5>Opening Hours</h5>
-          <p><i class="fas fa-clock me-2"></i>Monday - Friday: 8:00 AM - 10:00 PM</p>
-          <p><i class="fas fa-clock me-2"></i>Saturday - Sunday: 9:00 AM - 11:00 PM</p>
+          <h5>Jam Buka</h5>
+          <p><i class="fas fa-clock me-2"></i>Senin - Jumat: 08:00 - 18:00 WIB</p>
+          <p><i class="fas fa-clock me-2"></i>Sabtu - Minggu: 08:00 - 20:00 WIB</p>
         </div>
       </div>
       <hr class="my-4">
       <div class="text-center">
-        <p>&copy; {{ date('Y') }} Cafe Restaurant. All rights reserved.</p>
+        <p>&copy; {{ date('Y') }} Sentra Durian Tegal. All rights reserved.</p>
       </div>
     </div>
   </footer>

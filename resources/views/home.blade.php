@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Home - Cafe Restaurant')
+@section('title', 'Home - Sentra Durian Tegal')
 
 @section('content')
 <!-- Hero Section -->
@@ -8,11 +8,11 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8">
-        <h1 class="display-4 fw-bold mb-4">Welcome to Cafe Restaurant</h1>
-        <p class="lead mb-4">Experience exceptional dining with our carefully crafted menu, featuring the finest ingredients and authentic flavors in a warm, welcoming atmosphere.</p>
+        <h1 class="display-4 fw-bold mb-4">Selamat Datang di Sentra Durian Tegal</h1>
+        <p class="lead mb-4">Sentra Durian Tegal adalah pusat informasi dan distribusi durian unggulan langsung dari kebun terbaik di Tegal. Kami berkomitmen menyediakan durian berkualitas tinggi untuk konsumsi pribadi maupun kebutuhan bisnis Anda.</p>
         <div class="d-flex gap-3">
-          <a href="{{ route('products') }}" class="btn btn-primary btn-lg">View Menu</a>
-          <a href="{{ route('contact') }}" class="btn btn-outline-light btn-lg">Make Reservation</a>
+          <a href="{{ route('products') }}" class="btn btn-primary btn-lg">Lihat Produk</a>
+          <a href="{{ route('contact') }}" class="btn btn-outline-light btn-lg">Hubungi Kami</a>
         </div>
       </div>
     </div>
@@ -24,8 +24,8 @@
 <section class="py-5">
   <div class="container">
     <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold">Featured Menu Items</h2>
-      <p class="lead text-muted">Discover our chef's special recommendations</p>
+      <h2 class="display-5 fw-bold">Produk Durian Unggulan</h2>
+      <p class="lead text-muted">Temukan durian berkualitas terbaik dari kebun pilihan kami</p>
     </div>
 
     <div class="row">
@@ -36,7 +36,7 @@
           <img src="{{ asset('storage/' . $product->image_path) }}" class="card-img-top" alt="{{ $product->name }}" style="height: 200px; object-fit: cover;">
           @else
           <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
-            <i class="fas fa-utensils fa-3x text-muted"></i>
+            <i class="fas fa-leaf fa-3x text-muted"></i>
           </div>
           @endif
           <div class="card-body">
@@ -55,7 +55,7 @@
     </div>
 
     <div class="text-center mt-4">
-      <a href="{{ route('products') }}" class="btn btn-primary">View Full Menu</a>
+      <a href="{{ route('products') }}" class="btn btn-primary">Lihat Semua Produk</a>
     </div>
   </div>
 </section>
@@ -66,8 +66,8 @@
 <section class="py-5 bg-light">
   <div class="container">
     <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold">Restaurant Gallery</h2>
-      <p class="lead text-muted">Take a glimpse into our beautiful restaurant</p>
+      <h2 class="display-5 fw-bold">Galeri Sentra Durian</h2>
+      <p class="lead text-muted">Lihat kebun durian dan fasilitas kami</p>
     </div>
 
     <div class="row">
@@ -84,7 +84,7 @@
     </div>
 
     <div class="text-center mt-4">
-      <a href="{{ route('gallery') }}" class="btn btn-primary">View Gallery</a>
+      <a href="{{ route('gallery') }}" class="btn btn-primary">Lihat Galeri</a>
     </div>
   </div>
 </section>
@@ -95,8 +95,8 @@
 <section class="py-5">
   <div class="container">
     <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold">What Our Customers Say</h2>
-      <p class="lead text-muted">Read testimonials from our satisfied customers</p>
+      <h2 class="display-5 fw-bold">Testimoni Pelanggan</h2>
+      <p class="lead text-muted">Baca testimoni dari pelanggan yang puas</p>
     </div>
 
     <div class="row">
@@ -120,7 +120,7 @@
     </div>
 
     <div class="text-center mt-4">
-      <a href="{{ route('reviews') }}" class="btn btn-primary">View All Reviews</a>
+      <a href="{{ route('reviews') }}" class="btn btn-primary">Lihat Semua Testimoni</a>
     </div>
   </div>
 </section>
@@ -129,9 +129,9 @@
 <!-- Call to Action Section -->
 <section class="py-5 bg-primary text-white">
   <div class="container text-center">
-    <h2 class="display-5 fw-bold mb-4">Ready to Dine With Us?</h2>
-    <p class="lead mb-4">Make a reservation today and experience our exceptional service and delicious cuisine.</p>
-    <a href="{{ route('contact') }}" class="btn btn-light btn-lg">Contact Us</a>
+    <h2 class="display-5 fw-bold mb-4">Siap Memesan Durian Berkualitas?</h2>
+    <p class="lead mb-4">Hubungi kami sekarang dan rasakan kelezatan durian terbaik dari Tegal.</p>
+    <a href="{{ route('contact') }}" class="btn btn-light btn-lg">Hubungi Kami</a>
   </div>
 </section>
 @endsection

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Menu - Cafe Restaurant')
+@section('title', 'Produk - Sentra Durian Tegal')
 
 @section('content')
 <!-- Menu Header -->

@@ -1,23 +1,23 @@
-# Cafe Restaurant Website
+# Sentra Durian Tegal Website
 
-A complete Laravel-based website for marketing and promoting cafe/restaurant businesses with comprehensive admin management features.
+A complete Laravel-based website for marketing and promoting Sentra Durian Tegal - Rajane Duren, pusat penjualan durian berkualitas dengan fitur manajemen admin yang komprehensif.
 
 ## Features
 
 ### Public Pages
 
--   **Home**: Welcome page with featured products, gallery preview, and customer testimonials
--   **About**: Information about the restaurant, mission, and team
--   **Gallery**: Photo gallery showcasing the restaurant ambiance and food
--   **Menu/Products**: Complete menu with categories, prices, and descriptions
--   **Customer Reviews**: Customer testimonials and review submission form
--   **Contact**: Contact form, restaurant information, and FAQ section
+-   **Home**: Halaman utama dengan produk durian unggulan, preview galeri, dan testimoni pelanggan
+-   **About**: Informasi tentang Sentra Durian Tegal, misi, dan tim
+-   **Gallery**: Galeri foto yang menampilkan kebun durian dan fasilitas
+-   **Products**: Katalog lengkap durian dengan kategori, harga, dan deskripsi
+-   **Customer Reviews**: Testimoni pelanggan dan form pengiriman review
+-   **Contact**: Form kontak, informasi lokasi, dan FAQ
 
 ### Admin Management Features
 
 -   **Dashboard**: Overview of all data with statistics and quick actions
 -   **Gallery Management**: Full CRUD operations for gallery items
--   **Product Management**: Full CRUD operations for menu items
+-   **Product Management**: Full CRUD operations untuk produk durian
 -   **Review Management**: Approve/disapprove customer reviews
 -   **Contact Management**: View and manage customer messages
 
