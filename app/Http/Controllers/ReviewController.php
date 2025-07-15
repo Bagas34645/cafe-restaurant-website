@@ -45,7 +45,7 @@ class ReviewController extends Controller
             'is_approved' => false
         ]);
 
-        return redirect()->route('reviews')->with('success', 'Thank you for your review! It will be published after approval.');
+        return redirect()->route('reviews')->with('success', 'Terima kasih atas ulasan Anda! Ulasan akan dipublikasikan setelah disetujui.');
     }
 
     /**
