@@ -93,7 +93,7 @@
             <a class="nav-link" href="{{ route('contact') }}">Contact</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn btn-outline-light ms-2 px-3" href="{{ route('admin.dashboard') }}">Admin</a>
+            <a class="nav-link btn btn-outline-light ms-2 px-3" href="{{ route('admin.login') }}">Admin</a>
           </li>
         </ul>
       </div>

@@ -56,6 +56,19 @@
     .stat-card.info {
       background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
     }
+
+    .sidebar .nav-link.btn {
+      background: none;
+      border: none;
+      color: #bdc3c7;
+      text-align: left;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar .nav-link.btn:hover {
+      color: white;
+      background-color: #34495e;
+    }
   </style>
   @stack('styles')
 </head>
@@ -100,6 +113,16 @@
           <a class="nav-link" href="{{ route('home') }}" target="_blank">
             <i class="fas fa-external-link-alt me-2"></i>View Website
           </a>
+        </li>
+        <li class="nav-item">
+          <form method="POST" action="{{ route('admin.logout') }}" class="d-inline">
+            @csrf
+            <button type="submit" class="nav-link btn btn-link text-start w-100 border-0"
+              onclick="return confirm('Apakah Anda yakin ingin logout?')"
+              style="color: #bdc3c7; padding: 1rem 1.5rem;">
+              <i class="fas fa-sign-out-alt me-2"></i>Logout
+            </button>
+          </form>
         </li>
       </ul>
     </nav>
@@ -149,12 +172,42 @@
               <i class="fas fa-external-link-alt me-2"></i>View Website
             </a>
           </li>
+          <li class="nav-item">
+            <form method="POST" action="{{ route('admin.logout') }}" class="d-inline">
+              @csrf
+              <button type="submit" class="nav-link btn btn-link text-start w-100 border-0"
+                onclick="return confirm('Apakah Anda yakin ingin logout?')"
+                style="color: #bdc3c7; padding: 1rem 1.5rem;">
+                <i class="fas fa-sign-out-alt me-2"></i>Logout
+              </button>
+            </form>
+          </li>
         </ul>
       </div>
     </div>
 
     <!-- Main Content -->
     <main class="main-content flex-grow-1 p-4">
+      <!-- Admin Header -->
+      <div class="d-flex justify-content-between align-items-center mb-4 bg-light p-3 rounded">
+        <div>
+          <h6 class="mb-0">Selamat datang, <strong>{{ Auth::user()->name }}</strong></h6>
+          <small class="text-muted">{{ Auth::user()->email }}</small>
+        </div>
+        <div class="d-flex align-items-center">
+          <span class="badge bg-success me-2">
+            <i class="fas fa-circle me-1"></i>Online
+          </span>
+          <form method="POST" action="{{ route('admin.logout') }}" class="d-inline">
+            @csrf
+            <button type="submit" class="btn btn-outline-danger btn-sm"
+              onclick="return confirm('Apakah Anda yakin ingin logout?')">
+              <i class="fas fa-sign-out-alt me-1"></i>Logout
+            </button>
+          </form>
+        </div>
+      </div>
+
       @if(session('success'))
       <div class="alert alert-success alert-dismissible fade show" role="alert">
         {{ session('success') }}
