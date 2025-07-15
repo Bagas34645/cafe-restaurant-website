@@ -57,6 +57,115 @@
       background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
     }
 
+    /* Enhanced Dashboard Cards */
+    .hover-bg-light:hover {
+      background-color: #f8f9fa !important;
+      transition: all 0.3s ease;
+    }
+
+    .transition-all {
+      transition: all 0.3s ease;
+    }
+
+    .hover-opacity-10:hover {
+      opacity: 0.1 !important;
+    }
+
+    .min-width-0 {
+      min-width: 0;
+    }
+
+    .card {
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .text-truncate {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .text-nowrap {
+      white-space: nowrap !important;
+    }
+
+    /* Responsive improvements for admin dashboard */
+    @media (max-width: 768px) {
+      .card-header h5 {
+        font-size: 0.9rem;
+      }
+
+      .btn-sm {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+      }
+
+      .badge {
+        font-size: 0.7rem;
+      }
+    }
+
+    /* Quick Actions Styling */
+    .bg-gradient {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-bottom: 1px solid #dee2e6;
+    }
+
+    .action-text {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .btn-lg {
+      min-height: 60px;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-lg:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Responsive text for Quick Actions */
+    @media (max-width: 1200px) {
+      .action-text {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .action-text {
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .btn-lg {
+        min-height: 50px;
+        font-size: 0.875rem;
+        padding: 0.5rem 0.75rem;
+      }
+
+      .action-text {
+        font-size: 0.8rem;
+      }
+    }
+
     .sidebar .nav-link.btn {
       background: none;
       border: none;
