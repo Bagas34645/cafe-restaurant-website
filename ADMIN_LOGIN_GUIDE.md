@@ -20,7 +20,7 @@
 
 Gunakan kredensial default:
 
--   **Email**: `admin@caferestaurant.com`
+-   **Email**: `admin@email.com`
 -   **Password**: `admin123`
 
 ### 3. Mengakses Dashboard Admin

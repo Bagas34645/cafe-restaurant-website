@@ -8,7 +8,7 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8">
-        <h1 class="display-4 fw-bold mb-4">Selamat Datang di Sentra Durian Tegal</h1>
+        <h1 class="display-4 fw-bold mb-4">Selamat Datang</h1>
         <p class="lead mb-4">Sentra Durian Tegal adalah pusat informasi dan distribusi durian unggulan langsung dari kebun terbaik di Tegal. Kami berkomitmen menyediakan durian berkualitas tinggi untuk konsumsi pribadi maupun kebutuhan bisnis Anda.</p>
         <div class="d-flex gap-3">
           <a href="{{ route('products') }}" class="btn btn-primary btn-lg">Lihat Produk</a>
