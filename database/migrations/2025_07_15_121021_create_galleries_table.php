@@ -13,10 +13,12 @@ return new class extends Migration
     {
         Schema::create('galleries', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description')->nullable();
-            $table->string('image_path');
-            $table->boolean('is_active')->default(true);
+            $table->string('judul');
+            $table->text('deskripsi')->nullable();
+            $table->string('path_gambar');
+            $table->string('kategori')->default('umum'); // umum, durian, kebun, proses, fasilitas
+            $table->integer('urutan')->default(0);
+            $table->boolean('aktif')->default(true);
             $table->timestamps();
         });
     }

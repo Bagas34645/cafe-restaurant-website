@@ -13,7 +13,7 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        $galleries = Gallery::where('is_active', true)->latest()->paginate(12);
+        $galleries = Gallery::aktif()->urutkan()->paginate(12);
         return view('gallery.index', compact('galleries'));
     }
 
@@ -40,22 +40,26 @@ class GalleryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'kategori' => 'required|string|in:umum,durian,kebun,proses,fasilitas',
+            'urutan' => 'nullable|integer|min:0',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'is_active' => 'boolean'
+            'aktif' => 'boolean'
         ]);
 
         $imagePath = $request->file('image')->store('galleries', 'public');
 
         Gallery::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'image_path' => $imagePath,
-            'is_active' => $request->has('is_active')
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'path_gambar' => $imagePath,
+            'kategori' => $request->kategori,
+            'urutan' => $request->urutan ?? 0,
+            'aktif' => $request->has('aktif')
         ]);
 
-        return redirect()->route('admin.galleries.index')->with('success', 'Gallery item created successfully!');
+        return redirect()->route('admin.galleries.index')->with('success', 'Item gallery berhasil dibuat!');
     }
 
     /**
@@ -80,30 +84,34 @@ class GalleryController extends Controller
     public function update(Request $request, Gallery $gallery)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'nullable|string',
+            'kategori' => 'required|string|in:umum,durian,kebun,proses,fasilitas',
+            'urutan' => 'nullable|integer|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'is_active' => 'boolean'
+            'aktif' => 'boolean'
         ]);
 
         $data = [
-            'title' => $request->title,
-            'description' => $request->description,
-            'is_active' => $request->has('is_active')
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'kategori' => $request->kategori,
+            'urutan' => $request->urutan ?? 0,
+            'aktif' => $request->has('aktif')
         ];
 
         if ($request->hasFile('image')) {
             // Delete old image
-            if ($gallery->image_path) {
-                Storage::disk('public')->delete($gallery->image_path);
+            if ($gallery->path_gambar) {
+                Storage::disk('public')->delete($gallery->path_gambar);
             }
 
-            $data['image_path'] = $request->file('image')->store('galleries', 'public');
+            $data['path_gambar'] = $request->file('image')->store('galleries', 'public');
         }
 
         $gallery->update($data);
 
-        return redirect()->route('admin.galleries.index')->with('success', 'Gallery item updated successfully!');
+        return redirect()->route('admin.galleries.index')->with('success', 'Item gallery berhasil diperbarui!');
     }
 
     /**
@@ -111,12 +119,12 @@ class GalleryController extends Controller
      */
     public function destroy(Gallery $gallery)
     {
-        if ($gallery->image_path) {
-            Storage::disk('public')->delete($gallery->image_path);
+        if ($gallery->path_gambar) {
+            Storage::disk('public')->delete($gallery->path_gambar);
         }
 
         $gallery->delete();
 
-        return redirect()->route('admin.galleries.index')->with('success', 'Gallery item deleted successfully!');
+        return redirect()->route('admin.galleries.index')->with('success', 'Item gallery berhasil dihapus!');
     }
 }

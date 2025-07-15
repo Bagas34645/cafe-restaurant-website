@@ -21,21 +21,44 @@
           @csrf
 
           <div class="mb-3">
-            <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control @error('title') is-invalid @enderror"
-              id="title" name="title" value="{{ old('title') }}" required>
-            @error('title')
+            <label for="judul" class="form-label">Judul</label>
+            <input type="text" class="form-control @error('judul') is-invalid @enderror"
+              id="judul" name="judul" value="{{ old('judul') }}" required>
+            @error('judul')
             <div class="invalid-feedback">{{ $message }}</div>
             @enderror
           </div>
 
           <div class="mb-3">
-            <label for="description" class="form-label">Description (Optional)</label>
-            <textarea class="form-control @error('description') is-invalid @enderror"
-              id="description" name="description" rows="3">{{ old('description') }}</textarea>
-            @error('description')
+            <label for="deskripsi" class="form-label">Deskripsi (Opsional)</label>
+            <textarea class="form-control @error('deskripsi') is-invalid @enderror"
+              id="deskripsi" name="deskripsi" rows="3">{{ old('deskripsi') }}</textarea>
+            @error('deskripsi')
             <div class="invalid-feedback">{{ $message }}</div>
             @enderror
+          </div>
+
+          <div class="mb-3">
+            <label for="kategori" class="form-label">Kategori</label>
+            <select class="form-select @error('kategori') is-invalid @enderror" id="kategori" name="kategori" required>
+              <option value="">Pilih Kategori</option>
+              @foreach(App\Models\Gallery::getKategoriTersedia() as $key => $label)
+              <option value="{{ $key }}" {{ old('kategori') == $key ? 'selected' : '' }}>{{ $label }}</option>
+              @endforeach
+            </select>
+            @error('kategori')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </div>
+
+          <div class="mb-3">
+            <label for="urutan" class="form-label">Urutan Tampilan</label>
+            <input type="number" class="form-control @error('urutan') is-invalid @enderror"
+              id="urutan" name="urutan" value="{{ old('urutan', 0) }}" min="0">
+            @error('urutan')
+            <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+            <div class="form-text">Angka yang lebih kecil akan ditampilkan lebih dulu</div>
           </div>
 
           <div class="mb-3">
@@ -50,10 +73,10 @@
 
           <div class="mb-3">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="is_active" name="is_active"
-                {{ old('is_active', true) ? 'checked' : '' }}>
-              <label class="form-check-label" for="is_active">
-                Active (Display on website)
+              <input class="form-check-input" type="checkbox" id="aktif" name="aktif"
+                {{ old('aktif', true) ? 'checked' : '' }}>
+              <label class="form-check-label" for="aktif">
+                Aktif (Tampilkan di website)
               </label>
             </div>
           </div>

@@ -25,22 +25,22 @@
         <div class="row">
           <div class="col-md-6 mb-3">
             <label class="form-label fw-bold">Title:</label>
-            <p class="mb-0">{{ $gallery->title }}</p>
+            <p class="mb-0">{{ $gallery->judul }}</p>
           </div>
           <div class="col-md-6 mb-3">
             <label class="form-label fw-bold">Status:</label>
             <p class="mb-0">
-              <span class="badge bg-{{ $gallery->is_active ? 'success' : 'secondary' }} fs-6">
-                {{ $gallery->is_active ? 'Active' : 'Inactive' }}
+              <span class="badge bg-{{ $gallery->aktif ? 'success' : 'secondary' }} fs-6">
+                {{ $gallery->aktif ? 'Aktif' : 'Tidak Aktif' }}
               </span>
             </p>
           </div>
         </div>
 
-        @if($gallery->description)
+        @if($gallery->deskripsi)
         <div class="mb-3">
-          <label class="form-label fw-bold">Description:</label>
-          <p class="mb-0">{{ $gallery->description }}</p>
+          <label class="form-label fw-bold">Deskripsi:</label>
+          <p class="mb-0">{{ $gallery->deskripsi }}</p>
         </div>
         @endif
 
@@ -64,9 +64,9 @@
         <h5 class="mb-0"><i class="fas fa-image me-2"></i>Gallery Image</h5>
       </div>
       <div class="card-body text-center">
-        @if($gallery->image_path)
-        <img src="{{ asset('storage/' . $gallery->image_path) }}"
-          alt="{{ $gallery->title }}"
+        @if($gallery->path_gambar)
+        <img src="{{ asset('storage/' . $gallery->path_gambar) }}"
+          alt="{{ $gallery->judul }}"
           class="img-fluid rounded shadow"
           style="max-height: 400px;">
         @else
@@ -99,7 +99,7 @@
             </button>
           </form>
 
-          @if($gallery->is_active)
+          @if($gallery->aktif)
           <a href="{{ route('gallery') }}" target="_blank" class="btn btn-success">
             <i class="fas fa-external-link-alt me-2"></i>View on Website
           </a>

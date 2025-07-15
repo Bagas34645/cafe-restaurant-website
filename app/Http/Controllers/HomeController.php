@@ -11,7 +11,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $featuredGalleries = Gallery::where('is_active', true)->take(6)->get();
+        $featuredGalleries = Gallery::aktif()->urutkan()->take(6)->get();
         $featuredProducts = Product::where('is_available', true)->take(8)->get();
         $approvedReviews = Review::where('is_approved', true)->take(6)->get();
 

@@ -7,8 +7,8 @@
 <section class="py-5 bg-light">
   <div class="container">
     <div class="text-center">
-      <h1 class="display-4 fw-bold">Restaurant Gallery</h1>
-      <p class="lead text-muted">Take a visual journey through our beautiful restaurant and delicious cuisine</p>
+      <h1 class="display-4 fw-bold">Galeri Sentra Durian</h1>
+      <p class="lead text-muted">Jelajahi keindahan restoran kami dan kelezatan kuliner durian yang menggugah selera</p>
     </div>
   </div>
 </section>
@@ -21,19 +21,19 @@
       @foreach($galleries as $gallery)
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card border-0 gallery-item">
-          <img src="{{ asset('storage/' . $gallery->image_path) }}"
+          <img src="{{ asset('storage/' . $gallery->path_gambar) }}"
             class="card-img-top rounded"
-            alt="{{ $gallery->title }}"
+            alt="{{ $gallery->judul }}"
             style="height: 300px; object-fit: cover; cursor: pointer;"
             data-bs-toggle="modal"
             data-bs-target="#imageModal"
-            data-image="{{ asset('storage/' . $gallery->image_path) }}"
-            data-title="{{ $gallery->title }}"
-            data-description="{{ $gallery->description }}">
+            data-image="{{ asset('storage/' . $gallery->path_gambar) }}"
+            data-title="{{ $gallery->judul }}"
+            data-description="{{ $gallery->deskripsi }}">
           <div class="card-body text-center">
-            <h5 class="card-title">{{ $gallery->title }}</h5>
-            @if($gallery->description)
-            <p class="card-text text-muted">{{ Str::limit($gallery->description, 100) }}</p>
+            <h5 class="card-title">{{ $gallery->judul }}</h5>
+            @if($gallery->deskripsi)
+            <p class="card-text text-muted">{{ Str::limit($gallery->deskripsi, 100) }}</p>
             @endif
           </div>
         </div>

@@ -29,9 +29,9 @@
           @foreach($galleries as $gallery)
           <tr>
             <td>
-              @if($gallery->image_path)
-              <img src="{{ asset('storage/' . $gallery->image_path) }}"
-                alt="{{ $gallery->title }}"
+              @if($gallery->path_gambar)
+              <img src="{{ asset('storage/' . $gallery->path_gambar) }}"
+                alt="{{ $gallery->judul }}"
                 class="rounded"
                 style="width: 60px; height: 60px; object-fit: cover;">
               @else
@@ -41,14 +41,14 @@
               @endif
             </td>
             <td>
-              <strong>{{ $gallery->title }}</strong>
+              <strong>{{ $gallery->judul }}</strong>
             </td>
             <td>
-              <span class="text-muted">{{ Str::limit($gallery->description, 50) }}</span>
+              <span class="text-muted">{{ Str::limit($gallery->deskripsi, 50) }}</span>
             </td>
             <td>
-              <span class="badge bg-{{ $gallery->is_active ? 'success' : 'secondary' }}">
-                {{ $gallery->is_active ? 'Active' : 'Inactive' }}
+              <span class="badge bg-{{ $gallery->aktif ? 'success' : 'secondary' }}">
+                {{ $gallery->aktif ? 'Aktif' : 'Tidak Aktif' }}
               </span>
             </td>
             <td>

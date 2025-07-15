@@ -74,9 +74,9 @@
       @foreach($featuredGalleries->take(6) as $gallery)
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card border-0">
-          <img src="{{ asset('storage/' . $gallery->image_path) }}" class="card-img-top rounded" alt="{{ $gallery->title }}" style="height: 250px; object-fit: cover;">
+          <img src="{{ asset('storage/' . $gallery->path_gambar) }}" class="card-img-top rounded" alt="{{ $gallery->judul }}" style="height: 250px; object-fit: cover;">
           <div class="card-body text-center px-0">
-            <h6 class="card-title">{{ $gallery->title }}</h6>
+            <h6 class="card-title">{{ $gallery->judul }}</h6>
           </div>
         </div>
       </div>

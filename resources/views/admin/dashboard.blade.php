@@ -124,9 +124,9 @@
         @if($recentGalleries->count() > 0)
         @foreach($recentGalleries as $gallery)
         <div class="d-flex align-items-center mb-3">
-          @if($gallery->image_path)
-          <img src="{{ asset('storage/' . $gallery->image_path) }}"
-            alt="{{ $gallery->title }}"
+          @if($gallery->path_gambar)
+          <img src="{{ asset('storage/' . $gallery->path_gambar) }}"
+            alt="{{ $gallery->judul }}"
             class="rounded me-3"
             style="width: 50px; height: 50px; object-fit: cover;">
           @else
@@ -135,11 +135,11 @@
           </div>
           @endif
           <div class="flex-grow-1">
-            <h6 class="mb-1">{{ $gallery->title }}</h6>
+            <h6 class="mb-1">{{ $gallery->judul }}</h6>
             <small class="text-muted">{{ $gallery->created_at->diffForHumans() }}</small>
           </div>
-          <span class="badge bg-{{ $gallery->is_active ? 'success' : 'secondary' }}">
-            {{ $gallery->is_active ? 'Active' : 'Inactive' }}
+          <span class="badge bg-{{ $gallery->aktif ? 'success' : 'secondary' }}">
+            {{ $gallery->aktif ? 'Aktif' : 'Tidak Aktif' }}
           </span>
         </div>
         @endforeach
