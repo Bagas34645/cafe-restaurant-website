@@ -55,7 +55,7 @@
             <p class="card-text text-muted flex-grow-1">{{ $product->description }}</p>
 
             <div class="d-flex justify-content-between align-items-center mt-auto">
-              <span class="h5 text-primary mb-0">${{ number_format($product->price, 2) }}</span>
+              <span class="h5 text-primary mb-0">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
               @if($product->is_available)
               <span class="badge bg-success">Available</span>
               @else

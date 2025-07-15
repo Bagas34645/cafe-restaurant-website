@@ -47,7 +47,7 @@
               <small class="text-muted">{{ Str::limit($product->description, 40) }}</small>
             </td>
             <td>
-              <strong class="text-success">${{ number_format($product->price, 2) }}</strong>
+              <strong class="text-success">Rp{{ number_format($product->price, 0, ',', '.') }}</strong>
             </td>
             <td>
               @if($product->category)

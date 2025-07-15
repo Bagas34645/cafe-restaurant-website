@@ -40,7 +40,7 @@
 
           <div class="row">
             <div class="col-md-6 mb-3">
-              <label for="price" class="form-label">Price ($)</label>
+              <label for="price" class="form-label">Harga (Rp)</label>
               <input type="number" step="0.01" min="0" class="form-control @error('price') is-invalid @enderror"
                 id="price" name="price" value="{{ old('price') }}" required>
               @error('price')

@@ -29,7 +29,7 @@
           </div>
           <div class="col-md-4 mb-3">
             <label class="form-label fw-bold">Price:</label>
-            <p class="mb-0 h5 text-success">${{ number_format($product->price, 2) }}</p>
+            <p class="mb-0 h5 text-success">Rp{{ number_format($product->price, 0, ',', '.') }}</p>
           </div>
         </div>
 

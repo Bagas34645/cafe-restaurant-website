@@ -173,7 +173,7 @@
           @endif
           <div class="flex-grow-1">
             <h6 class="mb-1">{{ $product->name }}</h6>
-            <small class="text-muted">${{ number_format($product->price, 2) }} • {{ $product->created_at->diffForHumans() }}</small>
+            <small class="text-muted">Rp{{ number_format($product->price, 0, ',', '.') }} • {{ $product->created_at->diffForHumans() }}</small>
           </div>
           <span class="badge bg-{{ $product->is_available ? 'success' : 'secondary' }}">
             {{ $product->is_available ? 'Available' : 'Unavailable' }}
