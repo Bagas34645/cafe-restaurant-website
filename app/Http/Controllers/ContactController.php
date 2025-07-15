@@ -46,7 +46,7 @@ class ContactController extends Controller
             'is_read' => false
         ]);
 
-        return redirect()->route('contact')->with('success', 'Your message has been sent successfully! We will get back to you soon.');
+        return redirect()->route('contact')->with('success', 'Pesan Anda telah berhasil terkirim! Kami akan segera menghubungi Anda kembali.');
     }
 
     /**
