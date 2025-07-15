@@ -56,6 +56,58 @@
     .star-rating {
       color: #ffc107;
     }
+
+    /* Custom Pagination Styles */
+    .pagination-nav .pagination {
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .pagination-nav .page-link {
+      border: none;
+      padding: 12px 16px;
+      color: #495057;
+      background-color: #f8f9fa;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .pagination-nav .page-link:hover {
+      background-color: #e9ecef;
+      color: #e74c3c;
+      transform: translateY(-2px);
+    }
+
+    .pagination-nav .page-item.active .page-link {
+      background-color: #e74c3c;
+      border-color: #e74c3c;
+      color: white;
+      box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+    }
+
+    .pagination-nav .page-item.disabled .page-link {
+      background-color: #f8f9fa;
+      color: #6c757d;
+      opacity: 0.6;
+    }
+
+    .pagination-nav .page-item:first-child .page-link {
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+
+    .pagination-nav .page-item:last-child .page-link {
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+
+    .pagination-info {
+      background-color: #f8f9fa;
+      padding: 8px 16px;
+      border-radius: 20px;
+      display: inline-block;
+    }
   </style>
   @stack('styles')
 </head>

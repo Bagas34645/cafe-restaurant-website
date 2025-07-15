@@ -69,6 +69,89 @@
       color: white;
       background-color: #34495e;
     }
+
+    /* Custom Pagination Styles - Enhanced for Admin */
+    .pagination-wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .pagination-nav .pagination {
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+      padding: 8px;
+    }
+
+    .pagination-nav .page-link {
+      border: none;
+      padding: 12px 16px;
+      color: #6c757d;
+      background-color: transparent;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      border-radius: 8px;
+      margin: 0 2px;
+      position: relative;
+    }
+
+    .pagination-nav .page-link:hover {
+      background-color: #f8f9fa;
+      color: #2c3e50;
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(44, 62, 80, 0.15);
+    }
+
+    .pagination-nav .page-link:focus {
+      box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
+      background-color: #f8f9fa;
+      color: #2c3e50;
+    }
+
+    .pagination-nav .page-item.active .page-link {
+      background-color: #2c3e50;
+      border-color: #2c3e50;
+      color: white;
+      box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .pagination-nav .page-item.disabled .page-link {
+      background-color: transparent;
+      color: #adb5bd;
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .pagination-nav .page-item.disabled .page-link:hover {
+      transform: none;
+      box-shadow: none;
+      background-color: transparent;
+    }
+
+    .pagination-info small {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border: 1px solid #dee2e6;
+      color: #495057;
+      font-weight: 500;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+      .pagination-nav .page-link {
+        padding: 10px 12px;
+        font-size: 0.875rem;
+      }
+
+      .pagination-nav .pagination {
+        padding: 6px;
+      }
+
+      .pagination-wrapper {
+        max-width: 100%;
+      }
+    }
   </style>
   @stack('styles')
 </head>

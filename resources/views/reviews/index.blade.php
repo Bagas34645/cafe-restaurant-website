@@ -108,7 +108,9 @@
 
     <!-- Pagination -->
     <div class="d-flex justify-content-center mt-5">
-      {{ $reviews->links() }}
+      <div class="pagination-wrapper">
+        {{ $reviews->links('pagination.custom') }}
+      </div>
     </div>
     @else
     <div class="text-center py-5">
@@ -140,6 +142,97 @@
 
   .star-rating {
     color: #ffc107;
+  }
+
+  /* Enhanced Pagination Styles */
+  .pagination-wrapper {
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .pagination-navigation .pagination {
+    margin-bottom: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .pagination-navigation .page-link {
+    position: relative;
+    display: block;
+    padding: 0.75rem 1rem;
+    margin: 0 2px;
+    color: #495057;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    transition: all 0.3s ease-in-out;
+    min-width: 45px;
+    text-align: center;
+  }
+
+  .pagination-navigation .page-link:hover {
+    z-index: 2;
+    color: #e74c3c;
+    background-color: #f8f9fa;
+    border-color: #e74c3c;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.2);
+  }
+
+  .pagination-navigation .page-link:focus {
+    z-index: 3;
+    color: #e74c3c;
+    background-color: #f8f9fa;
+    border-color: #e74c3c;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(231, 76, 60, 0.25);
+  }
+
+  .pagination-navigation .page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+    transform: translateY(-1px);
+  }
+
+  .pagination-navigation .page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #fff;
+    border-color: #dee2e6;
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .pagination-navigation .page-item:first-child .page-link {
+    margin-left: 0;
+  }
+
+  .pagination-navigation .page-item:last-child .page-link {
+    margin-right: 0;
+  }
+
+  /* Mobile responsive adjustments */
+  @media (max-width: 576px) {
+    .pagination-navigation .page-link {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+      min-width: 40px;
+    }
+
+    .pagination-navigation .pagination {
+      gap: 2px;
+    }
+  }
+
+  /* Results info styling */
+  .pagination-navigation small {
+    padding: 0.5rem 1rem;
+    background-color: #f8f9fa;
+    border-radius: 1rem;
+    display: inline-block;
   }
 </style>
 @endpush

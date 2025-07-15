@@ -82,7 +82,9 @@
 
 <!-- Pagination -->
 <div class="d-flex justify-content-center mt-4">
-  {{ $galleries->links() }}
+  <div class="pagination-wrapper">
+    {{ $galleries->links('pagination.admin') }}
+  </div>
 </div>
 @else
 <div class="card">

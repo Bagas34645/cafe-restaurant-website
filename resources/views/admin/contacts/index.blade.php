@@ -111,7 +111,9 @@
 
 <!-- Pagination -->
 <div class="d-flex justify-content-center mt-4">
-  {{ $contacts->links() }}
+  <div class="pagination-wrapper">
+    {{ $contacts->links('pagination.admin') }}
+  </div>
 </div>
 @else
 <div class="card">

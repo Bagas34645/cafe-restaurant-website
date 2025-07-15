@@ -92,7 +92,9 @@
 
 <!-- Pagination -->
 <div class="d-flex justify-content-center mt-4">
-  {{ $products->links() }}
+  <div class="pagination-wrapper">
+    {{ $products->links('pagination.admin') }}
+  </div>
 </div>
 @else
 <div class="card">
