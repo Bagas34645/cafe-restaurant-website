@@ -24,8 +24,8 @@
         <p>Tim ahli kami memastikan setiap durian yang kami distribusikan telah melalui proses seleksi ketat untuk menjamin kepuasan dan kepercayaan pelanggan.</p>
       </div>
       <div class="col-lg-6">
-        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-          alt="Restaurant Interior" class="img-fluid rounded shadow">
+        <img src="{{ asset('images/durian-farm.jpg') }}"
+          alt="Kebun Durian Tegal" class="img-fluid rounded shadow">
       </div>
     </div>
   </div>
@@ -82,36 +82,36 @@
     <div class="row">
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card border-0 text-center">
-          <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-            alt="Head Chef" class="card-img-top rounded-circle mx-auto mt-3" style="width: 150px; height: 150px; object-fit: cover;">
+          <img src="{{ asset('images/team-pak-budi.jpg') }}"
+            alt="Pak Budi - Ahli Durian" class="card-img-top rounded-circle mx-auto mt-3" style="width: 150px; height: 150px; object-fit: cover;">
           <div class="card-body">
-            <h5 class="card-title">Chef Maria Rodriguez</h5>
-            <p class="text-muted">Head Chef</p>
-            <p class="card-text">With over 15 years of culinary experience, Chef Maria brings creativity and passion to every dish.</p>
+            <h5 class="card-title">Pak Budi Santoso</h5>
+            <p class="text-muted">Ahli Durian Senior</p>
+            <p class="card-text">Dengan pengalaman lebih dari 20 tahun dalam budidaya durian, Pak Budi ahli dalam menilai kualitas dan kematangan durian terbaik.</p>
           </div>
         </div>
       </div>
 
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card border-0 text-center">
-          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-            alt="Sous Chef" class="card-img-top rounded-circle mx-auto mt-3" style="width: 150px; height: 150px; object-fit: cover;">
+          <img src="{{ asset('images/team-ibu-sari.jpg') }}"
+            alt="Ibu Sari - Manajer Operasional" class="card-img-top rounded-circle mx-auto mt-3" style="width: 150px; height: 150px; object-fit: cover;">
           <div class="card-body">
-            <h5 class="card-title">Chef David Kim</h5>
-            <p class="text-muted">Sous Chef</p>
-            <p class="card-text">Specializing in fusion cuisine, Chef David combines traditional techniques with modern innovation.</p>
+            <h5 class="card-title">Ibu Sari Wulandari</h5>
+            <p class="text-muted">Manajer Operasional</p>
+            <p class="card-text">Ibu Sari mengawasi seluruh operasional distribusi dan memastikan setiap pelanggan mendapat pelayanan terbaik dan durian berkualitas.</p>
           </div>
         </div>
       </div>
 
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card border-0 text-center">
-          <img src="https://images.unsplash.com/photo-1594736797933-d0401ba49d81?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80"
-            alt="Restaurant Manager" class="card-img-top rounded-circle mx-auto mt-3" style="width: 150px; height: 150px; object-fit: cover;">
+          <img src="{{ asset('images/team-mas-andi.jpg') }}"
+            alt="Mas Andi - Koordinator Petani" class="card-img-top rounded-circle mx-auto mt-3" style="width: 150px; height: 150px; object-fit: cover;">
           <div class="card-body">
-            <h5 class="card-title">Sarah Johnson</h5>
-            <p class="text-muted">Restaurant Manager</p>
-            <p class="card-text">Sarah ensures every guest has an exceptional dining experience with her attention to detail and warm hospitality.</p>
+            <h5 class="card-title">Mas Andi Prasetyo</h5>
+            <p class="text-muted">Koordinator Petani</p>
+            <p class="card-text">Mas Andi menjalin hubungan erat dengan petani durian di seluruh Tegal untuk memastikan pasokan durian terbaik sepanjang musim.</p>
           </div>
         </div>
       </div>
@@ -122,10 +122,10 @@
 <!-- Call to Action -->
 <section class="py-5 bg-primary text-white">
   <div class="container text-center">
-    <h2 class="display-5 fw-bold mb-4">Experience Our Passion</h2>
-    <p class="lead mb-4">Come and taste the difference that passion and quality make in every dish we serve.</p>
-    <a href="{{ route('contact') }}" class="btn btn-light btn-lg me-3">Make a Reservation</a>
-    <a href="{{ route('products') }}" class="btn btn-outline-light btn-lg">View Our Menu</a>
+    <h2 class="display-5 fw-bold mb-4">Rasakan Kualitas Durian Terbaik</h2>
+    <p class="lead mb-4">Kunjungi Sentra Durian Tegal dan rasakan sendiri kelezatan durian pilihan dari kebun terbaik di Tegal.</p>
+    <a href="{{ route('contact') }}" class="btn btn-light btn-lg me-3">Hubungi Kami</a>
+    <a href="{{ route('products') }}" class="btn btn-outline-light btn-lg">Lihat Produk Durian</a>
   </div>
 </section>
 @endsection
