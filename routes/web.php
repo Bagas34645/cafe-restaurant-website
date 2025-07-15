@@ -9,6 +9,8 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 
+use App\Http\Controllers\ContentController;
+
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
@@ -45,4 +47,7 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
     Route::get('contacts', [ContactController::class, 'admin'])->name('contacts.index');
     Route::patch('contacts/{contact}/mark-read', [ContactController::class, 'markAsRead'])->name('contacts.mark-read');
     Route::delete('contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
+
+    // Content Management
+    Route::resource('contents', ContentController::class);
 });

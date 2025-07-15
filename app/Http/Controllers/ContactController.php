@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
+use App\Models\Content;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -12,7 +13,10 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view('contact.index');
+        // Get contact page content from CMS
+        $contactContents = Content::active()->bySection('contact')->orderBy('order')->get();
+
+        return view('contact.index', compact('contactContents'));
     }
 
     /**

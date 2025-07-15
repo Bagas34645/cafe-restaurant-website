@@ -301,6 +301,11 @@
             <i class="fas fa-envelope me-2"></i>Contact Messages
           </a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.contents.*') ? 'active' : '' }}" href="{{ route('admin.contents.index') }}">
+            <i class="fas fa-edit me-2"></i>Content Management
+          </a>
+        </li>
         <li class="nav-item mt-4">
           <a class="nav-link" href="{{ route('home') }}" target="_blank">
             <i class="fas fa-external-link-alt me-2"></i>View Website

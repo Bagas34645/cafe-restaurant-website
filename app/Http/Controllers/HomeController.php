@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Gallery;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\Content;
 
 class HomeController extends Controller
 {
@@ -15,11 +16,17 @@ class HomeController extends Controller
         $featuredProducts = Product::where('is_available', true)->take(8)->get();
         $approvedReviews = Review::where('is_approved', true)->take(6)->get();
 
-        return view('home', compact('featuredGalleries', 'featuredProducts', 'approvedReviews'));
+        // Get home page content from CMS
+        $homeContents = Content::active()->bySection('home')->orderBy('order')->get();
+
+        return view('home', compact('featuredGalleries', 'featuredProducts', 'approvedReviews', 'homeContents'));
     }
 
     public function about()
     {
-        return view('about');
+        // Get about page content from CMS
+        $aboutContents = Content::active()->bySection('about')->orderBy('order')->get();
+
+        return view('about', compact('aboutContents'));
     }
 }

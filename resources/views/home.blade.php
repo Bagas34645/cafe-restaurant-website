@@ -8,8 +8,8 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8">
-        <h1 class="display-4 fw-bold mb-4">Selamat Datang</h1>
-        <p class="lead mb-4">Sentra Durian Tegal adalah pusat informasi dan distribusi durian unggulan langsung dari kebun terbaik di Tegal. Kami berkomitmen menyediakan durian berkualitas tinggi untuk konsumsi pribadi maupun kebutuhan bisnis Anda.</p>
+        <h1 class="display-4 fw-bold mb-4">{{ cms_content('home_hero_title', 'Selamat Datang') }}</h1>
+        <p class="lead mb-4">{{ cms_content('home_hero_subtitle', 'Sentra Durian Tegal adalah pusat informasi dan distribusi durian unggulan langsung dari kebun terbaik di Tegal. Kami berkomitmen menyediakan durian berkualitas tinggi untuk konsumsi pribadi maupun kebutuhan bisnis Anda.') }}</p>
         <div class="d-flex gap-3">
           <a href="{{ route('products') }}" class="btn btn-primary btn-lg">Lihat Produk</a>
           <a href="{{ route('contact') }}" class="btn btn-outline-light btn-lg">Hubungi Kami</a>
@@ -24,8 +24,8 @@
 <section class="py-5">
   <div class="container">
     <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold">Produk Durian Unggulan</h2>
-      <p class="lead text-muted">Temukan durian berkualitas terbaik dari kebun pilihan kami</p>
+      <h2 class="display-5 fw-bold">{{ cms_content('home_featured_title', 'Produk Durian Unggulan') }}</h2>
+      <p class="lead text-muted">{{ cms_content('home_featured_subtitle', 'Temukan durian berkualitas terbaik dari kebun pilihan kami') }}</p>
     </div>
 
     <div class="row">
@@ -96,7 +96,7 @@
   <div class="container">
     <div class="text-center mb-5">
       <h2 class="display-5 fw-bold">Testimoni Pelanggan</h2>
-      <p class="lead text-muted">Baca testimoni dari pelanggan yang puas</p>
+      <p class="lead text-muted">Baca testimoni dari pelanggan kami</p>
     </div>
 
     <div class="row">

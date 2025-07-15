@@ -7,6 +7,7 @@ use App\Models\Gallery;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\Contact;
+use App\Models\Content;
 
 class AdminController extends Controller
 {
@@ -17,13 +18,16 @@ class AdminController extends Controller
             'products' => Product::count(),
             'pending_reviews' => Review::where('is_approved', false)->count(),
             'unread_contacts' => Contact::where('is_read', false)->count(),
+            'contents' => Content::count(),
+            'active_contents' => Content::where('is_active', true)->count(),
         ];
 
         $recentGalleries = Gallery::latest()->take(5)->get();
         $recentProducts = Product::latest()->take(5)->get();
         $pendingReviews = Review::where('is_approved', false)->latest()->take(5)->get();
         $unreadContacts = Contact::where('is_read', false)->latest()->take(5)->get();
+        $recentContents = Content::latest()->take(5)->get();
 
-        return view('admin.dashboard', compact('stats', 'recentGalleries', 'recentProducts', 'pendingReviews', 'unreadContacts'));
+        return view('admin.dashboard', compact('stats', 'recentGalleries', 'recentProducts', 'pendingReviews', 'unreadContacts', 'recentContents'));
     }
 }

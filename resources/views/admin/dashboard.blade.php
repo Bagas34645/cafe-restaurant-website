@@ -77,6 +77,43 @@
   </div>
 </div>
 
+<!-- Second Row of Stats -->
+<div class="row mb-5">
+  <div class="col-xl-6 col-md-6 mb-4">
+    <div class="card stat-card secondary">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h6 class="card-title text-uppercase mb-1">Total Content</h6>
+            <h2 class="mb-0">{{ $stats['contents'] }}</h2>
+            <small class="text-muted">{{ $stats['active_contents'] }} active</small>
+          </div>
+          <div class="align-self-center">
+            <i class="fas fa-edit fa-2x opacity-75"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-xl-6 col-md-6 mb-4">
+    <div class="card stat-card dark">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h6 class="card-title text-uppercase mb-1">Content Sections</h6>
+            <h2 class="mb-0">{{ $recentContents->pluck('section')->unique()->count() }}</h2>
+            <small class="text-muted">{{ $recentContents->where('type', 'text')->count() }} text, {{ $recentContents->where('type', 'image')->count() }} images</small>
+          </div>
+          <div class="align-self-center">
+            <i class="fas fa-layer-group fa-2x opacity-75"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Quick Actions -->
 <div class="row mb-5">
   <div class="col-12">
@@ -108,6 +145,34 @@
             <a href="{{ route('admin.contacts.index') }}" class="btn btn-info btn-lg w-100 d-flex align-items-center justify-content-center text-nowrap">
               <i class="fas fa-envelope me-2"></i>
               <span class="action-text">Messages</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Second Row of Quick Actions -->
+        <div class="row g-3">
+          <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+            <a href="{{ route('admin.contents.create') }}" class="btn btn-secondary btn-lg w-100 d-flex align-items-center justify-content-center text-nowrap">
+              <i class="fas fa-plus me-2"></i>
+              <span class="action-text">Add Content</span>
+            </a>
+          </div>
+          <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+            <a href="{{ route('admin.contents.index') }}" class="btn btn-dark btn-lg w-100 d-flex align-items-center justify-content-center text-nowrap">
+              <i class="fas fa-edit me-2"></i>
+              <span class="action-text">Manage Content</span>
+            </a>
+          </div>
+          <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+            <a href="{{ route('home') }}" target="_blank" class="btn btn-outline-primary btn-lg w-100 d-flex align-items-center justify-content-center text-nowrap">
+              <i class="fas fa-external-link-alt me-2"></i>
+              <span class="action-text">View Website</span>
+            </a>
+          </div>
+          <div class="col-xl-3 col-lg-6 col-md-6 mb-3">
+            <a href="{{ route('about') }}" target="_blank" class="btn btn-outline-secondary btn-lg w-100 d-flex align-items-center justify-content-center text-nowrap">
+              <i class="fas fa-info-circle me-2"></i>
+              <span class="action-text">View About</span>
             </a>
           </div>
         </div>
@@ -293,6 +358,106 @@
           <i class="fas fa-envelope text-muted mb-3" style="font-size: 3rem; opacity: 0.3;"></i>
           <p class="text-muted mb-0">Belum ada pesan yang belum dibaca</p>
           <small class="text-muted">Pesan baru akan muncul di sini</small>
+        </div>
+        @endif
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Content -->
+<div class="row">
+  <div class="col-lg-6 mb-4">
+    <div class="card shadow-sm border-0">
+      <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="fas fa-edit me-2"></i>Recent Content</h5>
+        <a href="{{ route('admin.contents.index') }}" class="btn btn-sm btn-outline-light">
+          <i class="fas fa-eye me-1"></i>View All
+        </a>
+      </div>
+      <div class="card-body p-0">
+        @if($recentContents->count() > 0)
+        @foreach($recentContents as $content)
+        <div class="d-flex align-items-center p-3 border-bottom hover-bg-light transition-all">
+          <div class="bg-light rounded-3 me-3 d-flex align-items-center justify-content-center shadow-sm" style="width: 60px; height: 60px;">
+            @if($content->type === 'image')
+            <i class="fas fa-image text-primary fs-5"></i>
+            @elseif($content->type === 'hero')
+            <i class="fas fa-home text-success fs-5"></i>
+            @elseif($content->type === 'feature')
+            <i class="fas fa-star text-warning fs-5"></i>
+            @else
+            <i class="fas fa-edit text-info fs-5"></i>
+            @endif
+          </div>
+          <div class="flex-grow-1 min-width-0">
+            <h6 class="mb-1 fw-semibold text-truncate">{{ $content->title ?: $content->key }}</h6>
+            <div class="d-flex align-items-center mb-1">
+              <span class="badge bg-primary me-2">{{ ucfirst($content->section) }}</span>
+              <span class="badge bg-info">{{ ucfirst($content->type) }}</span>
+            </div>
+            <div class="d-flex align-items-center">
+              <i class="fas fa-clock me-1 text-muted" style="font-size: 0.75rem;"></i>
+              <small class="text-muted">{{ $content->created_at->diffForHumans() }}</small>
+            </div>
+          </div>
+          <div class="ms-2">
+            <span class="badge {{ $content->is_active ? 'bg-success' : 'bg-secondary' }} px-3 py-2">
+              <i class="fas {{ $content->is_active ? 'fa-check-circle' : 'fa-times-circle' }} me-1"></i>
+              {{ $content->is_active ? 'Active' : 'Inactive' }}
+            </span>
+          </div>
+        </div>
+        @endforeach
+        @else
+        <div class="text-center py-5">
+          <i class="fas fa-edit text-muted mb-3" style="font-size: 3rem; opacity: 0.3;"></i>
+          <p class="text-muted mb-0">Belum ada konten</p>
+          <small class="text-muted">Klik "Add Content" untuk menambah</small>
+        </div>
+        @endif
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6 mb-4">
+    <div class="card shadow-sm border-0">
+      <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+        <h5 class="mb-0"><i class="fas fa-layer-group me-2"></i>Content by Section</h5>
+        <a href="{{ route('admin.contents.index') }}" class="btn btn-sm btn-outline-light">
+          <i class="fas fa-eye me-1"></i>Manage
+        </a>
+      </div>
+      <div class="card-body">
+        @php
+        $sectionCounts = $recentContents->groupBy('section')->map(function($group) {
+        return $group->count();
+        });
+        @endphp
+        @if($sectionCounts->count() > 0)
+        @foreach($sectionCounts as $section => $count)
+        <div class="d-flex justify-content-between align-items-center p-2 mb-2 rounded bg-light">
+          <div class="d-flex align-items-center">
+            @if($section === 'home')
+            <i class="fas fa-home text-primary me-2"></i>
+            @elseif($section === 'about')
+            <i class="fas fa-info-circle text-success me-2"></i>
+            @elseif($section === 'contact')
+            <i class="fas fa-envelope text-warning me-2"></i>
+            @elseif($section === 'footer')
+            <i class="fas fa-columns text-secondary me-2"></i>
+            @else
+            <i class="fas fa-file-alt text-info me-2"></i>
+            @endif
+            <span class="fw-semibold">{{ ucfirst($section) }}</span>
+          </div>
+          <span class="badge bg-primary rounded-pill">{{ $count }}</span>
+        </div>
+        @endforeach
+        @else
+        <div class="text-center py-4">
+          <i class="fas fa-layer-group text-muted mb-3" style="font-size: 2rem; opacity: 0.3;"></i>
+          <p class="text-muted mb-0">Belum ada konten tersegmentasi</p>
         </div>
         @endif
       </div>
