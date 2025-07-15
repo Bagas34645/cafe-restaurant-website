@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title', 'Produk - Sentra Durian Tegal')
+@section('title', 'Produk - Rajane Duren')
 
 @section('content')
 <!-- Menu Header -->
 <section class="py-5 bg-light">
   <div class="container">
     <div class="text-center">
-      <h1 class="display-4 fw-bold">Our Menu</h1>
-      <p class="lead text-muted">Discover our carefully crafted dishes made with the finest ingredients</p>
+      <h1 class="display-4 fw-bold">Produk Kami</h1>
+      <p class="lead text-muted">Produk durian dan bibit berkualitas premium langsung dari Tegal</p>
     </div>
   </div>
 </section>
@@ -87,9 +87,9 @@
 <!-- Call to Action -->
 <section class="py-5 bg-primary text-white">
   <div class="container text-center">
-    <h2 class="display-5 fw-bold mb-4">Ready to Order?</h2>
-    <p class="lead mb-4">Contact us to make a reservation or place an order for pickup.</p>
-    <a href="{{ route('contact') }}" class="btn btn-light btn-lg">Contact Us</a>
+    <h2 class="display-5 fw-bold mb-4">Siap untuk memesan?</h2>
+    <p class="lead mb-4">Hubungi kami untuk membuat reservasi atau melakukan pemesanan untuk diambil.</p>
+    <a href="{{ route('contact') }}" class="btn btn-light btn-lg">Hubungi Kami</a>
   </div>
 </section>
 @endsection

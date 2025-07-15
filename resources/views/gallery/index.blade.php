@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Gallery - Cafe Restaurant')
+@section('title', 'Galeri - Rajane Duren')
 
 @section('content')
 <!-- Gallery Header -->

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@yield('title', 'Sentra Durian Tegal')</title>
+  <title>@yield('title', 'Rajane Duren')</title>
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -128,7 +128,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('home') }}">Home</a>
+            <a class="nav-link" href="{{ route('home') }}">Beranda</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ route('about') }}">Tentang</a>
@@ -183,14 +183,13 @@
         </div>
         <div class="col-md-4">
           <h5>Info Kontak</h5>
-          <p><i class="fas fa-map-marker-alt me-2"></i>Tegal, Jawa Tengah</p>
-          <p><i class="fas fa-phone me-2"></i>+62 123 456 789</p>
-          <p><i class="fas fa-envelope me-2"></i>info@sentradurian.com</p>
+          <p><i class="fas fa-map-marker-alt me-2"></i>Kalikangkung Kulon, Kalikangkung, Pangkah, Kabupaten Tegal, Jawa Tengah 52471</p>
+          <p><i class="fas fa-phone me-2"></i>+62 812-3456-7890</p>
+          <p><i class="fas fa-envelope me-2"></i>javatani00@gmail.com</p>
         </div>
         <div class="col-md-4">
           <h5>Jam Buka</h5>
-          <p><i class="fas fa-clock me-2"></i>Senin - Jumat: 08:00 - 18:00 WIB</p>
-          <p><i class="fas fa-clock me-2"></i>Sabtu - Minggu: 08:00 - 20:00 WIB</p>
+          <p><i class="fas fa-clock me-2"></i>Setiap Hari: 08:00 - 22:00 WIB</p>
         </div>
       </div>
       <hr class="my-4">
