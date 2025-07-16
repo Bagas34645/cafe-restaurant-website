@@ -23,7 +23,7 @@
       url('{{ asset("storage/hero-durian.jpg") }}');
       background-size: cover;
       background-position: center;
-      min-height: 70vh;
+      min-height: 100vh;
       display: flex;
       align-items: center;
       color: white;
@@ -110,6 +110,182 @@
       border-radius: 20px;
       display: inline-block;
     }
+
+    /* Cart Icon Styles */
+    .cart-icon-full {
+      position: relative;
+    }
+
+    .cart-icon-full .fa-exclamation-circle {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      font-size: 0.7em;
+      color: #e74c3c !important;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    .cart-notification {
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 0.8em;
+      color: #ffc107 !important;
+      animation: pulse 1.5s infinite;
+      z-index: 1;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    /* Active Navigation Styles */
+    .navbar-nav .nav-link {
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      margin: 0 4px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .navbar-nav .nav-link i {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #ffc107 !important;
+      transform: translateY(-2px);
+    }
+
+    .navbar-nav .nav-link:hover i {
+      color: #ffc107 !important;
+      transform: scale(1.1);
+    }
+
+    .navbar-nav .nav-link.active {
+      color: #e74c3c !important;
+      font-weight: 600;
+      transform: translateY(-1px);
+    }
+
+    .navbar-nav .nav-link.active i {
+      color: #e74c3c !important;
+      animation: activeIcon 0.6s ease;
+    }
+
+    @keyframes activeIcon {
+      0% {
+        transform: scale(1) rotate(0deg);
+      }
+
+      50% {
+        transform: scale(1.2) rotate(5deg);
+      }
+
+      100% {
+        transform: scale(1) rotate(0deg);
+      }
+    }
+
+    /* Dropdown active state */
+    .navbar-nav .dropdown-toggle.active {
+      color: #e74c3c !important;
+      font-weight: 600;
+    }
+
+    .navbar-nav .dropdown-toggle.active i {
+      color: #e74c3c !important;
+    }
+
+    .navbar-nav .dropdown-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .navbar-nav .dropdown-toggle i {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Active indicator line */
+    .navbar-nav .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 3px;
+      background-color: #e74c3c;
+      border-radius: 2px;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        width: 0%;
+      }
+
+      to {
+        width: 80%;
+      }
+    }
+
+    /* Dropdown menu active state */
+    .dropdown-menu .dropdown-item.active {
+      color: #e74c3c !important;
+      font-weight: 600;
+    }
+
+    .dropdown-menu .dropdown-item.active i {
+      color: #e74c3c !important;
+    }
+
+    .dropdown-menu .dropdown-item:hover {
+      color: #e74c3c;
+      transition: all 0.3s ease;
+    }
+
+    .dropdown-menu .dropdown-item:hover i {
+      color: #e74c3c;
+      transform: scale(1.1);
+    }
+
+    .dropdown-menu .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .dropdown-menu .dropdown-item i {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+    }
   </style>
   @stack('styles')
 </head>
@@ -129,65 +305,66 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('home') }}">
-              <i class="fas fa-home me-1"></i>Beranda
+            <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" href="{{ route('home') }}">
+              <i class="fas fa-home"></i>Beranda
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('about') }}">
-              <i class="fas fa-info-circle me-1"></i>Tentang
+            <a class="nav-link {{ Route::currentRouteName() == 'about' ? 'active' : '' }}" href="{{ route('about') }}">
+              <i class="fas fa-info-circle"></i>Tentang
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('gallery') }}">
-              <i class="fas fa-images me-1"></i>Galeri
+            <a class="nav-link {{ Route::currentRouteName() == 'gallery' ? 'active' : '' }}" href="{{ route('gallery') }}">
+              <i class="fas fa-images"></i>Galeri
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('products') }}">
-              <i class="fas fa-box me-1"></i>Produk
+            <a class="nav-link {{ Route::currentRouteName() == 'products' ? 'active' : '' }}" href="{{ route('products') }}">
+              <i class="fas fa-box"></i>Produk
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('reviews') }}">
-              <i class="fas fa-star me-1"></i>Testimoni
+            <a class="nav-link {{ Route::currentRouteName() == 'reviews' ? 'active' : '' }}" href="{{ route('reviews') }}">
+              <i class="fas fa-star"></i>Testimoni
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('contact') }}">
-              <i class="fas fa-envelope me-1"></i>Kontak
+            <a class="nav-link {{ Route::currentRouteName() == 'contact' ? 'active' : '' }}" href="{{ route('contact') }}">
+              <i class="fas fa-envelope"></i>Kontak
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link position-relative" href="{{ route('cart.index') }}">
-              <i class="fas fa-shopping-cart"></i> Keranjang
-              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-count">
-                0
+            <a class="nav-link position-relative {{ Str::startsWith(Route::currentRouteName(), 'cart.') ? 'active' : '' }}" href="{{ route('cart.index') }}">
+              <i class="fas fa-shopping-cart cart-icon-empty"></i>
+              <span class="cart-icon-full" style="display: none;">
+                <i class="fas fa-exclamation-circle"></i>
+                <i class="fas fa-shopping-cart"></i>
               </span>
+              Keranjang
             </a>
-          </li>
-          @guest
+          </li> @guest
           <li class="nav-item">
             <a class="nav-link btn btn-outline-light ms-2 px-3" href="{{ route('login') }}">
-              <i class="fas fa-sign-in-alt me-1"></i>Login
+              <i class="fas fa-sign-in-alt"></i>Login
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link btn btn-primary ms-2 px-3" href="{{ route('register') }}">
-              <i class="fas fa-user-plus me-1"></i>Daftar
+              <i class="fas fa-user-plus"></i>Daftar
             </a>
           </li>
           @else
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-              <i class="fas fa-user me-1"></i>{{ Auth::user()->name }}
+            <a class="nav-link dropdown-toggle {{ in_array(Route::currentRouteName(), ['profile', 'orders.history']) ? 'active' : '' }}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-user"></i>{{ Auth::user()->name }}
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{{ route('profile') }}">
-                  <i class="fas fa-user-circle me-2"></i>Profil
+              <li><a class="dropdown-item {{ Route::currentRouteName() == 'profile' ? 'active' : '' }}" href="{{ route('profile') }}">
+                  <i class="fas fa-user-circle"></i>Profil
                 </a></li>
-              <li><a class="dropdown-item" href="{{ route('orders.history') }}">
-                  <i class="fas fa-history me-2"></i>Riwayat Pesanan
+              <li><a class="dropdown-item {{ Route::currentRouteName() == 'orders.history' ? 'active' : '' }}" href="{{ route('orders.history') }}">
+                  <i class="fas fa-history"></i>Riwayat Pesanan
                 </a></li>
               <li>
                 <hr class="dropdown-divider">
@@ -196,7 +373,7 @@
                 <form action="{{ route('logout') }}" method="POST" class="d-inline">
                   @csrf
                   <button type="submit" class="dropdown-item">
-                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                    <i class="fas fa-sign-out-alt"></i>Logout
                   </button>
                 </form>
               </li>
@@ -209,7 +386,7 @@
   </nav>
 
   <!-- Main Content -->
-  <main style="margin-top: 76px;">
+  <main>
     @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
       {{ session('success') }}
@@ -261,16 +438,32 @@
 
   <script>
     $(document).ready(function() {
-      // Load cart count on page load
-      function updateCartCount() {
+      // Update cart icon based on cart status
+      function updateCartIcon() {
         $.get('/cart/count', function(response) {
-          $('.cart-count').text(response.count || 0);
+          const cartCount = response.count || 0;
+
+          if (cartCount > 0) {
+            // Show exclamation icon (cart has items)
+            $('.cart-icon-empty').hide();
+            $('.cart-icon-full').show();
+          } else {
+            // Show normal cart icon (cart is empty)
+            $('.cart-icon-empty').show();
+            $('.cart-icon-full').hide();
+          }
         }).fail(function() {
-          $('.cart-count').text('0');
+          // If request fails, show normal cart icon
+          $('.cart-icon-empty').show();
+          $('.cart-icon-full').hide();
         });
       }
 
-      updateCartCount();
+      // Update cart icon on page load
+      updateCartIcon();
+
+      // Update cart icon when items are added/removed (can be called from other pages)
+      window.updateCartIcon = updateCartIcon;
     });
   </script>
 
