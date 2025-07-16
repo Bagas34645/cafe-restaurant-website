@@ -104,11 +104,12 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
     Route::delete('contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
 
     // Order Management
+    Route::get('orders/export/csv', [OrderController::class, 'export'])->name('orders.export');
     Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::patch('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
+    Route::patch('orders/{order}/confirm-payment', [OrderController::class, 'confirmPayment'])->name('orders.confirm-payment');
     Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
-    Route::get('orders/export/csv', [OrderController::class, 'export'])->name('orders.export');
 
     // Content Management
     Route::resource('contents', ContentController::class);

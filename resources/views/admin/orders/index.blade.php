@@ -117,6 +117,16 @@
                   <a href="{{ route('admin.orders.show', $order->id) }}" class="btn btn-outline-primary" title="Detail">
                     <i class="fas fa-eye"></i>
                   </a>
+                  @if($order->status === 'pending' && $order->payment_method === 'midtrans')
+                  <form method="POST" action="{{ route('admin.orders.confirm-payment', $order->id) }}" class="d-inline">
+                    @csrf
+                    @method('PATCH')
+                    <button type="submit" class="btn btn-outline-success" title="Konfirmasi Pembayaran"
+                      onclick="return confirm('Konfirmasi pembayaran untuk pesanan {{ $order->order_number }}?')">
+                      <i class="fas fa-check-circle"></i>
+                    </button>
+                  </form>
+                  @endif
                   <button type="button" class="btn btn-outline-danger delete-btn"
                     data-order-id="{{ $order->id }}"
                     data-order-number="{{ $order->order_number }}" title="Hapus">
@@ -182,9 +192,17 @@
       let orderId = $(this).data('order-id');
       let orderNumber = $(this).data('order-number');
 
+      console.log('Delete button clicked for order:', orderId, orderNumber);
+
       $('#orderNumber').text(orderNumber);
-      $('#deleteForm').attr('action', '/admin/orders/' + orderId);
+      $('#deleteForm').attr('action', '{{ route("admin.orders.destroy", ":id") }}'.replace(':id', orderId));
       $('#deleteModal').modal('show');
+    });
+
+    // Add confirmation on form submit
+    $('#deleteForm').on('submit', function(e) {
+      console.log('Delete form submitted');
+      return true; // Allow form submission
     });
   });
 </script>

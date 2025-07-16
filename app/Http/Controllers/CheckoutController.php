@@ -50,6 +50,7 @@ class CheckoutController extends Controller
         try {
             // Create order
             $order = Order::create([
+                'user_id' => Auth::id(), // Add user_id if user is authenticated
                 'order_number' => Order::generateOrderNumber(),
                 'customer_name' => $request->customer_name,
                 'customer_email' => $request->customer_email,

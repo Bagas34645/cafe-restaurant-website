@@ -374,6 +374,16 @@
               <i class="fas fa-envelope me-2"></i>Contact Messages
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}" href="{{ route('admin.orders.index') }}">
+              <i class="fas fa-shopping-cart me-2"></i>Order Management
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('admin.contents.*') ? 'active' : '' }}" href="{{ route('admin.contents.index') }}">
+              <i class="fas fa-edit me-2"></i>Content Management
+            </a>
+          </li>
           <li class="nav-item mt-4">
             <a class="nav-link" href="{{ route('home') }}" target="_blank">
               <i class="fas fa-external-link-alt me-2"></i>View Website
@@ -435,6 +445,8 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   @stack('scripts')
 </body>
 

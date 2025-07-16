@@ -57,10 +57,22 @@ class OrderController extends Controller
 
     public function destroy($id)
     {
-        $order = Order::findOrFail($id);
-        $order->delete();
+        try {
+            $order = Order::findOrFail($id);
 
-        return back()->with('success', 'Pesanan berhasil dihapus');
+            // Log the deletion attempt
+            \Log::info("Attempting to delete order: {$order->order_number} (ID: {$id})");
+
+            $order->delete();
+
+            \Log::info("Order {$order->order_number} deleted successfully");
+
+            return back()->with('success', 'Pesanan berhasil dihapus');
+        } catch (\Exception $e) {
+            \Log::error("Failed to delete order ID {$id}: " . $e->getMessage());
+
+            return back()->with('error', 'Gagal menghapus pesanan: ' . $e->getMessage());
+        }
     }
 
     public function export(Request $request)
@@ -96,5 +108,28 @@ class OrderController extends Controller
         return response($csv)
             ->header('Content-Type', 'text/csv')
             ->header('Content-Disposition', 'attachment; filename="orders_export_' . date('Y-m-d') . '.csv"');
+    }
+
+    public function confirmPayment(Order $order)
+    {
+        try {
+            if ($order->status === 'paid') {
+                return back()->with('info', 'Pesanan sudah dikonfirmasi pembayarannya sebelumnya');
+            }
+
+            $order->update([
+                'status' => 'paid',
+                'midtrans_status' => 'manual_confirmation',
+                'midtrans_transaction_id' => 'MANUAL_' . time() . '_' . $order->id,
+                'paid_at' => now()
+            ]);
+
+            \Log::info("Payment manually confirmed for order: {$order->order_number}");
+
+            return back()->with('success', 'Pembayaran pesanan berhasil dikonfirmasi');
+        } catch (\Exception $e) {
+            \Log::error("Failed to confirm payment for order {$order->id}: " . $e->getMessage());
+            return back()->with('error', 'Gagal mengkonfirmasi pembayaran: ' . $e->getMessage());
+        }
     }
 }
