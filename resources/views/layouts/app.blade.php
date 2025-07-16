@@ -129,22 +129,34 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('home') }}">Beranda</a>
+            <a class="nav-link" href="{{ route('home') }}">
+              <i class="fas fa-home me-1"></i>Beranda
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('about') }}">Tentang</a>
+            <a class="nav-link" href="{{ route('about') }}">
+              <i class="fas fa-info-circle me-1"></i>Tentang
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('gallery') }}">Galeri</a>
+            <a class="nav-link" href="{{ route('gallery') }}">
+              <i class="fas fa-images me-1"></i>Galeri
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('products') }}">Produk</a>
+            <a class="nav-link" href="{{ route('products') }}">
+              <i class="fas fa-box me-1"></i>Produk
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('reviews') }}">Testimoni</a>
+            <a class="nav-link" href="{{ route('reviews') }}">
+              <i class="fas fa-star me-1"></i>Testimoni
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ route('contact') }}">Kontak</a>
+            <a class="nav-link" href="{{ route('contact') }}">
+              <i class="fas fa-envelope me-1"></i>Kontak
+            </a>
           </li>
           <li class="nav-item">
             <a class="nav-link position-relative" href="{{ route('cart.index') }}">
