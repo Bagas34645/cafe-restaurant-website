@@ -41,13 +41,19 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // Add logging for debugging
+        \Log::info('Product store started', [
+            'has_file' => $request->hasFile('image'),
+            'request_data' => $request->except(['image'])
+        ]);
+
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
             'category' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'is_available' => 'boolean'
+            'is_available' => 'sometimes|boolean'
         ]);
 
         $data = [
@@ -55,11 +61,30 @@ class ProductController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'category' => $request->category,
-            'is_available' => $request->has('is_available')
+            'is_available' => (bool) $request->input('is_available', 0)
         ];
 
         if ($request->hasFile('image')) {
-            $data['image_path'] = $request->file('image')->store('products', 'public');
+            try {
+                // Create products directory if it doesn't exist
+                $productsDir = storage_path('app/public/products');
+                if (!file_exists($productsDir)) {
+                    mkdir($productsDir, 0755, true);
+                    \Log::info('Created products directory', ['path' => $productsDir]);
+                }
+
+                $data['image_path'] = $request->file('image')->store('products', 'public');
+                \Log::info('Image stored successfully', ['path' => $data['image_path']]);
+            } catch (\Exception $e) {
+                \Log::error('Image upload failed during store', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['image' => 'Failed to upload image: ' . $e->getMessage()]);
+            }
         }
 
         Product::create($data);
@@ -88,13 +113,20 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        // Add logging for debugging
+        \Log::info('Product update started', [
+            'product_id' => $product->id,
+            'has_file' => $request->hasFile('image'),
+            'request_data' => $request->except(['image'])
+        ]);
+
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
             'category' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'is_available' => 'boolean'
+            'is_available' => 'sometimes|boolean'
         ]);
 
         $data = [
@@ -102,19 +134,54 @@ class ProductController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'category' => $request->category,
-            'is_available' => $request->has('is_available')
+            'is_available' => (bool) $request->input('is_available', 0)
         ];
 
         if ($request->hasFile('image')) {
-            // Delete old image
-            if ($product->image_path) {
-                Storage::disk('public')->delete($product->image_path);
-            }
+            // Log file details
+            $file = $request->file('image');
+            \Log::info('Image file details', [
+                'original_name' => $file->getClientOriginalName(),
+                'mime_type' => $file->getMimeType(),
+                'size' => $file->getSize(),
+                'is_valid' => $file->isValid(),
+                'error' => $file->getError()
+            ]);
 
-            $data['image_path'] = $request->file('image')->store('products', 'public');
+            try {
+                // Create products directory if it doesn't exist
+                $productsDir = storage_path('app/public/products');
+                if (!file_exists($productsDir)) {
+                    mkdir($productsDir, 0755, true);
+                    \Log::info('Created products directory', ['path' => $productsDir]);
+                }
+
+                // Delete old image
+                if ($product->image_path) {
+                    Storage::disk('public')->delete($product->image_path);
+                    \Log::info('Deleted old image', ['path' => $product->image_path]);
+                }
+
+                // Store new image
+                $imagePath = $request->file('image')->store('products', 'public');
+                $data['image_path'] = $imagePath;
+                
+                \Log::info('New image stored', ['path' => $imagePath]);
+            } catch (\Exception $e) {
+                \Log::error('Image upload failed', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
+                
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['image' => 'Failed to upload image: ' . $e->getMessage()]);
+            }
         }
 
         $product->update($data);
+        
+        \Log::info('Product updated successfully', ['product_id' => $product->id]);
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully!');
     }
