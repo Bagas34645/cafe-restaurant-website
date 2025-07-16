@@ -21,7 +21,10 @@ class CheckoutController extends Controller
 
         $total = $cartItems->sum('subtotal');
 
-        return view('checkout.index', compact('cartItems', 'total'));
+        // Get authenticated user data for auto-fill
+        $user = Auth::user();
+
+        return view('checkout.index', compact('cartItems', 'total', 'user'));
     }
 
     public function store(Request $request)
