@@ -54,7 +54,7 @@
 
             <p class="card-text text-muted flex-grow-1">{{ $product->description }}</p>
 
-            <div class="d-flex justify-content-between align-items-center mt-auto">
+            <div class="d-flex justify-content-between align-items-center mt-auto mb-3">
               <span class="h5 text-primary mb-0">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
               @if($product->is_available)
               <span class="badge bg-success">Available</span>
@@ -62,6 +62,23 @@
               <span class="badge bg-danger">Unavailable</span>
               @endif
             </div>
+
+            @if($product->is_available)
+            <div class="d-flex align-items-center gap-2">
+              <div class="input-group input-group-sm" style="max-width: 120px;">
+                <button class="btn btn-outline-secondary quantity-btn" type="button" data-action="decrease">-</button>
+                <input type="number" class="form-control text-center quantity-input" value="1" min="1" max="99" data-product-id="{{ $product->id }}">
+                <button class="btn btn-outline-secondary quantity-btn" type="button" data-action="increase">+</button>
+              </div>
+              <button class="btn btn-primary flex-fill add-to-cart-btn" data-product-id="{{ $product->id }}">
+                <i class="fas fa-cart-plus"></i> Add to Cart
+              </button>
+            </div>
+            @else
+            <button class="btn btn-secondary w-100" disabled>
+              <i class="fas fa-ban"></i> Out of Stock
+            </button>
+            @endif
           </div>
         </div>
       </div>
@@ -216,4 +233,94 @@
     display: inline-block;
   }
 </style>
+@endpush
+
+@push('scripts')
+<script>
+  $(document).ready(function() {
+    // Quantity controls
+    $('.quantity-btn').click(function() {
+      let button = $(this);
+      let input = button.siblings('.quantity-input');
+      let currentValue = parseInt(input.val());
+      let action = button.data('action');
+
+      let newValue = action === 'increase' ? currentValue + 1 : Math.max(1, currentValue - 1);
+      input.val(newValue);
+    });
+
+    $('.quantity-input').change(function() {
+      let value = Math.max(1, parseInt($(this).val()) || 1);
+      $(this).val(value);
+    });
+
+    // Add to cart
+    $('.add-to-cart-btn').click(function() {
+      let button = $(this);
+      let productId = button.data('product-id');
+      let quantityInput = button.closest('.card-body').find('.quantity-input');
+      let quantity = parseInt(quantityInput.val());
+
+      // Disable button
+      button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Adding...');
+
+      $.ajax({
+        url: '/cart/add',
+        method: 'POST',
+        data: {
+          product_id: productId,
+          quantity: quantity,
+          _token: '{{ csrf_token() }}'
+        },
+        success: function(response) {
+          if (response.success) {
+            // Reset quantity
+            quantityInput.val(1);
+
+            // Update cart count
+            updateCartCount();
+
+            // Show success message
+            showToast('success', response.message);
+
+            // Reset button
+            button.prop('disabled', false).html('<i class="fas fa-cart-plus"></i> Add to Cart');
+          } else {
+            showToast('error', response.message);
+            button.prop('disabled', false).html('<i class="fas fa-cart-plus"></i> Add to Cart');
+          }
+        },
+        error: function() {
+          showToast('error', 'Terjadi kesalahan saat menambahkan produk ke keranjang');
+          button.prop('disabled', false).html('<i class="fas fa-cart-plus"></i> Add to Cart');
+        }
+      });
+    });
+
+    function updateCartCount() {
+      $.get('/cart/count', function(response) {
+        $('.cart-count').text(response.count || 0);
+      });
+    }
+
+    function showToast(type, message) {
+      let alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+      let icon = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+
+      let toast = $('<div class="alert ' + alertClass + ' alert-dismissible fade show position-fixed" style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;">' +
+        '<i class="' + icon + '"></i> ' + message +
+        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+        '</div>');
+
+      $('body').append(toast);
+
+      setTimeout(function() {
+        toast.alert('close');
+      }, 3000);
+    }
+
+    // Load cart count on page load
+    updateCartCount();
+  });
+</script>
 @endpush

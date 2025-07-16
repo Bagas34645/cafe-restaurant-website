@@ -302,6 +302,11 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}" href="{{ route('admin.orders.index') }}">
+            <i class="fas fa-shopping-cart me-2"></i>Order Management
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.contents.*') ? 'active' : '' }}" href="{{ route('admin.contents.index') }}">
             <i class="fas fa-edit me-2"></i>Content Management
           </a>

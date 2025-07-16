@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>@yield('title', 'Rajane Duren')</title>
 
   <!-- Bootstrap CSS -->
@@ -146,8 +147,50 @@
             <a class="nav-link" href="{{ route('contact') }}">Kontak</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn btn-outline-light ms-2 px-3" href="{{ route('admin.login') }}">Admin</a>
+            <a class="nav-link position-relative" href="{{ route('cart.index') }}">
+              <i class="fas fa-shopping-cart"></i> Keranjang
+              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-count">
+                0
+              </span>
+            </a>
           </li>
+          @guest
+          <li class="nav-item">
+            <a class="nav-link btn btn-outline-light ms-2 px-3" href="{{ route('login') }}">
+              <i class="fas fa-sign-in-alt me-1"></i>Login
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn btn-primary ms-2 px-3" href="{{ route('register') }}">
+              <i class="fas fa-user-plus me-1"></i>Daftar
+            </a>
+          </li>
+          @else
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
+              <i class="fas fa-user me-1"></i>{{ Auth::user()->name }}
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="{{ route('profile') }}">
+                  <i class="fas fa-user-circle me-2"></i>Profil
+                </a></li>
+              <li><a class="dropdown-item" href="{{ route('orders.history') }}">
+                  <i class="fas fa-history me-2"></i>Riwayat Pesanan
+                </a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li>
+                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                  @csrf
+                  <button type="submit" class="dropdown-item">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                  </button>
+                </form>
+              </li>
+            </ul>
+          </li>
+          @endguest
         </ul>
       </div>
     </div>
@@ -201,6 +244,24 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+    $(document).ready(function() {
+      // Load cart count on page load
+      function updateCartCount() {
+        $.get('/cart/count', function(response) {
+          $('.cart-count').text(response.count || 0);
+        }).fail(function() {
+          $('.cart-count').text('0');
+        });
+      }
+
+      updateCartCount();
+    });
+  </script>
+
   @stack('scripts')
 </body>
 
