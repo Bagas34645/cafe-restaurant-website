@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class GalleryController extends Controller
 {
@@ -45,7 +46,7 @@ class GalleryController extends Controller
             'kategori' => 'required|string|in:umum,durian,kebun,proses,fasilitas',
             'urutan' => 'nullable|integer|min:0',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'aktif' => 'boolean'
+            'aktif' => 'nullable|boolean'
         ]);
 
         $imagePath = $request->file('image')->store('galleries', 'public');
@@ -56,7 +57,7 @@ class GalleryController extends Controller
             'path_gambar' => $imagePath,
             'kategori' => $request->kategori,
             'urutan' => $request->urutan ?? 0,
-            'aktif' => $request->has('aktif')
+            'aktif' => $request->has('aktif') && $request->aktif
         ]);
 
         return redirect()->route('admin.galleries.index')->with('success', 'Item gallery berhasil dibuat!');
@@ -83,13 +84,19 @@ class GalleryController extends Controller
      */
     public function update(Request $request, Gallery $gallery)
     {
+        Log::info('Gallery update started', [
+            'gallery_id' => $gallery->id,
+            'has_file' => $request->hasFile('image'),
+            'request_data' => $request->except(['image'])
+        ]);
+
         $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
             'kategori' => 'required|string|in:umum,durian,kebun,proses,fasilitas',
             'urutan' => 'nullable|integer|min:0',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'aktif' => 'boolean'
+            'aktif' => 'nullable|boolean'
         ]);
 
         $data = [
@@ -97,21 +104,51 @@ class GalleryController extends Controller
             'deskripsi' => $request->deskripsi,
             'kategori' => $request->kategori,
             'urutan' => $request->urutan ?? 0,
-            'aktif' => $request->has('aktif')
+            'aktif' => $request->has('aktif') && $request->aktif
         ];
 
+        // Handle image upload
         if ($request->hasFile('image')) {
-            // Delete old image
-            if ($gallery->path_gambar) {
+            $file = $request->file('image');
+            Log::info('Image file details', [
+                'original_name' => $file->getClientOriginalName(),
+                'mime_type' => $file->getMimeType(),
+                'size' => $file->getSize(),
+                'is_valid' => $file->isValid(),
+                'error' => $file->getError()
+            ]);
+
+            // Validate image file again
+            if (!$file->isValid()) {
+                Log::error('Invalid image file', ['error' => $file->getError()]);
+                return back()->withErrors(['image' => 'File gambar tidak valid atau rusak. Error: ' . $file->getError()]);
+            }
+
+            // Delete old image if exists
+            if ($gallery->path_gambar && Storage::disk('public')->exists($gallery->path_gambar)) {
+                Log::info('Deleting old image', ['path' => $gallery->path_gambar]);
                 Storage::disk('public')->delete($gallery->path_gambar);
             }
 
-            $data['path_gambar'] = $request->file('image')->store('galleries', 'public');
+            // Store new image
+            try {
+                $imagePath = $file->store('galleries', 'public');
+                Log::info('New image stored', ['path' => $imagePath]);
+                $data['path_gambar'] = $imagePath;
+            } catch (\Exception $e) {
+                Log::error('Failed to store image', ['error' => $e->getMessage()]);
+                return back()->withErrors(['image' => 'Gagal mengupload gambar: ' . $e->getMessage()]);
+            }
         }
 
-        $gallery->update($data);
-
-        return redirect()->route('admin.galleries.index')->with('success', 'Item gallery berhasil diperbarui!');
+        try {
+            $gallery->update($data);
+            Log::info('Gallery updated successfully', ['gallery_id' => $gallery->id]);
+            return redirect()->route('admin.galleries.index')->with('success', 'Item gallery berhasil diperbarui!');
+        } catch (\Exception $e) {
+            Log::error('Failed to update gallery', ['error' => $e->getMessage()]);
+            return back()->withErrors(['error' => 'Gagal memperbarui gallery: ' . $e->getMessage()]);
+        }
     }
 
     /**

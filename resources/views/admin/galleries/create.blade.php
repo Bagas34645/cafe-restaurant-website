@@ -73,7 +73,7 @@
 
           <div class="mb-3">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="aktif" name="aktif"
+              <input class="form-check-input" type="checkbox" id="aktif" name="aktif" value="1"
                 {{ old('aktif', true) ? 'checked' : '' }}>
               <label class="form-check-label" for="aktif">
                 Aktif (Tampilkan di website)

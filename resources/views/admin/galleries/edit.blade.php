@@ -10,6 +10,17 @@
   </a>
 </div>
 
+<!-- Display any errors -->
+@if ($errors->any())
+<div class="alert alert-danger">
+  <ul class="mb-0">
+    @foreach ($errors->all() as $error)
+    <li>{{ $error }}</li>
+    @endforeach
+  </ul>
+</div>
+@endif
+
 <div class="row justify-content-center">
   <div class="col-lg-8">
     <div class="card">
@@ -17,7 +28,7 @@
         <h5 class="mb-0"><i class="fas fa-edit me-2"></i>Edit Gallery Item</h5>
       </div>
       <div class="card-body">
-        <form action="{{ route('admin.galleries.update', $gallery) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.galleries.update', $gallery) }}" method="POST" enctype="multipart/form-data" id="gallery-form">
           @csrf
           @method('PUT')
 
@@ -70,12 +81,17 @@
                 alt="{{ $gallery->judul }}"
                 class="img-thumbnail"
                 style="max-height: 200px;">
+              <div class="form-text text-muted">Current file: {{ $gallery->path_gambar }}</div>
+            </div>
+            @else
+            <div class="mb-2">
+              <div class="alert alert-info">No image uploaded yet</div>
             </div>
             @endif
 
             <label for="image" class="form-label">New Image (Optional)</label>
             <input type="file" class="form-control @error('image') is-invalid @enderror"
-              id="image" name="image" accept="image/*">
+              id="image" name="image" accept="image/jpeg,image/png,image/jpg,image/gif">
             @error('image')
             <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -84,7 +100,7 @@
 
           <div class="mb-3">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="aktif" name="aktif"
+              <input class="form-check-input" type="checkbox" id="aktif" name="aktif" value="1"
                 {{ old('aktif', $gallery->aktif) ? 'checked' : '' }}>
               <label class="form-check-label" for="aktif">
                 Aktif (Tampilkan di website)
@@ -128,6 +144,23 @@
     const previewImage = document.getElementById('image-preview');
 
     if (file) {
+      // Validate file size (2MB = 2048KB)
+      if (file.size > 2048 * 1024) {
+        alert('File terlalu besar! Maksimal ukuran file adalah 2MB.');
+        this.value = '';
+        previewCard.style.display = 'none';
+        return;
+      }
+
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+      if (!allowedTypes.includes(file.type)) {
+        alert('Jenis file tidak didukung! Gunakan format JPEG, PNG, JPG, atau GIF.');
+        this.value = '';
+        previewCard.style.display = 'none';
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = function(e) {
         previewImage.src = e.target.result;
@@ -137,6 +170,46 @@
     } else {
       previewCard.style.display = 'none';
     }
+  });
+
+  // Form submission validation
+  document.getElementById('gallery-form').addEventListener('submit', function(e) {
+    const fileInput = document.getElementById('image');
+    const file = fileInput.files[0];
+    
+    if (file) {
+      console.log('File info:', {
+        name: file.name,
+        size: file.size,
+        type: file.type
+      });
+      
+      // Final validation before submit
+      if (file.size > 2048 * 1024) {
+        e.preventDefault();
+        alert('File terlalu besar! Maksimal ukuran file adalah 2MB.');
+        return false;
+      }
+      
+      const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
+      if (!allowedTypes.includes(file.type)) {
+        e.preventDefault();
+        alert('Jenis file tidak didukung! Gunakan format JPEG, PNG, JPG, atau GIF.');
+        return false;
+      }
+    }
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Updating...';
+    submitBtn.disabled = true;
+    
+    // Re-enable button after 30 seconds as fallback
+    setTimeout(() => {
+      submitBtn.innerHTML = originalText;
+      submitBtn.disabled = false;
+    }, 30000);
   });
 </script>
 @endpush
