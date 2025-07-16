@@ -65,6 +65,7 @@
 
             @if($product->is_available)
             <div class="d-flex align-items-center gap-2">
+              @auth
               <div class="input-group input-group-sm" style="max-width: 120px;">
                 <button class="btn btn-outline-secondary quantity-btn" type="button" data-action="decrease">-</button>
                 <input type="number" class="form-control text-center quantity-input" value="1" min="1" max="99" data-product-id="{{ $product->id }}">
@@ -73,6 +74,11 @@
               <button class="btn btn-primary flex-fill add-to-cart-btn" data-product-id="{{ $product->id }}">
                 <i class="fas fa-cart-plus"></i> Add to Cart
               </button>
+              @else
+              <button class="btn btn-warning w-100 login-required-btn" data-bs-toggle="modal" data-bs-target="#loginModal">
+                <i class="fas fa-sign-in-alt"></i> Login untuk Menambah ke Keranjang
+              </button>
+              @endauth
             </div>
             @else
             <button class="btn btn-secondary w-100" disabled>
@@ -100,6 +106,31 @@
     @endif
   </div>
 </section>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Login Diperlukan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <i class="fas fa-shopping-cart fa-3x text-primary mb-3"></i>
+        <h5>Silakan Login Terlebih Dahulu</h5>
+        <p class="text-muted">Untuk menambahkan produk ke keranjang, Anda harus login terlebih dahulu.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="{{ route('login') }}" class="btn btn-primary">
+          <i class="fas fa-sign-in-alt"></i> Login Sekarang
+        </a>
+        <a href="{{ route('register') }}" class="btn btn-outline-primary">
+          <i class="fas fa-user-plus"></i> Daftar Akun Baru
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Call to Action -->
 <section class="py-5 bg-primary text-white">
@@ -290,12 +321,31 @@
             button.prop('disabled', false).html('<i class="fas fa-cart-plus"></i> Add to Cart');
           }
         },
-        error: function() {
-          showToast('error', 'Terjadi kesalahan saat menambahkan produk ke keranjang');
+        error: function(xhr) {
+          let response = xhr.responseJSON;
+
+          if (xhr.status === 401 && response && response.redirect) {
+            // User not authenticated, redirect to login
+            showLoginModal(response.message);
+          } else {
+            showToast('error', response?.message || 'Terjadi kesalahan saat menambahkan produk ke keranjang');
+          }
+
           button.prop('disabled', false).html('<i class="fas fa-cart-plus"></i> Add to Cart');
         }
       });
     });
+
+    function showLoginModal(message) {
+      // Update modal message if provided
+      if (message) {
+        $('#loginModal .modal-body p').text(message);
+      }
+
+      // Show modal
+      const modal = new bootstrap.Modal(document.getElementById('loginModal'));
+      modal.show();
+    }
 
     function updateCartCount() {
       $.get('/cart/count', function(response) {

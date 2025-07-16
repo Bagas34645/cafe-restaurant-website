@@ -8,7 +8,23 @@
     <div class="col-md-12">
       <h2 class="mb-4"><i class="fas fa-shopping-cart"></i> Keranjang Belanja</h2>
 
-      @if($cartItems->isEmpty())
+      @if(isset($requireLogin) && $requireLogin)
+      <div class="card">
+        <div class="card-body text-center py-5">
+          <i class="fas fa-lock fa-3x text-warning mb-3"></i>
+          <h4>Login Diperlukan</h4>
+          <p class="text-muted">Silakan login terlebih dahulu untuk melihat keranjang belanja Anda.</p>
+          <div class="d-flex gap-3 justify-content-center">
+            <a href="{{ route('login') }}" class="btn btn-primary">
+              <i class="fas fa-sign-in-alt"></i> Login
+            </a>
+            <a href="{{ route('register') }}" class="btn btn-outline-primary">
+              <i class="fas fa-user-plus"></i> Daftar
+            </a>
+          </div>
+        </div>
+      </div>
+      @elseif($cartItems->isEmpty())
       <div class="card">
         <div class="card-body text-center py-5">
           <i class="fas fa-shopping-cart fa-3x text-muted mb-3"></i>

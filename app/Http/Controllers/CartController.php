@@ -14,11 +14,29 @@ class CartController extends Controller
         $cartItems = $this->getCartItems();
         $total = $cartItems->sum('subtotal');
 
+        // Show login prompt for guest users
+        if (!Auth::check()) {
+            return view('cart.index', [
+                'cartItems' => collect(),
+                'total' => 0,
+                'requireLogin' => true
+            ]);
+        }
+
         return view('cart.index', compact('cartItems', 'total'));
     }
 
     public function add(Request $request)
     {
+        // Check if user is authenticated
+        if (!Auth::check()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Silakan login terlebih dahulu untuk menambahkan produk ke keranjang',
+                'redirect' => route('login')
+            ], 401);
+        }
+
         $request->validate([
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1'
@@ -33,18 +51,11 @@ class CartController extends Controller
             ]);
         }
 
-        $sessionId = session()->getId();
         $userId = Auth::id();
 
         // Check if item already exists in cart
         $existingItem = Cart::where('product_id', $request->product_id)
-            ->where(function ($query) use ($sessionId, $userId) {
-                if ($userId) {
-                    $query->where('user_id', $userId);
-                } else {
-                    $query->where('session_id', $sessionId);
-                }
-            })
+            ->where('user_id', $userId)
             ->first();
 
         if ($existingItem) {
@@ -53,7 +64,7 @@ class CartController extends Controller
             ]);
         } else {
             Cart::create([
-                'session_id' => $userId ? null : $sessionId,
+                'session_id' => null, // Always null for authenticated users
                 'user_id' => $userId,
                 'product_id' => $request->product_id,
                 'quantity' => $request->quantity,
@@ -72,11 +83,21 @@ class CartController extends Controller
 
     public function update(Request $request, $id)
     {
+        if (!Auth::check()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Silakan login terlebih dahulu'
+            ], 401);
+        }
+
         $request->validate([
             'quantity' => 'required|integer|min:1'
         ]);
 
-        $cartItem = Cart::findOrFail($id);
+        $cartItem = Cart::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
         $cartItem->update(['quantity' => $request->quantity]);
 
         return response()->json([
@@ -89,7 +110,17 @@ class CartController extends Controller
 
     public function remove($id)
     {
-        $cartItem = Cart::findOrFail($id);
+        if (!Auth::check()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Silakan login terlebih dahulu'
+            ], 401);
+        }
+
+        $cartItem = Cart::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
         $cartItem->delete();
 
         return response()->json([
@@ -101,16 +132,14 @@ class CartController extends Controller
 
     public function clear()
     {
-        $sessionId = session()->getId();
-        $userId = Auth::id();
+        if (!Auth::check()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Silakan login terlebih dahulu'
+            ], 401);
+        }
 
-        Cart::where(function ($query) use ($sessionId, $userId) {
-            if ($userId) {
-                $query->where('user_id', $userId);
-            } else {
-                $query->where('session_id', $sessionId);
-            }
-        })->delete();
+        Cart::where('user_id', Auth::id())->delete();
 
         return response()->json([
             'success' => true,
@@ -127,31 +156,22 @@ class CartController extends Controller
 
     private function getCartItems()
     {
-        $sessionId = session()->getId();
-        $userId = Auth::id();
+        if (!Auth::check()) {
+            return collect(); // Return empty collection for guest users
+        }
 
         return Cart::with('product')
-            ->where(function ($query) use ($sessionId, $userId) {
-                if ($userId) {
-                    $query->where('user_id', $userId);
-                } else {
-                    $query->where('session_id', $sessionId);
-                }
-            })
+            ->where('user_id', Auth::id())
             ->get();
     }
 
     private function getCartCount()
     {
-        $sessionId = session()->getId();
-        $userId = Auth::id();
+        if (!Auth::check()) {
+            return 0; // Return 0 for guest users
+        }
 
-        return Cart::where(function ($query) use ($sessionId, $userId) {
-            if ($userId) {
-                $query->where('user_id', $userId);
-            } else {
-                $query->where('session_id', $sessionId);
-            }
-        })->sum('quantity');
+        return Cart::where('user_id', Auth::id())
+            ->sum('quantity');
     }
 }

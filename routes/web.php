@@ -29,11 +29,15 @@ Route::post('/contact', [ContactController::class, 'store'])->name('contact.stor
 // Cart Routes
 Route::prefix('cart')->name('cart.')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('index');
-    Route::post('/add', [CartController::class, 'add'])->name('add');
-    Route::patch('/{id}', [CartController::class, 'update'])->name('update');
-    Route::delete('/{id}', [CartController::class, 'remove'])->name('remove');
-    Route::delete('/', [CartController::class, 'clear'])->name('clear');
     Route::get('/count', [CartController::class, 'count'])->name('count');
+
+    // Protected cart actions (require customer login)
+    Route::middleware('customer')->group(function () {
+        Route::post('/add', [CartController::class, 'add'])->name('add');
+        Route::patch('/{id}', [CartController::class, 'update'])->name('update');
+        Route::delete('/{id}', [CartController::class, 'remove'])->name('remove');
+        Route::delete('/', [CartController::class, 'clear'])->name('clear');
+    });
 });
 
 // Checkout Routes
