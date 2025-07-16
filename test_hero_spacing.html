@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Navbar Spacing - Hero Section</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Test the navbar spacing implementation for hero section */
+    .navbar {
+      background-color: #1C5B40 !important;
+    }
+
+    main {
+      padding-top: 80px;
+    }
+
+    /* For hero sections - remove main padding and add to hero */
+    main:has(.hero-section) {
+      padding-top: 0;
+    }
+
+    .hero-section {
+      background: #1c5b40;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      color: #FFFFFF;
+      padding-top: 80px;
+      /* Account for fixed navbar */
+    }
+
+    .content-section {
+      background: #f8f9fa;
+      padding: 40px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-fluid px-3">
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-leaf me-2"></i>
+        Sentra Durian Tegal
+      </a>
+      <div class="navbar-nav">
+        <a class="nav-link" href="#">Home</a>
+        <a class="nav-link" href="#">About</a>
+        <a class="nav-link" href="#">Products</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content with Hero Section -->
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-8">
+            <h1 class="display-4 fw-bold mb-4">Selamat Datang</h1>
+            <p class="lead mb-4">Hero section dengan proper spacing dari navbar fixed-top.</p>
+            <div class="d-flex gap-3">
+              <a href="#" class="btn btn-primary btn-lg">Lihat Produk</a>
+              <a href="#" class="btn btn-outline-light btn-lg">Hubungi Kami</a>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div
+              style="background: rgba(255,255,255,0.1); height: 300px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+              <span>Hero Image</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Additional Content -->
+    <div class="container">
+      <div class="content-section">
+        <h2>Content After Hero</h2>
+        <p>This content follows the hero section and should flow naturally.</p>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

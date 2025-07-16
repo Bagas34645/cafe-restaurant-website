@@ -1,0 +1,325 @@
+/* Nature & Eco-Friendly Theme CSS */
+:root {
+  --eco-background: #FFFFFF;
+  /* White - Background utama */
+  --eco-background-light: #DFF5EA;
+  /* Light Green - Background ringan, kartu */
+  --eco-primary: #2FA365;
+  /* Primary Green - Warna utama: tombol, link, ikon utama */
+  --eco-secondary: #1C5B40;
+  /* Dark Green - Hover state, footer, aksen gelap */
+  --eco-accent: #A3E0E0;
+  /* Accent Aqua - Badge, notif, elemen UI kecil */
+  --eco-text: #2C2C2C;
+  /* Dark Gray/Black - Teks utama atau judul */
+  --eco-text-secondary: #9FA8A3;
+  /* Neutral Gray - Label, border, teks sekunder */
+  --eco-white: #FFFFFF;
+  /* White - Background utama, konten utama */
+}
+
+/* Global Styles */
+body {
+  background-color: var(--eco-background);
+  color: var(--eco-text);
+}
+
+/* Bootstrap Color Overrides */
+.text-primary {
+  color: var(--eco-primary) !important;
+}
+
+.bg-primary {
+  background-color: var(--eco-primary) !important;
+}
+
+.bg-secondary {
+  background-color: var(--eco-secondary) !important;
+}
+
+.bg-light {
+  background-color: var(--eco-background-light) !important;
+}
+
+.btn-primary {
+  background-color: var(--eco-primary);
+  border-color: var(--eco-primary);
+  color: var(--eco-white);
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: var(--eco-secondary);
+  border-color: var(--eco-secondary);
+  color: var(--eco-white);
+}
+
+.btn-outline-light {
+  border-color: var(--eco-white);
+  color: var(--eco-white);
+}
+
+.btn-outline-light:hover,
+.btn-outline-light:focus,
+.btn-outline-light:active {
+  background-color: var(--eco-white);
+  border-color: var(--eco-white);
+  color: var(--eco-secondary);
+}
+
+/* Card Styles */
+.card {
+  background-color: var(--eco-background-light);
+  border: 1px solid var(--eco-text-secondary);
+  box-shadow: 0 4px 6px rgba(47, 163, 101, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(47, 163, 101, 0.15);
+}
+
+/* Alert Styles */
+.alert-success {
+  background-color: var(--eco-background-light);
+  border-color: var(--eco-primary);
+  color: var(--eco-secondary);
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+/* Navigation Enhancements */
+.navbar-dark {
+  background-color: var(--eco-secondary) !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+  color: var(--eco-background-light) !important;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+  color: var(--eco-primary) !important;
+  background-color: rgba(223, 245, 234, 0.1);
+  border-radius: 8px;
+}
+
+/* Footer Enhancements */
+.footer {
+  background: linear-gradient(135deg, var(--eco-secondary) 0%, var(--eco-primary) 100%);
+  color: var(--eco-white);
+}
+
+/* Hero Section Enhancement */
+.hero-section {
+  background: url('/storage/hero-durian.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  color: var(--eco-white);
+}
+
+/* Hero section text readability */
+.hero-section h1,
+.hero-section .display-4 {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hero-section p,
+.hero-section .lead {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* Badge Styles */
+.badge.bg-secondary {
+  background-color: var(--eco-secondary) !important;
+}
+
+.badge.bg-primary {
+  background-color: var(--eco-primary) !important;
+}
+
+.badge.bg-info {
+  background-color: var(--eco-accent) !important;
+  color: var(--eco-text) !important;
+}
+
+/* Form Styles */
+.form-control:focus {
+  border-color: var(--eco-primary);
+  box-shadow: 0 0 0 0.2rem rgba(47, 163, 101, 0.25);
+}
+
+.form-select:focus {
+  border-color: var(--eco-primary);
+  box-shadow: 0 0 0 0.2rem rgba(47, 163, 101, 0.25);
+}
+
+/* Star Rating */
+.star-rating {
+  color: #ffc107;
+}
+
+/* Pagination Eco-friendly enhancement */
+.pagination .page-link {
+  color: var(--eco-primary);
+  background-color: var(--eco-white);
+  border-color: var(--eco-text-secondary);
+}
+
+.pagination .page-link:hover {
+  color: var(--eco-secondary);
+  background-color: var(--eco-background-light);
+  border-color: var(--eco-primary);
+}
+
+.pagination .page-item.active .page-link {
+  color: var(--eco-white);
+  background-color: var(--eco-primary);
+  border-color: var(--eco-primary);
+}
+
+/* Call to Action Section */
+.bg-primary.text-white {
+  background: linear-gradient(135deg, var(--eco-primary) 0%, var(--eco-secondary) 100%) !important;
+}
+
+/* Table Styles */
+.table-striped>tbody>tr:nth-of-type(odd)>td,
+.table-striped>tbody>tr:nth-of-type(odd)>th {
+  background-color: rgba(223, 245, 234, 0.3);
+}
+
+/* Text Muted Override */
+.text-muted {
+  color: var(--eco-text-secondary) !important;
+}
+
+/* Secondary Text Color */
+.text-secondary {
+  color: var(--eco-text-secondary) !important;
+}
+
+/* Button Styles */
+.btn-success {
+  background-color: var(--eco-primary);
+  border-color: var(--eco-primary);
+}
+
+.btn-success:hover {
+  background-color: var(--eco-secondary);
+  border-color: var(--eco-secondary);
+}
+
+.btn-outline-primary {
+  border-color: var(--eco-primary);
+  color: var(--eco-primary);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--eco-primary);
+  border-color: var(--eco-primary);
+  color: var(--eco-white);
+}
+
+.btn-outline-secondary {
+  border-color: var(--eco-text-secondary);
+  color: var(--eco-text-secondary);
+}
+
+.btn-outline-secondary:hover {
+  background-color: var(--eco-text-secondary);
+  border-color: var(--eco-text-secondary);
+  color: var(--eco-white);
+}
+
+/* Eco-friendly accents */
+.eco-leaf-accent::before {
+  content: "🌱";
+  margin-right: 8px;
+}
+
+.eco-tree-accent::before {
+  content: "🌳";
+  margin-right: 8px;
+}
+
+/* Additional nature-inspired animations */
+@keyframes gentle-sway {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(1deg);
+  }
+
+  75% {
+    transform: rotate(-1deg);
+  }
+}
+
+.eco-sway {
+  animation: gentle-sway 3s ease-in-out infinite;
+}
+
+/* Border Colors */
+.border-primary {
+  border-color: var(--eco-primary) !important;
+}
+
+.border-secondary {
+  border-color: var(--eco-secondary) !important;
+}
+
+/* Background Variants */
+.bg-light-green {
+  background-color: var(--eco-background-light) !important;
+}
+
+.bg-accent {
+  background-color: var(--eco-accent) !important;
+  color: var(--eco-text) !important;
+}
+
+/* Text Colors */
+.text-primary-green {
+  color: var(--eco-primary) !important;
+}
+
+.text-secondary-green {
+  color: var(--eco-secondary) !important;
+}
+
+/* Link Colors */
+a {
+  color: var(--eco-primary);
+}
+
+a:hover {
+  color: var(--eco-secondary);
+}
+
+/* Responsive eco-friendly spacing */
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 80vh;
+    text-align: center;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+}

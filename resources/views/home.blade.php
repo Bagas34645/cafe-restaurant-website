@@ -2,11 +2,24 @@
 
 @section('title', 'Beranda - Rajane Duren')
 
+@push('styles')
+<style>
+  body {
+    /* Override main padding for hero section */
+  }
+
+  .hero-section {
+    padding-top: 80px;
+    /* Add navbar height to hero section padding */
+  }
+</style>
+@endpush
+
 @section('content')
 <!-- Hero Section -->
 <section class="hero-section">
   <div class="container">
-    <div class="row">
+    <div class="row align-items-center">
       <div class="col-lg-8">
         <h1 class="display-4 fw-bold mb-4">{{ cms_content('home_hero_title', 'Selamat Datang') }}</h1>
         <p class="lead mb-4">{{ cms_content('home_hero_subtitle', 'Sentra Durian Tegal adalah pusat informasi dan distribusi durian unggulan langsung dari kebun terbaik di Tegal. Kami berkomitmen menyediakan durian berkualitas tinggi untuk konsumsi pribadi maupun kebutuhan bisnis Anda.') }}</p>
@@ -14,6 +27,30 @@
           <a href="{{ route('products') }}" class="btn btn-primary btn-lg">Lihat Produk</a>
           <a href="{{ route('contact') }}" class="btn btn-outline-light btn-lg">Hubungi Kami</a>
         </div>
+      </div>
+      <div class="col-lg-4">
+        @php
+        $heroImage = \App\Models\Content::where('key', 'home_hero_image')->where('is_active', true)->first();
+        @endphp
+        @if($heroImage && $heroImage->image_path)
+        <div class="text-center">
+          <img src="{{ asset('storage/' . $heroImage->image_path) }}"
+            alt="{{ $heroImage->title ?? 'Hero Image' }}"
+            class="img-fluid rounded shadow-lg hero-image"
+            style="max-height: 400px; width: auto;">
+        </div>
+        @else
+        <div class="text-center">
+          <div class="placeholder-image d-flex align-items-center justify-content-center"
+            style="height: 300px;">
+            <div class="text-white-50 text-center">
+              <i class="fas fa-image fa-3x mb-3"></i>
+              <p class="mb-1 fw-bold">Gambar Hero</p>
+              <small>Upload melalui Admin → Konten</small>
+            </div>
+          </div>
+        </div>
+        @endif
       </div>
     </div>
   </div>

@@ -9,7 +9,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
     body {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #2FA365 0%, #1C5B40 100%);
       height: 100vh;
       display: flex;
       align-items: center;
@@ -66,7 +66,7 @@
     }
 
     .btn-login {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #2FA365 0%, #1C5B40 100%);
       border: none;
       border-radius: 10px;
       padding: 12px;
@@ -78,7 +78,7 @@
 
     .btn-login:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+      box-shadow: 0 10px 25px rgba(47, 163, 101, 0.3);
     }
 
     .alert {
@@ -92,23 +92,23 @@
     }
 
     .back-to-home a {
-      color: #667eea;
+      color: #2FA365;
       text-decoration: none;
       font-weight: 500;
       transition: color 0.3s ease;
     }
 
     .back-to-home a:hover {
-      color: #764ba2;
+      color: #1C5B40;
     }
 
     .form-check-input:checked {
-      background-color: #667eea;
-      border-color: #667eea;
+      background-color: #2FA365;
+      border-color: #2FA365;
     }
 
     .form-check-input:focus {
-      box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+      box-shadow: 0 0 0 0.2rem rgba(47, 163, 101, 0.25);
     }
   </style>
 </head>
