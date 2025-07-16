@@ -89,7 +89,7 @@
       <!-- Contact Information -->
       <div class="col-lg-4">
         <div class="card">
-          <div class="card-header bg-dark text-white">
+          <div class="card-header bg-primary text-white">
             <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Informasi Kontak</h5>
           </div>
           <div class="card-body">
@@ -109,30 +109,14 @@
             </div>
 
             <div class="mb-4">
+              <h6><i class="fab fa-instagram text-primary me-2"></i>Instagram</h6>
+              <p class="text-muted">instagram.com/rajaneduren_/</p>
+            </div>
+
+            <div class="mb-4">
               <h6><i class="fas fa-clock text-primary me-2"></i>Jam Buka</h6>
               <p class="text-muted mb-1"><strong>Setiap Hari:</strong><br>08:00 - 22:00 WIB</p>
             </div>
-          </div>
-        </div>
-
-        <!-- Social Media -->
-        <div class="card mt-4">
-          <div class="card-header bg-secondary text-white">
-            <h5 class="mb-0"><i class="fas fa-share-alt me-2"></i>Follow</h5>
-          </div>
-          <div class="card-body text-center">
-            <a href="#" class="btn btn-outline-primary me-2 mb-2">
-              <i class="fab fa-facebook-f"></i> Facebook
-            </a>
-            <a href="#" class="btn btn-outline-info me-2 mb-2">
-              <i class="fab fa-twitter"></i> Twitter
-            </a>
-            <a href="#" class="btn btn-outline-danger me-2 mb-2">
-              <i class="fab fa-instagram"></i> Instagram
-            </a>
-            <a href="#" class="btn btn-outline-dark mb-2">
-              <i class="fab fa-tiktok"></i> TikTok
-            </a>
           </div>
         </div>
       </div>
@@ -146,6 +130,11 @@
     <div class="text-center mb-5">
       <h2 class="display-5 fw-bold">Lokasi Kami</h2>
       <p class="lead text-muted">Temukan lokasi kami dan rasakan langsung kelezatan durian</p>
+      <a href="https://maps.google.com/?q=Sentra+Durian+Tegal,+Kalikangkung+Kulon,+Kalikangkung,+Pangkah,+Kabupaten+Tegal,+Jawa+Tengah+52471"
+        target="_blank"
+        class="btn btn-primary btn-lg">
+        <i class="fas fa-map-marker-alt me-2"></i>Buka di Google Maps
+      </a>
     </div>
 
     <div class="row justify-content-center">

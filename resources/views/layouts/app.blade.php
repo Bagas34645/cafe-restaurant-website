@@ -723,6 +723,7 @@
           <p><i class="fas fa-map-marker-alt me-2"></i>Kalikangkung Kulon, Kalikangkung, Pangkah, Kabupaten Tegal, Jawa Tengah 52471</p>
           <p><i class="fas fa-phone me-2"></i>+62 812-3456-7890</p>
           <p><i class="fas fa-envelope me-2"></i>javatani00@gmail.com</p>
+          <p><i class="fab fa-instagram me-2"></i>instagram.com/rajaneduren_/</p>
         </div>
         <div class="col-md-4">
           <h5>Jam Buka</h5>

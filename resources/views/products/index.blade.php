@@ -9,6 +9,39 @@
     <div class="text-center">
       <h1 class="display-4 fw-bold">Produk Kami</h1>
       <p class="lead text-muted">Produk durian dan bibit berkualitas premium langsung dari Tegal</p>
+
+      <!-- Search Box -->
+      <div class="row justify-content-center mt-4">
+        <div class="col-md-6">
+          <form method="GET" action="{{ route('products') }}" class="search-form">
+            <div class="input-group">
+              <input type="text"
+                class="form-control form-control-lg"
+                name="search"
+                placeholder="Cari produk durian..."
+                value="{{ request('search') }}"
+                id="searchInput">
+              <button class="btn btn-primary" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+            @if(request('category'))
+            <input type="hidden" name="category" value="{{ request('category') }}">
+            @endif
+          </form>
+
+          @if(request('search'))
+          <div class="mt-2">
+            <small class="text-muted">
+              Hasil pencarian untuk: "<strong>{{ request('search') }}</strong>"
+              <a href="{{ route('products') }}" class="btn btn-sm btn-outline-secondary ms-2">
+                <i class="fas fa-times"></i> Hapus Filter
+              </a>
+            </small>
+          </div>
+          @endif
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -20,15 +53,42 @@
     @if($categories->count() > 0)
     <div class="text-center mb-5">
       <div class="btn-group" role="group">
-        <button type="button" class="btn btn-outline-primary active" data-filter="all">All Items</button>
+        <a href="{{ route('products', array_merge(request()->query(), ['category' => 'all'])) }}"
+          class="btn btn-outline-primary {{ !request('category') || request('category') === 'all' ? 'active' : '' }}">
+          All Items
+        </a>
         @foreach($categories as $category)
-        <button type="button" class="btn btn-outline-primary" data-filter="{{ Str::slug($category) }}">{{ $category }}</button>
+        <a href="{{ route('products', array_merge(request()->query(), ['category' => $category])) }}"
+          class="btn btn-outline-primary {{ request('category') === $category ? 'active' : '' }}">
+          {{ $category }}
+        </a>
         @endforeach
       </div>
     </div>
     @endif
 
     @if($products->count() > 0)
+
+    <!-- Search Results Info -->
+    @if(request('search') || request('category'))
+    <div class="row justify-content-center mb-4">
+      <div class="col-md-8">
+        <div class="alert alert-info d-flex align-items-center">
+          <i class="fas fa-info-circle me-2"></i>
+          <div>
+            Menampilkan {{ $products->count() }} dari {{ $products->total() }} produk
+            @if(request('search'))
+            untuk pencarian "<strong>{{ request('search') }}</strong>"
+            @endif
+            @if(request('category') && request('category') !== 'all')
+            dalam kategori "<strong>{{ request('category') }}</strong>"
+            @endif
+          </div>
+        </div>
+      </div>
+    </div>
+    @endif
+
     <div class="row" id="products-grid">
       @foreach($products as $product)
       <div class="col-lg-4 col-md-6 mb-4 product-item" data-category="{{ $product->category ? Str::slug($product->category) : 'uncategorized' }}">
@@ -99,9 +159,17 @@
     </div>
     @else
     <div class="text-center py-5">
-      <i class="fas fa-utensils fa-5x text-muted mb-4"></i>
+      <i class="fas fa-search fa-5x text-muted mb-4"></i>
+      @if(request('search'))
+      <h3 class="text-muted">Tidak ada produk yang ditemukan</h3>
+      <p class="text-muted">Tidak ada produk yang cocok dengan pencarian "{{ request('search') }}"</p>
+      <a href="{{ route('products') }}" class="btn btn-primary">
+        <i class="fas fa-arrow-left"></i> Kembali ke Semua Produk
+      </a>
+      @else
       <h3 class="text-muted">No menu items found</h3>
       <p class="text-muted">Our menu is being updated. Please check back later!</p>
+      @endif
     </div>
     @endif
   </div>
@@ -144,35 +212,100 @@
 
 @push('scripts')
 <script>
-  // Category filtering
+  // Real-time search (optional)
   document.addEventListener('DOMContentLoaded', function() {
-    const filterButtons = document.querySelectorAll('[data-filter]');
-    const productItems = document.querySelectorAll('.product-item');
+    const searchInput = document.getElementById('searchInput');
+    let searchTimeout;
 
-    filterButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        // Remove active class from all buttons
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        // Add active class to clicked button
-        this.classList.add('active');
+    // Optional: Add search suggestions or instant search
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        clearTimeout(searchTimeout);
+        const query = this.value.trim();
 
-        const filterValue = this.getAttribute('data-filter');
-
-        productItems.forEach(item => {
-          if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-            item.style.display = 'block';
-          } else {
-            item.style.display = 'none';
-          }
-        });
+        if (query.length >= 3) {
+          searchTimeout = setTimeout(() => {
+            // You can implement live search here if needed
+            // For now, we'll keep it simple with form submission
+          }, 500);
+        }
       });
-    });
+    }
   });
 </script>
 @endpush
 
 @push('styles')
 <style>
+  /* Search Box Styles */
+  .search-form .input-group {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 50px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .search-form .input-group:focus-within {
+    box-shadow: 0 6px 20px rgba(47, 163, 101, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .search-form .form-control {
+    border: none;
+    padding: 1rem 1.5rem;
+    font-size: 1.1rem;
+    background: white;
+  }
+
+  .search-form .form-control:focus {
+    box-shadow: none;
+    border: none;
+  }
+
+  .search-form .btn {
+    border: none;
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, #2FA365, #1C5B40);
+    border-radius: 0;
+    color: white;
+  }
+
+  .search-form .btn:hover {
+    background: linear-gradient(135deg, #1C5B40, #155040);
+    transform: none;
+    color: white;
+  }
+
+  .search-form .input-group .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .search-form .input-group .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  /* Category Filter Enhancement */
+  .btn-group .btn-outline-primary {
+    transition: all 0.3s ease;
+    margin: 0 2px;
+    border-radius: 25px !important;
+  }
+
+  .btn-group .btn-outline-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(47, 163, 101, 0.3);
+  }
+
+  .btn-group .btn-outline-primary.active {
+    background-color: #2FA365;
+    border-color: #2FA365;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(47, 163, 101, 0.4);
+  }
+
   /* Enhanced Pagination Styles */
   .pagination-wrapper {
     width: 100%;
@@ -202,28 +335,28 @@
 
   .pagination-navigation .page-link:hover {
     z-index: 2;
-    color: #e74c3c;
+    color: #2FA365;
     background-color: #f8f9fa;
-    border-color: #e74c3c;
+    border-color: #2FA365;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.2);
+    box-shadow: 0 4px 8px rgba(47, 163, 101, 0.2);
   }
 
   .pagination-navigation .page-link:focus {
     z-index: 3;
-    color: #e74c3c;
+    color: #2FA365;
     background-color: #f8f9fa;
-    border-color: #e74c3c;
+    border-color: #2FA365;
     outline: 0;
-    box-shadow: 0 0 0 0.25rem rgba(231, 76, 60, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(47, 163, 101, 0.25);
   }
 
   .pagination-navigation .page-item.active .page-link {
     z-index: 3;
-    color: #fff;
-    background-color: #e74c3c;
-    border-color: #e74c3c;
-    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+    color: white;
+    background-color: #2FA365;
+    border-color: #2FA365;
+    box-shadow: 0 4px 12px rgba(47, 163, 101, 0.4);
     transform: translateY(-1px);
   }
 
@@ -245,6 +378,21 @@
 
   /* Mobile responsive adjustments */
   @media (max-width: 576px) {
+    .search-form .form-control {
+      font-size: 1rem;
+      padding: 0.875rem 1.25rem;
+    }
+
+    .search-form .btn {
+      padding: 0.875rem 1.25rem;
+    }
+
+    .btn-group .btn-outline-primary {
+      font-size: 0.875rem;
+      padding: 0.5rem 1rem;
+      margin: 2px;
+    }
+
     .pagination-navigation .page-link {
       padding: 0.5rem 0.75rem;
       font-size: 0.875rem;

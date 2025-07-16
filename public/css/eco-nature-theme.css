@@ -45,6 +45,7 @@ body {
   background-color: var(--eco-primary);
   border-color: var(--eco-primary);
   color: var(--eco-white);
+  font-weight: 600;
 }
 
 .btn-primary:hover,
