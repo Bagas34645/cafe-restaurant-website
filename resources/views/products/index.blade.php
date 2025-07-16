@@ -94,13 +94,35 @@
       <div class="col-lg-4 col-md-6 mb-4 product-item" data-category="{{ $product->category ? Str::slug($product->category) : 'uncategorized' }}">
         <div class="card h-100">
           @if($product->image_path)
-          <img src="{{ asset('storage/' . $product->image_path) }}"
-            class="card-img-top"
-            alt="{{ $product->name }}"
-            style="height: 250px; object-fit: cover;">
+          <div class="position-relative">
+            <img src="{{ asset('storage/' . $product->image_path) }}"
+              class="card-img-top"
+              alt="{{ $product->name }}"
+              style="height: 250px; object-fit: cover;">
+            @if($product->hasDiscount())
+            <span class="position-absolute top-0 end-0 badge bg-danger m-2">
+              {{ $product->discount_percentage }}% OFF
+            </span>
+            @endif
+            @if($product->is_featured)
+            <span class="position-absolute top-0 start-0 badge bg-warning text-dark m-2">
+              Featured
+            </span>
+            @endif
+          </div>
           @else
-          <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
+          <div class="card-img-top bg-light d-flex align-items-center justify-content-center position-relative" style="height: 250px;">
             <i class="fas fa-utensils fa-3x text-muted"></i>
+            @if($product->hasDiscount())
+            <span class="position-absolute top-0 end-0 badge bg-danger m-2">
+              {{ $product->discount_percentage }}% OFF
+            </span>
+            @endif
+            @if($product->is_featured)
+            <span class="position-absolute top-0 start-0 badge bg-warning text-dark m-2">
+              Featured
+            </span>
+            @endif
           </div>
           @endif
 
@@ -115,35 +137,64 @@
             <p class="card-text text-muted flex-grow-1">{{ $product->description }}</p>
 
             <div class="d-flex justify-content-between align-items-center mt-auto mb-3">
-              <span class="h5 text-primary mb-0">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
-              @if($product->is_available)
-              <span class="badge bg-success">Available</span>
-              @else
-              <span class="badge bg-danger">Unavailable</span>
-              @endif
+              <div class="price-section">
+                @if($product->hasDiscount())
+                <small class="text-decoration-line-through text-muted d-block">
+                  Rp{{ number_format($product->price, 0, ',', '.') }}
+                </small>
+                <span class="h5 text-success mb-0">Rp{{ number_format($product->final_price, 0, ',', '.') }}</span>
+                @else
+                <span class="h5 text-success mb-0">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
+                @endif
+              </div>
+              <div class="d-flex flex-column align-items-end">
+                @if($product->is_available)
+                <span class="badge bg-success mb-1">Available</span>
+                @else
+                <span class="badge bg-danger mb-1">Unavailable</span>
+                @endif
+                @if($product->total_reviews > 0)
+                <small class="text-warning">
+                  ★ {{ number_format($product->average_rating, 1) }} ({{ $product->total_reviews }})
+                </small>
+                @endif
+              </div>
             </div>
 
             @if($product->is_available)
-            <div class="d-flex align-items-center gap-2">
-              @auth
-              <div class="input-group input-group-sm" style="max-width: 120px;">
-                <button class="btn btn-outline-secondary quantity-btn" type="button" data-action="decrease">-</button>
-                <input type="number" class="form-control text-center quantity-input" value="1" min="1" max="99" data-product-id="{{ $product->id }}">
-                <button class="btn btn-outline-secondary quantity-btn" type="button" data-action="increase">+</button>
+            <div class="d-flex flex-column gap-2">
+              <!-- Quick Action Row -->
+              <div class="d-flex align-items-center gap-2">
+                @auth
+                <div class="input-group input-group-sm" style="max-width: 120px;">
+                  <button class="btn btn-outline-secondary quantity-btn" type="button" data-action="decrease">-</button>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" max="99" data-product-id="{{ $product->id }}">
+                  <button class="btn btn-outline-secondary quantity-btn" type="button" data-action="increase">+</button>
+                </div>
+                <button class="btn btn-primary flex-fill add-to-cart-btn" data-product-id="{{ $product->id }}">
+                  <i class="fas fa-cart-plus"></i> Add to Cart
+                </button>
+                @else
+                <button class="btn btn-warning w-100 login-required-btn" data-bs-toggle="modal" data-bs-target="#loginModal">
+                  <i class="fas fa-sign-in-alt"></i> Login untuk Menambah ke Keranjang
+                </button>
+                @endauth
               </div>
-              <button class="btn btn-primary flex-fill add-to-cart-btn" data-product-id="{{ $product->id }}">
-                <i class="fas fa-cart-plus"></i> Add to Cart
-              </button>
-              @else
-              <button class="btn btn-warning w-100 login-required-btn" data-bs-toggle="modal" data-bs-target="#loginModal">
-                <i class="fas fa-sign-in-alt"></i> Login untuk Menambah ke Keranjang
-              </button>
-              @endauth
+
+              <!-- Detail Button -->
+              <a href="{{ route('products.show', $product->id) }}" class="btn btn-outline-primary w-100">
+                <i class="fas fa-eye"></i> Lihat Detail
+              </a>
             </div>
             @else
-            <button class="btn btn-secondary w-100" disabled>
-              <i class="fas fa-ban"></i> Out of Stock
-            </button>
+            <div class="d-flex flex-column gap-2">
+              <button class="btn btn-secondary w-100" disabled>
+                <i class="fas fa-ban"></i> Out of Stock
+              </button>
+              <a href="{{ route('products.show', $product->id) }}" class="btn btn-outline-primary w-100">
+                <i class="fas fa-eye"></i> Lihat Detail
+              </a>
+            </div>
             @endif
           </div>
         </div>
@@ -296,6 +347,18 @@
   .btn-group .btn-outline-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(47, 163, 101, 0.3);
+  }
+
+  /* Hide number input arrows/spinners */
+  .quantity-input::-webkit-outer-spin-button,
+  .quantity-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .quantity-input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
   }
 
   .btn-group .btn-outline-primary.active {

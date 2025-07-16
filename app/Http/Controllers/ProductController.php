@@ -114,7 +114,22 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('admin.products.show', compact('product'));
+        // For admin, show admin view
+        if (request()->is('admin/*')) {
+            return view('admin.products.show', compact('product'));
+        }
+
+        // For public, show public product detail
+        $relatedProducts = Product::where('is_available', true)
+            ->where('category', $product->category)
+            ->where('id', '!=', $product->id)
+            ->limit(4)
+            ->get();
+
+        // Load reviews with user information
+        $product->load(['approvedReviews.user']);
+
+        return view('products.show', compact('product', 'relatedProducts'));
     }
 
     /**
