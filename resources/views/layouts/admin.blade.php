@@ -10,23 +10,25 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <!-- Eco Nature Theme CSS -->
+  <link href="{{ asset('css/eco-nature-theme.css') }}" rel="stylesheet">
   <!-- Custom CSS -->
   <style>
     .sidebar {
       min-height: 100vh;
-      background-color: #2c3e50;
+      background-color: #1C5B40;
     }
 
     .sidebar .nav-link {
-      color: #bdc3c7;
+      color: #DFF5EA;
       padding: 1rem 1.5rem;
       border-radius: 0;
     }
 
     .sidebar .nav-link:hover,
     .sidebar .nav-link.active {
-      color: white;
-      background-color: #34495e;
+      color: #FFFFFF;
+      background-color: #2FA365;
     }
 
     .main-content {
@@ -40,26 +42,29 @@
     }
 
     .stat-card {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+      background: linear-gradient(135deg, #2FA365 0%, #1C5B40 100%);
+      color: #FFFFFF;
       border-radius: 10px;
     }
 
     .stat-card.warning {
-      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      background: linear-gradient(135deg, #A3E0E0 0%, #2FA365 100%);
+      color: #2C2C2C;
     }
 
     .stat-card.success {
-      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      background: linear-gradient(135deg, #2FA365 0%, #DFF5EA 100%);
+      color: #2C2C2C;
     }
 
     .stat-card.info {
-      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      background: linear-gradient(135deg, #DFF5EA 0%, #A3E0E0 100%);
+      color: #2C2C2C;
     }
 
     /* Enhanced Dashboard Cards */
     .hover-bg-light:hover {
-      background-color: #f8f9fa !important;
+      background-color: #DFF5EA !important;
       transition: all 0.3s ease;
     }
 
@@ -169,14 +174,14 @@
     .sidebar .nav-link.btn {
       background: none;
       border: none;
-      color: #bdc3c7;
+      color: #DFF5EA;
       text-align: left;
       transition: all 0.3s ease;
     }
 
     .sidebar .nav-link.btn:hover {
-      color: white;
-      background-color: #34495e;
+      color: #FFFFFF;
+      background-color: #2FA365;
     }
 
     /* Custom Pagination Styles - Enhanced for Admin */
@@ -186,17 +191,17 @@
     }
 
     .pagination-nav .pagination {
-      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 2px 15px rgba(47, 163, 101, 0.08);
       border-radius: 12px;
       overflow: hidden;
-      background: #fff;
+      background: #FFFFFF;
       padding: 8px;
     }
 
     .pagination-nav .page-link {
       border: none;
       padding: 12px 16px;
-      color: #6c757d;
+      color: #9FA8A3;
       background-color: transparent;
       transition: all 0.3s ease;
       font-weight: 500;
@@ -206,29 +211,29 @@
     }
 
     .pagination-nav .page-link:hover {
-      background-color: #f8f9fa;
-      color: #2c3e50;
+      background-color: #DFF5EA;
+      color: #2FA365;
       transform: translateY(-1px);
-      box-shadow: 0 2px 8px rgba(44, 62, 80, 0.15);
+      box-shadow: 0 2px 8px rgba(47, 163, 101, 0.15);
     }
 
     .pagination-nav .page-link:focus {
-      box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.1);
-      background-color: #f8f9fa;
-      color: #2c3e50;
+      box-shadow: 0 0 0 3px rgba(47, 163, 101, 0.1);
+      background-color: #DFF5EA;
+      color: #2FA365;
     }
 
     .pagination-nav .page-item.active .page-link {
-      background-color: #2c3e50;
-      border-color: #2c3e50;
-      color: white;
-      box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
+      background-color: #2FA365;
+      border-color: #2FA365;
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(47, 163, 101, 0.3);
       transform: translateY(-1px);
     }
 
     .pagination-nav .page-item.disabled .page-link {
       background-color: transparent;
-      color: #adb5bd;
+      color: #9FA8A3;
       opacity: 0.6;
       cursor: not-allowed;
     }
@@ -240,9 +245,9 @@
     }
 
     .pagination-info small {
-      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-      border: 1px solid #dee2e6;
-      color: #495057;
+      background: linear-gradient(135deg, #DFF5EA 0%, #A3E0E0 100%);
+      border: 1px solid #2FA365;
+      color: #2C2C2C;
       font-weight: 500;
     }
 
@@ -268,7 +273,7 @@
 <body>
   <div class="d-flex">
     <!-- Sidebar -->
-    <nav class="sidebar bg-dark position-fixed d-lg-block d-none" style="width: 250px; z-index: 1000;">
+    <nav class="sidebar position-fixed d-lg-block d-none" style="width: 250px; z-index: 1000; background-color: #1C5B40;">
       <div class="p-3">
         <h5 class="text-white">
           <i class="fa-solid fa-user me-2"></i>Admin Panel
@@ -302,6 +307,11 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}" href="{{ route('admin.orders.index') }}">
+            <i class="fas fa-shopping-cart me-2"></i>Order Management
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.contents.*') ? 'active' : '' }}" href="{{ route('admin.contents.index') }}">
             <i class="fas fa-edit me-2"></i>Content Management
           </a>
@@ -316,7 +326,7 @@
             @csrf
             <button type="submit" class="nav-link btn btn-link text-start w-100 border-0"
               onclick="return confirm('Apakah Anda yakin ingin logout?')"
-              style="color: #bdc3c7; padding: 1rem 1.5rem;">
+              style="color: #DFF5EA; padding: 1rem 1.5rem;">
               <i class="fas fa-sign-out-alt me-2"></i>Logout
             </button>
           </form>
@@ -325,19 +335,19 @@
     </nav>
 
     <!-- Mobile Toggle Button -->
-    <button class="btn btn-dark d-lg-none position-fixed" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMobile" style="top: 10px; left: 10px; z-index: 1050;">
+    <button class="btn d-lg-none position-fixed" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMobile" style="top: 10px; left: 10px; z-index: 1050; background-color: #1C5B40; color: #FFFFFF;">
       <i class="fas fa-bars"></i>
     </button>
 
     <!-- Mobile Sidebar -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMobile">
-      <div class="offcanvas-header bg-dark text-white">
+      <div class="offcanvas-header text-white" style="background-color: #1C5B40;">
         <h5 class="offcanvas-title">
           <i class="fa-solid fa-user me-2"></i>Admin Panel
         </h5>
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
       </div>
-      <div class="offcanvas-body bg-dark p-0">
+      <div class="offcanvas-body p-0" style="background-color: #1C5B40;">
         <ul class="nav flex-column">
           <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
@@ -364,6 +374,16 @@
               <i class="fas fa-envelope me-2"></i>Contact Messages
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}" href="{{ route('admin.orders.index') }}">
+              <i class="fas fa-shopping-cart me-2"></i>Order Management
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('admin.contents.*') ? 'active' : '' }}" href="{{ route('admin.contents.index') }}">
+              <i class="fas fa-edit me-2"></i>Content Management
+            </a>
+          </li>
           <li class="nav-item mt-4">
             <a class="nav-link" href="{{ route('home') }}" target="_blank">
               <i class="fas fa-external-link-alt me-2"></i>View Website
@@ -374,7 +394,7 @@
               @csrf
               <button type="submit" class="nav-link btn btn-link text-start w-100 border-0"
                 onclick="return confirm('Apakah Anda yakin ingin logout?')"
-                style="color: #bdc3c7; padding: 1rem 1.5rem;">
+                style="color: #DFF5EA; padding: 1rem 1.5rem;">
                 <i class="fas fa-sign-out-alt me-2"></i>Logout
               </button>
             </form>
@@ -386,10 +406,10 @@
     <!-- Main Content -->
     <main class="main-content flex-grow-1 p-4">
       <!-- Admin Header -->
-      <div class="d-flex justify-content-between align-items-center mb-4 bg-light p-3 rounded">
+      <div class="d-flex justify-content-between align-items-center mb-4 p-3 rounded" style="background-color: #DFF5EA;">
         <div>
-          <h6 class="mb-0">Selamat datang, <strong>{{ Auth::user()->name }}</strong></h6>
-          <small class="text-muted">{{ Auth::user()->email }}</small>
+          <h6 class="mb-0" style="color: #2C2C2C;">Selamat datang, <strong>{{ Auth::user()->name }}</strong></h6>
+          <small style="color: #9FA8A3;">{{ Auth::user()->email }}</small>
         </div>
         <div class="d-flex align-items-center">
           <span class="badge bg-success me-2">
@@ -425,6 +445,8 @@
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   @stack('scripts')
 </body>
 

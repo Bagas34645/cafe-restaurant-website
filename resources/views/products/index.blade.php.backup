@@ -1,0 +1,1149 @@
+@extends('layouts.app')
+
+@section('title', 'Produk - Rajane Duren')
+
+@section('content')
+<!-- Header Section -->
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center">
+      <h1 class="display-4 fw-bold">Produk Kami</h1>
+      <p class="lead text-muted">Produk durian dan bibit berkualitas premium langsung dari Tegal</p>
+    </div>
+  </div>
+</section>
+
+<!-- Search and Filter Section -->
+<section class="py-4 bg-white shadow-sm">
+  <div class="container">
+    <form method="GET" action="{{ route('products') }}" id="filter-form">
+      <div class="row align-items-end g-3">
+        <!-- Search Input -->
+        <div class="col-lg-4 col-md-6">
+          <label for="search" class="form-label fw-medium text-muted small">
+            <i class="fas fa-search me-1"></i>Cari Produk
+          </label>
+          <div class="input-group position-relative">
+            <input type="text" 
+                   class="form-control border-0 shadow-sm" 
+                   id="search" 
+                   name="search" 
+                   value="{{ request('search') }}" 
+                   placeholder="Nama produk, kategori..."
+                   style="border-radius: 12px 0 0 12px;"
+                   autocomplete="off">
+            <button class="btn btn-primary" type="submit" style="border-radius: 0 12px 12px 0;">
+              <i class="fas fa-search"></i>
+            </button>
+            
+            <!-- Live Search Results -->
+            <div id="search-results" class="position-absolute w-100 bg-white shadow-lg border-0 rounded-3 mt-1 d-none" style="top: 100%; z-index: 1000; max-height: 300px; overflow-y: auto;">
+              <div class="p-3">
+                <div class="d-flex align-items-center justify-content-center py-3">
+                  <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                  </div>
+                  <span class="text-muted">Mencari produk...</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Category Filter -->
+        <div class="col-lg-2 col-md-6">
+          <label for="category" class="form-label fw-medium text-muted small">
+            <i class="fas fa-filter me-1"></i>Kategori
+          </label>
+          <select class="form-select border-0 shadow-sm" 
+                  id="category" 
+                  name="category" 
+                  style="border-radius: 12px;">
+            <option value="">Semua</option>
+            @foreach($categories as $category)
+            <option value="{{ $category }}" {{ request('category') == $category ? 'selected' : '' }}>
+              {{ ucfirst($category) }}
+            </option>
+            @endforeach
+          </select>
+        </div>
+        
+        <!-- Price Range -->
+        <div class="col-lg-3 col-md-6">
+          <label class="form-label fw-medium text-muted small">
+            <i class="fas fa-tag me-1"></i>Rentang Harga
+          </label>
+          <div class="row g-1">
+            <div class="col-6">
+              <input type="number" 
+                     class="form-control border-0 shadow-sm" 
+                     name="min_price" 
+                     value="{{ request('min_price') }}" 
+                     placeholder="Min"
+                     style="border-radius: 12px;">
+            </div>
+            <div class="col-6">
+              <input type="number" 
+                     class="form-control border-0 shadow-sm" 
+                     name="max_price" 
+                     value="{{ request('max_price') }}" 
+                     placeholder="Max"
+                     style="border-radius: 12px;">
+            </div>
+          </div>
+        </div>
+        
+        <!-- Sort Options -->
+        <div class="col-lg-2 col-md-6">
+          <label for="sort_by" class="form-label fw-medium text-muted small">
+            <i class="fas fa-sort me-1"></i>Urutkan
+          </label>
+          <select class="form-select border-0 shadow-sm" 
+                  id="sort_by" 
+                  name="sort_by" 
+                  style="border-radius: 12px;">
+            <option value="latest" {{ request('sort_by') == 'latest' ? 'selected' : '' }}>Terbaru</option>
+            <option value="name_asc" {{ request('sort_by') == 'name_asc' ? 'selected' : '' }}>Nama A-Z</option>
+            <option value="name_desc" {{ request('sort_by') == 'name_desc' ? 'selected' : '' }}>Nama Z-A</option>
+            <option value="price_asc" {{ request('sort_by') == 'price_asc' ? 'selected' : '' }}>Harga Terendah</option>
+            <option value="price_desc" {{ request('sort_by') == 'price_desc' ? 'selected' : '' }}>Harga Tertinggi</option>
+          </select>
+        </div>
+        
+        <!-- Action Buttons -->
+        <div class="col-lg-1 col-md-12">
+          <div class="d-flex gap-2">
+            @if(request()->anyFilled(['search', 'category', 'min_price', 'max_price', 'sort_by']))
+            <a href="{{ route('products') }}" 
+               class="btn btn-outline-secondary shadow-sm"
+               style="border-radius: 12px;"
+               title="Reset Filter">
+              <i class="fas fa-times"></i>
+            </a>
+            @endif
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Results Summary -->
+@if(request()->anyFilled(['search', 'category', 'min_price', 'max_price']))
+<section class="py-3 bg-light border-bottom">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="text-muted">
+        <i class="fas fa-info-circle me-1"></i>
+        Menampilkan {{ $products->count() }} dari {{ $products->total() }} produk
+        @if(request('search'))
+          untuk pencarian "<strong>{{ request('search') }}</strong>"
+        @endif
+        @if(request('category'))
+          dalam kategori "<strong>{{ ucfirst(request('category')) }}</strong>"
+        @endif
+      </div>
+      
+      <!-- Quick Category Chips -->
+      @if($categories->count() > 0)
+      <div class="d-none d-md-flex gap-2">
+        <span class="text-muted small me-2">Quick filter:</span>
+        @foreach($categories->take(4) as $category)
+        <a href="{{ route('products', ['category' => $category] + request()->except(['category', 'page'])) }}" 
+           class="badge bg-{{ request('category') == $category ? 'primary' : 'light text-dark' }} text-decoration-none"
+           style="border-radius: 20px; padding: 0.5rem 1rem;">
+          {{ ucfirst($category) }}
+        </a>
+        @endforeach
+      </div>
+      @endif
+    </div>
+  </div>
+</section>
+@endif
+
+<!-- Products Grid -->
+<section class="py-5">
+  <div class="container">
+    @if($products->count() > 0)
+    <div class="row g-4" id="products-grid">
+      @foreach($products as $product)
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card h-100 border-0 shadow-sm product-card" style="border-radius: 16px; overflow: hidden; transition: all 0.3s ease;">
+          @if($product->image_path)
+          <div class="position-relative">
+            <img src="{{ asset('storage/' . $product->image_path) }}"
+                 class="card-img-top"
+                 alt="{{ $product->name }}"
+                 style="height: 250px; object-fit: cover;">
+            @if($product->category)
+            <span class="position-absolute top-0 start-0 m-3 badge bg-primary" 
+                  style="border-radius: 20px; padding: 0.5rem 1rem;">
+              {{ ucfirst($product->category) }}
+            </span>
+            @endif
+          </div>
+          @else
+          <div class="card-img-top bg-light d-flex align-items-center justify-content-center position-relative" 
+               style="height: 250px;">
+            <i class="fas fa-image fa-3x text-muted"></i>
+            @if($product->category)
+            <span class="position-absolute top-0 start-0 m-3 badge bg-primary" 
+                  style="border-radius: 20px; padding: 0.5rem 1rem;">
+              {{ ucfirst($product->category) }}
+            </span>
+            @endif
+          </div>
+          @endif
+
+          <div class="card-body d-flex flex-column p-4">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <h5 class="card-title fw-bold mb-0">{{ $product->name }}</h5>
+              <span class="badge bg-{{ $product->is_available ? 'success' : 'secondary' }}" 
+                    style="border-radius: 20px;">
+                {{ $product->is_available ? 'Tersedia' : 'Habis' }}
+              </span>
+            </div>
+
+            <p class="card-text text-muted flex-grow-1 mb-3">{{ Str::limit($product->description, 100) }}</p>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="price-tag">
+                <span class="h4 text-primary fw-bold mb-0">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
+              </div>
+            </div>
+
+            @if($product->is_available)
+            <div class="d-flex align-items-center gap-2">
+              @auth
+              <div class="input-group input-group-sm" style="max-width: 120px;">
+                <button class="btn btn-outline-primary quantity-btn" 
+                        type="button" 
+                        data-action="decrease"
+                        style="border-radius: 8px 0 0 8px;">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <input type="number" 
+                       class="form-control text-center quantity-input border-primary" 
+                       value="1" 
+                       min="1" 
+                       max="99" 
+                       data-product-id="{{ $product->id }}"
+                       style="border-left: 0; border-right: 0;">
+                <button class="btn btn-outline-primary quantity-btn" 
+                        type="button" 
+                        data-action="increase"
+                        style="border-radius: 0 8px 8px 0;">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <button class="btn btn-primary flex-fill add-to-cart-btn shadow-sm" 
+                      data-product-id="{{ $product->id }}"
+                      style="border-radius: 12px;">
+                <i class="fas fa-cart-plus me-1"></i>Tambah
+              </button>
+              @else
+              <button class="btn btn-outline-primary w-100 login-required-btn shadow-sm" 
+                      data-bs-toggle="modal" 
+                      data-bs-target="#loginModal"
+                      style="border-radius: 12px;">
+                <i class="fas fa-sign-in-alt me-1"></i>Login untuk Membeli
+              </button>
+              @endauth
+            </div>
+            @else
+            <button class="btn btn-secondary w-100" disabled style="border-radius: 12px;">
+              <i class="fas fa-ban me-1"></i>Stok Habis
+            </button>
+            @endif
+          </div>
+        </div>
+      </div>
+      @endforeach
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-5">
+      <div class="pagination-wrapper">
+        {{ $products->appends(request()->query())->links() }}
+      </div>
+    </div>
+    @else
+    <!-- Empty State -->
+    <div class="text-center py-5">
+      <div class="mb-4">
+        <i class="fas fa-search fa-5x text-muted mb-3"></i>
+        <h3 class="text-muted">Tidak ada produk ditemukan</h3>
+        @if(request()->anyFilled(['search', 'category', 'min_price', 'max_price']))
+        <p class="text-muted mb-4">Coba ubah filter pencarian atau hapus beberapa filter yang aktif.</p>
+        <a href="{{ route('products') }}" class="btn btn-primary" style="border-radius: 12px;">
+          <i class="fas fa-times me-1"></i>Hapus Semua Filter
+        </a>
+        @else
+        <p class="text-muted">Belum ada produk yang tersedia saat ini.</p>
+        @endif
+      </div>
+    </div>
+    @endif
+  </div>
+</section>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content" style="border-radius: 16px;">
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="loginModalLabel">Login Diperlukan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <i class="fas fa-shopping-cart fa-3x text-primary mb-3"></i>
+        <h5>Silakan Login Terlebih Dahulu</h5>
+        <p class="text-muted">Untuk menambahkan produk ke keranjang, Anda harus login terlebih dahulu.</p>
+      </div>
+      <div class="modal-footer border-0 justify-content-center">
+        <a href="{{ route('login') }}" class="btn btn-primary" style="border-radius: 12px;">
+          <i class="fas fa-sign-in-alt"></i> Login Sekarang
+        </a>
+        <a href="{{ route('register') }}" class="btn btn-outline-primary" style="border-radius: 12px;">
+          <i class="fas fa-user-plus"></i> Daftar Akun Baru
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Call to Action -->
+<section class="py-5 bg-primary text-white">
+  <div class="container text-center">
+    <h2 class="display-5 fw-bold mb-4">Siap untuk memesan?</h2>
+    <p class="lead mb-4">Hubungi kami untuk membuat reservasi atau melakukan pemesanan untuk diambil.</p>
+    <a href="{{ route('contact') }}" class="btn btn-light btn-lg" style="border-radius: 12px;">Hubungi Kami</a>
+  </div>
+</section>
+@endsection
+
+@push('styles')
+<style>
+  /* Product Card Animations */
+  .product-card {
+    transition: all 0.3s ease;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1) !important;
+  }
+  
+  /* Filter Form Styling */
+  .form-control:focus,
+  .form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1);
+  }
+  
+  /* Live Search Results */
+  #search-results {
+    border: 1px solid #e9ecef;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  
+  #search-results .hover-bg-light:hover {
+    background-color: #f8f9fa !important;
+    transition: background-color 0.2s ease;
+  }
+  
+  #search-results a {
+    display: block;
+    border-radius: 8px;
+    margin: 2px 0;
+  }
+  
+  #search-results a:hover {
+    text-decoration: none;
+  }
+  
+  /* Custom Pagination */
+  .pagination-wrapper .page-link {
+    border: none;
+    border-radius: 12px !important;
+    margin: 0 2px;
+    color: #6c757d;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+  }
+  
+  .pagination-wrapper .page-link:hover {
+    background-color: #e9ecef;
+    color: #495057;
+    transform: translateY(-2px);
+  }
+  
+  .pagination-wrapper .page-item.active .page-link {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    color: white;
+  }
+  
+  /* Badge Animations */
+  .badge {
+    transition: all 0.3s ease;
+  }
+  
+  .badge:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Quantity Controls */
+  .quantity-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+  }
+  
+  .quantity-input {
+    width: 60px;
+    text-align: center;
+  }
+  
+  /* Price Tag */
+  .price-tag {
+    position: relative;
+  }
+  
+  /* Search Input Animation */
+  #search:focus {
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+  }
+  
+  /* Toast Notifications */
+  .toast-notification {
+    animation: slideInRight 0.3s ease-out;
+  }
+  
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  /* Filter Chips */
+  .filter-chip {
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+  }
+  
+  .filter-chip:hover {
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+  
+  /* Empty State */
+  .empty-state {
+    padding: 4rem 2rem;
+  }
+  
+  .empty-state i {
+    opacity: 0.5;
+  }
+  
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .display-4 {
+      font-size: 2rem;
+    }
+    
+    .lead {
+      font-size: 1rem;
+    }
+    
+    .product-card:hover {
+      transform: none;
+    }
+    
+    .col-lg-1 {
+      margin-top: 1rem;
+    }
+    
+    #search-results {
+      position: fixed !important;
+      top: auto !important;
+      left: 15px;
+      right: 15px;
+      max-height: 50vh;
+    }
+    
+    .filter-chip {
+      font-size: 0.75rem;
+      padding: 0.4rem 0.8rem;
+    }
+  }
+  
+  /* Loading State */
+  .btn.loading {
+    position: relative;
+    color: transparent;
+  }
+  
+  .btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* Search input focus effects */
+  .input-group.shadow {
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.1) !important;
+    border-radius: 12px;
+  }
+  
+  /* Smooth transitions for all interactive elements */
+  .btn, .form-control, .form-select, .card {
+    transition: all 0.3s ease;
+  }
+  
+  /* Custom scrollbar for search results */
+  #search-results::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  #search-results::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+  
+  #search-results::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+  }
+  
+  #search-results::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+  }
+</style>
+@endpush
+
+@push('scripts')
+<script>
+$(document).ready(function() {
+  // Live Search Functionality
+  let searchTimeout;
+  let searchInput = $('#search');
+  let searchResults = $('#search-results');
+  
+  searchInput.on('input', function() {
+    let query = $(this).val().trim();
+    
+    clearTimeout(searchTimeout);
+    
+    if (query.length < 2) {
+      searchResults.addClass('d-none');
+      return;
+    }
+    
+    searchTimeout = setTimeout(function() {
+      performLiveSearch(query);
+    }, 300);
+  });
+  
+  function performLiveSearch(query) {
+    searchResults.removeClass('d-none');
+    searchResults.html(`
+      <div class="p-3">
+        <div class="d-flex align-items-center justify-content-center py-3">
+          <div class="spinner-border spinner-border-sm text-primary me-2" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <span class="text-muted">Mencari produk...</span>
+        </div>
+      </div>
+    `);
+    
+    $.ajax({
+      url: '{{ route("products.search") }}',
+      method: 'GET',
+      data: { q: query },
+      dataType: 'json',
+      success: function(response) {
+        if (response.success && response.products.length > 0) {
+          let resultsHtml = '<div class="p-2">';
+          
+          response.products.forEach(function(product) {
+            resultsHtml += `
+              <a href="${product.url}" class="text-decoration-none">
+                <div class="d-flex align-items-center p-2 rounded hover-bg-light">
+                  <div class="me-3">
+                    ${product.image_url ? 
+                      `<img src="${product.image_url}" alt="${product.name}" class="rounded" style="width: 40px; height: 40px; object-fit: cover;">` :
+                      `<div class="bg-light rounded d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;"><i class="fas fa-image text-muted"></i></div>`
+                    }
+                  </div>
+                  <div class="flex-grow-1">
+                    <div class="fw-medium text-dark">${product.name}</div>
+                    <div class="small text-muted">
+                      ${product.category ? `<span class="badge bg-light text-dark me-1">${product.category}</span>` : ''}
+                      <span class="text-primary fw-bold">Rp${product.price}</span>
+                    </div>
+                  </div>
+                  <i class="fas fa-arrow-right text-muted"></i>
+                </div>
+              </a>
+            `;
+          });
+          
+          resultsHtml += '</div>';
+          searchResults.html(resultsHtml);
+        } else {
+          searchResults.html(`
+            <div class="p-3 text-center">
+              <i class="fas fa-search text-muted mb-2"></i>
+              <div class="text-muted">Tidak ada produk ditemukan untuk "${query}"</div>
+            </div>
+          `);
+        }
+      },
+      error: function() {
+        searchResults.html(`
+          <div class="p-3 text-center">
+            <i class="fas fa-exclamation-triangle text-warning mb-2"></i>
+            <div class="text-muted">Terjadi kesalahan saat mencari</div>
+          </div>
+        `);
+      }
+    });
+  }
+  
+  // Hide search results when clicking outside
+  $(document).on('click', function(e) {
+    if (!$(e.target).closest('.input-group').length) {
+      searchResults.addClass('d-none');
+    }
+  });
+  
+  // Show search results when focusing on input (if has content)
+  searchInput.on('focus', function() {
+    if ($(this).val().trim().length >= 2) {
+      searchResults.removeClass('d-none');
+    }
+  });
+
+  // Auto-submit form on filter changes
+  $('#category, #sort_by').change(function() {
+    $('#filter-form').submit();
+  });
+  
+  // Auto-submit on price input changes (with debounce)
+  let priceTimeout;
+  $('input[name="min_price"], input[name="max_price"]').on('input', function() {
+    clearTimeout(priceTimeout);
+    priceTimeout = setTimeout(function() {
+      $('#filter-form').submit();
+    }, 1000);
+  });
+  
+  // Quantity controls
+  $('.quantity-btn').click(function() {
+    let button = $(this);
+    let input = button.siblings('.quantity-input');
+    let currentValue = parseInt(input.val());
+    let action = button.data('action');
+
+    let newValue = action === 'increase' ? currentValue + 1 : Math.max(1, currentValue - 1);
+    input.val(newValue);
+  });
+
+  $('.quantity-input').change(function() {
+    let value = Math.max(1, parseInt($(this).val()) || 1);
+    $(this).val(value);
+  });
+
+  // Add to cart functionality
+  $('.add-to-cart-btn').click(function() {
+    let button = $(this);
+    let productId = button.data('product-id');
+    let quantityInput = button.closest('.card-body').find('.quantity-input');
+    let quantity = parseInt(quantityInput.val());
+
+    // Add loading state
+    button.addClass('loading').prop('disabled', true);
+
+    $.ajax({
+      url: '/cart/add',
+      method: 'POST',
+      data: {
+        product_id: productId,
+        quantity: quantity,
+        _token: '{{ csrf_token() }}'
+      },
+      success: function(response) {
+        if (response.success) {
+          // Reset quantity
+          quantityInput.val(1);
+
+          // Update cart count
+          updateCartCount();
+
+          // Show success toast
+          showToast('success', response.message);
+
+          // Remove loading state
+          button.removeClass('loading').prop('disabled', false);
+        } else {
+          showToast('error', response.message);
+          button.removeClass('loading').prop('disabled', false);
+        }
+      },
+      error: function(xhr) {
+        let response = xhr.responseJSON;
+
+        if (xhr.status === 401 && response && response.redirect) {
+          // User not authenticated, show modal
+          $('#loginModal').modal('show');
+        } else {
+          showToast('error', response?.message || 'Terjadi kesalahan saat menambahkan produk ke keranjang');
+        }
+
+        button.removeClass('loading').prop('disabled', false);
+      }
+    });
+  });
+
+  // Update cart count
+  function updateCartCount() {
+    $.get('/cart/count', function(data) {
+      $('.cart-count').text(data.count);
+      if (data.count > 0) {
+        $('.cart-count').show();
+      } else {
+        $('.cart-count').hide();
+      }
+    });
+  }
+
+  // Toast notification function
+  function showToast(type, message) {
+    if (type === 'success') {
+      // Create a simple success notification
+      let toast = $(`
+        <div class="toast-notification success position-fixed" style="top: 20px; right: 20px; z-index: 9999;">
+          <div class="alert alert-success alert-dismissible fade show" role="alert" style="border-radius: 12px;">
+            <i class="fas fa-check-circle me-2"></i>${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        </div>
+      `);
+      
+      $('body').append(toast);
+      
+      setTimeout(function() {
+        toast.fadeOut(function() {
+          toast.remove();
+        });
+      }, 3000);
+    } else {
+      let toast = $(`
+        <div class="toast-notification error position-fixed" style="top: 20px; right: 20px; z-index: 9999;">
+          <div class="alert alert-danger alert-dismissible fade show" role="alert" style="border-radius: 12px;">
+            <i class="fas fa-exclamation-circle me-2"></i>${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        </div>
+      `);
+      
+      $('body').append(toast);
+      
+      setTimeout(function() {
+        toast.fadeOut(function() {
+          toast.remove();
+        });
+      }, 4000);
+    }
+  }
+
+  // Initialize cart count on page load
+  updateCartCount();
+  
+  // Search input enhancement
+  $('#search').on('focus', function() {
+    $(this).parent().addClass('shadow');
+  }).on('blur', function() {
+    setTimeout(function() {
+      $('#search').parent().removeClass('shadow');
+    }, 200);
+  });
+});
+</script>
+@endpush
+
+    @if($products->count() > 0)
+    <div class="row" id="products-grid">
+      @foreach($products as $product)
+      <div class="col-lg-4 col-md-6 mb-4 product-item" data-category="{{ $product->category ? Str::slug($product->category) : 'uncategorized' }}">
+        <div class="card h-100">
+          @if($product->image_path)
+          <img src="{{ asset('storage/' . $product->image_path) }}"
+            class="card-img-top"
+            alt="{{ $product->name }}"
+            style="height: 250px; object-fit: cover;">
+          @else
+          <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 250px;">
+            <i class="fas fa-utensils fa-3x text-muted"></i>
+          </div>
+          @endif
+
+          <div class="card-body d-flex flex-column">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <h5 class="card-title">{{ $product->name }}</h5>
+              @if($product->category)
+              <span class="badge bg-secondary">{{ $product->category }}</span>
+              @endif
+            </div>
+
+            <p class="card-text text-muted flex-grow-1">{{ $product->description }}</p>
+
+            <div class="d-flex justify-content-between align-items-center mt-auto mb-3">
+              <span class="h5 text-primary mb-0">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
+              @if($product->is_available)
+              <span class="badge bg-success">Available</span>
+              @else
+              <span class="badge bg-danger">Unavailable</span>
+              @endif
+            </div>
+
+            @if($product->is_available)
+            <div class="d-flex align-items-center gap-2">
+              @auth
+              <div class="input-group input-group-sm" style="max-width: 120px;">
+                <button class="btn btn-outline-secondary quantity-btn" type="button" data-action="decrease">-</button>
+                <input type="number" class="form-control text-center quantity-input" value="1" min="1" max="99" data-product-id="{{ $product->id }}">
+                <button class="btn btn-outline-secondary quantity-btn" type="button" data-action="increase">+</button>
+              </div>
+              <button class="btn btn-primary flex-fill add-to-cart-btn" data-product-id="{{ $product->id }}">
+                <i class="fas fa-cart-plus"></i> Add to Cart
+              </button>
+              @else
+              <button class="btn btn-warning w-100 login-required-btn" data-bs-toggle="modal" data-bs-target="#loginModal">
+                <i class="fas fa-sign-in-alt"></i> Login untuk Menambah ke Keranjang
+              </button>
+              @endauth
+            </div>
+            @else
+            <button class="btn btn-secondary w-100" disabled>
+              <i class="fas fa-ban"></i> Out of Stock
+            </button>
+            @endif
+          </div>
+        </div>
+      </div>
+      @endforeach
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-5">
+      <div class="pagination-wrapper">
+        {{ $products->links('pagination.custom') }}
+      </div>
+    </div>
+    @else
+    <div class="text-center py-5">
+      <i class="fas fa-utensils fa-5x text-muted mb-4"></i>
+      <h3 class="text-muted">No menu items found</h3>
+      <p class="text-muted">Our menu is being updated. Please check back later!</p>
+    </div>
+    @endif
+  </div>
+</section>
+
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginModalLabel">Login Diperlukan</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <i class="fas fa-shopping-cart fa-3x text-primary mb-3"></i>
+        <h5>Silakan Login Terlebih Dahulu</h5>
+        <p class="text-muted">Untuk menambahkan produk ke keranjang, Anda harus login terlebih dahulu.</p>
+      </div>
+      <div class="modal-footer">
+        <a href="{{ route('login') }}" class="btn btn-primary">
+          <i class="fas fa-sign-in-alt"></i> Login Sekarang
+        </a>
+        <a href="{{ route('register') }}" class="btn btn-outline-primary">
+          <i class="fas fa-user-plus"></i> Daftar Akun Baru
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Call to Action -->
+<section class="py-5 bg-primary text-white">
+  <div class="container text-center">
+    <h2 class="display-5 fw-bold mb-4">Siap untuk memesan?</h2>
+    <p class="lead mb-4">Hubungi kami untuk membuat reservasi atau melakukan pemesanan untuk diambil.</p>
+    <a href="{{ route('contact') }}" class="btn btn-light btn-lg">Hubungi Kami</a>
+  </div>
+</section>
+@endsection
+
+@push('scripts')
+<script>
+  // Category filtering
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('[data-filter]');
+    const productItems = document.querySelectorAll('.product-item');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        this.classList.add('active');
+
+        const filterValue = this.getAttribute('data-filter');
+
+        productItems.forEach(item => {
+          if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
+  });
+</script>
+@endpush
+
+@push('styles')
+<style>
+  /* Enhanced Pagination Styles */
+  .pagination-wrapper {
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .pagination-navigation .pagination {
+    margin-bottom: 0;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .pagination-navigation .page-link {
+    position: relative;
+    display: block;
+    padding: 0.75rem 1rem;
+    margin: 0 2px;
+    color: #495057;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    transition: all 0.3s ease-in-out;
+    min-width: 45px;
+    text-align: center;
+  }
+
+  .pagination-navigation .page-link:hover {
+    z-index: 2;
+    color: #e74c3c;
+    background-color: #f8f9fa;
+    border-color: #e74c3c;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.2);
+  }
+
+  .pagination-navigation .page-link:focus {
+    z-index: 3;
+    color: #e74c3c;
+    background-color: #f8f9fa;
+    border-color: #e74c3c;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(231, 76, 60, 0.25);
+  }
+
+  .pagination-navigation .page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+    box-shadow: 0 4px 12px rgba(231, 76, 60, 0.4);
+    transform: translateY(-1px);
+  }
+
+  .pagination-navigation .page-item.disabled .page-link {
+    color: #6c757d;
+    background-color: #fff;
+    border-color: #dee2e6;
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .pagination-navigation .page-item:first-child .page-link {
+    margin-left: 0;
+  }
+
+  .pagination-navigation .page-item:last-child .page-link {
+    margin-right: 0;
+  }
+
+  /* Mobile responsive adjustments */
+  @media (max-width: 576px) {
+    .pagination-navigation .page-link {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+      min-width: 40px;
+    }
+
+    .pagination-navigation .pagination {
+      gap: 2px;
+    }
+  }
+
+  /* Results info styling */
+  .pagination-navigation small {
+    padding: 0.5rem 1rem;
+    background-color: #f8f9fa;
+    border-radius: 1rem;
+    display: inline-block;
+  }
+</style>
+@endpush
+
+@push('scripts')
+<script>
+  $(document).ready(function() {
+    // Quantity controls
+    $('.quantity-btn').click(function() {
+      let button = $(this);
+      let input = button.siblings('.quantity-input');
+      let currentValue = parseInt(input.val());
+      let action = button.data('action');
+
+      let newValue = action === 'increase' ? currentValue + 1 : Math.max(1, currentValue - 1);
+      input.val(newValue);
+    });
+
+    $('.quantity-input').change(function() {
+      let value = Math.max(1, parseInt($(this).val()) || 1);
+      $(this).val(value);
+    });
+
+    // Add to cart
+    $('.add-to-cart-btn').click(function() {
+      let button = $(this);
+      let productId = button.data('product-id');
+      let quantityInput = button.closest('.card-body').find('.quantity-input');
+      let quantity = parseInt(quantityInput.val());
+
+      // Disable button
+      button.prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Adding...');
+
+      $.ajax({
+        url: '/cart/add',
+        method: 'POST',
+        data: {
+          product_id: productId,
+          quantity: quantity,
+          _token: '{{ csrf_token() }}'
+        },
+        success: function(response) {
+          if (response.success) {
+            // Reset quantity
+            quantityInput.val(1);
+
+            // Update cart count
+            updateCartCount();
+
+            // Show success message
+            showToast('success', response.message);
+
+            // Reset button
+            button.prop('disabled', false).html('<i class="fas fa-cart-plus"></i> Add to Cart');
+          } else {
+            showToast('error', response.message);
+            button.prop('disabled', false).html('<i class="fas fa-cart-plus"></i> Add to Cart');
+          }
+        },
+        error: function(xhr) {
+          let response = xhr.responseJSON;
+
+          if (xhr.status === 401 && response && response.redirect) {
+            // User not authenticated, redirect to login
+            showLoginModal(response.message);
+          } else {
+            showToast('error', response?.message || 'Terjadi kesalahan saat menambahkan produk ke keranjang');
+          }
+
+          button.prop('disabled', false).html('<i class="fas fa-cart-plus"></i> Add to Cart');
+        }
+      });
+    });
+
+    function showLoginModal(message) {
+      // Update modal message if provided
+      if (message) {
+        $('#loginModal .modal-body p').text(message);
+      }
+
+      // Show modal
+      const modal = new bootstrap.Modal(document.getElementById('loginModal'));
+      modal.show();
+    }
+
+    function updateCartCount() {
+      $.get('/cart/count', function(response) {
+        $('.cart-count').text(response.count || 0);
+      });
+    }
+
+    function showToast(type, message) {
+      let alertClass = type === 'success' ? 'alert-success' : 'alert-danger';
+      let icon = type === 'success' ? 'fas fa-check-circle' : 'fas fa-exclamation-circle';
+
+      let toast = $('<div class="alert ' + alertClass + ' alert-dismissible fade show position-fixed" style="top: 20px; right: 20px; z-index: 9999; min-width: 300px;">' +
+        '<i class="' + icon + '"></i> ' + message +
+        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>' +
+        '</div>');
+
+      $('body').append(toast);
+
+      setTimeout(function() {
+        toast.alert('close');
+      }, 3000);
+    }
+
+    // Load cart count on page load
+    updateCartCount();
+  });
+</script>
+@endpush

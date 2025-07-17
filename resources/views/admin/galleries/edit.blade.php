@@ -176,21 +176,21 @@
   document.getElementById('gallery-form').addEventListener('submit', function(e) {
     const fileInput = document.getElementById('image');
     const file = fileInput.files[0];
-    
+
     if (file) {
       console.log('File info:', {
         name: file.name,
         size: file.size,
         type: file.type
       });
-      
+
       // Final validation before submit
       if (file.size > 2048 * 1024) {
         e.preventDefault();
         alert('File terlalu besar! Maksimal ukuran file adalah 2MB.');
         return false;
       }
-      
+
       const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
       if (!allowedTypes.includes(file.type)) {
         e.preventDefault();
@@ -198,13 +198,13 @@
         return false;
       }
     }
-    
+
     // Show loading state
     const submitBtn = this.querySelector('button[type="submit"]');
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Updating...';
     submitBtn.disabled = true;
-    
+
     // Re-enable button after 30 seconds as fallback
     setTimeout(() => {
       submitBtn.innerHTML = originalText;
