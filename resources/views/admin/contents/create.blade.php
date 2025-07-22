@@ -24,13 +24,45 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="key">Key Konten <span class="text-danger">*</span></label>
-                <input type="text" class="form-control @error('key') is-invalid @enderror"
-                  id="key" name="key" value="{{ old('key') }}"
-                  placeholder="contoh: home_hero_title">
+                <select class="form-control @error('key') is-invalid @enderror" id="key" name="key">
+                  <option value="">Pilih atau ketik Key Konten</option>
+                  <option value="home_hero_title">home_hero_title</option>
+                  <option value="home_hero_subtitle">home_hero_subtitle</option>
+                  <option value="home_hero_description">home_hero_description</option>
+                  <option value="home_hero_image">home_hero_image</option>
+                  <option value="about_title">about_title</option>
+                  <option value="about_story_content">about_story_content</option>
+                  <option value="about_image">about_image</option>
+                  <option value="contact_address">contact_address</option>
+                  <option value="contact_phone">contact_phone</option>
+                  <option value="contact_email">contact_email</option>
+                  <option value="footer_description">footer_description</option>
+                  <option value="footer_logo">footer_logo</option>
+                  <option value="footer_social_facebook">footer_social_facebook</option>
+                  <option value="footer_social_instagram">footer_social_instagram</option>
+                  <option value="footer_social_twitter">footer_social_twitter</option>
+                  <option value="menu_section_title">menu_section_title</option>
+                  <option value="menu_section_description">menu_section_description</option>
+                  <option value="feature_1_title">feature_1_title</option>
+                  <option value="feature_1_description">feature_1_description</option>
+                  <option value="feature_1_icon">feature_1_icon</option>
+                  <option value="feature_2_title">feature_2_title</option>
+                  <option value="feature_2_description">feature_2_description</option>
+                  <option value="feature_2_icon">feature_2_icon</option>
+                  <option value="feature_3_title">feature_3_title</option>
+                  <option value="feature_3_description">feature_3_description</option>
+                  <option value="feature_3_icon">feature_3_icon</option>
+                  <option value="general_site_title">general_site_title</option>
+                  <option value="general_site_description">general_site_description</option>
+                  <option value="general_logo">general_logo</option>
+                  <option value="general_favicon">general_favicon</option>
+                  <option value="general_meta_keywords">general_meta_keywords</option>
+                  <option value="general_meta_description">general_meta_description</option>
+                </select>
                 @error('key')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
-                <small class="form-text text-muted">Key unik untuk mengidentifikasi konten (gunakan underscore, tanpa spasi)</small>
+                <small class="form-text text-muted">Pilih dari daftar atau ketik key baru untuk mengidentifikasi konten (gunakan underscore, tanpa spasi)</small>
               </div>
             </div>
             <div class="col-md-6">
@@ -162,6 +194,9 @@
 @endsection
 
 @push('scripts')
+<!-- Select2 CDN -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
   $(document).ready(function() {
     // Toggle image field based on type
@@ -177,6 +212,14 @@
     if ($('#type').val() !== 'image') {
       $('#image-group').hide();
     }
+
+    // Select2 for key input
+    $('#key').select2({
+      tags: true,
+      placeholder: 'Pilih atau ketik Key Konten',
+      allowClear: true,
+      width: '100%'
+    });
   });
 </script>
 @endpush
