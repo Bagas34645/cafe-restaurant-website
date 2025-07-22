@@ -156,6 +156,7 @@ class ProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
+            'stock' => 'required|integer|min:0',
             'category' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'is_available' => 'sometimes|boolean'
@@ -165,6 +166,7 @@ class ProductController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
+            'stock_quantity' => $request->stock,
             'category' => $request->category,
             'is_available' => (bool) $request->input('is_available', 0)
         ];

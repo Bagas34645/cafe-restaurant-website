@@ -38,6 +38,17 @@
           <p class="mb-0">{{ $product->description }}</p>
         </div>
 
+        <div class="mb-3">
+          <label class="form-label fw-bold">Stock:</label>
+          <p class="mb-0">
+            @if(isset($product->stock_quantity))
+              <span class="badge bg-info fs-6">{{ $product->stock_quantity }} item</span>
+            @else
+              <span class="text-muted">Not set</span>
+            @endif
+          </p>
+        </div>
+
         <div class="row">
           <div class="col-md-6 mb-3">
             <label class="form-label fw-bold">Category:</label>

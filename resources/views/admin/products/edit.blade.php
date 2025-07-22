@@ -77,6 +77,15 @@
             </div>
 
             <div class="col-md-6 mb-3">
+              <label for="stock" class="form-label">Stock</label>
+              <input type="number" min="0" class="form-control @error('stock') is-invalid @enderror"
+                id="stock" name="stock" value="{{ old('stock', $product->stock ?? 0) }}" required>
+              @error('stock')
+              <div class="invalid-feedback">{{ $message }}</div>
+              @enderror
+            </div>
+
+            <div class="col-md-6 mb-3">
               <label for="category" class="form-label">Category (Optional)</label>
               <input type="text" class="form-control @error('category') is-invalid @enderror"
                 id="category" name="category" value="{{ old('category', $product->category) }}"
