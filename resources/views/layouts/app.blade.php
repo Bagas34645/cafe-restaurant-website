@@ -624,7 +624,7 @@
       <a class="navbar-brand" href="{{ route('home') }}">
         <i class="fas fa-leaf me-2"></i>
         <span class="d-none d-sm-inline">Sentra Durian Tegal</span>
-        <span class="d-sm-none">SDT</span>
+        <span class="d-sm-none">Sentra Durian Tegal</span>
       </a>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
