@@ -52,17 +52,19 @@
     <!-- Category Filter -->
     @if($categories->count() > 0)
     <div class="text-center mb-5">
-      <div class="btn-group" role="group">
-        <a href="{{ route('products', array_merge(request()->query(), ['category' => 'all'])) }}"
-          class="btn btn-outline-primary {{ !request('category') || request('category') === 'all' ? 'active' : '' }}">
-          All Items
-        </a>
-        @foreach($categories as $category)
-        <a href="{{ route('products', array_merge(request()->query(), ['category' => $category])) }}"
-          class="btn btn-outline-primary {{ request('category') === $category ? 'active' : '' }}">
-          {{ $category }}
-        </a>
-        @endforeach
+      <div class="category-scroll-wrapper d-inline-block w-100 w-md-auto">
+        <div class="btn-group flex-nowrap" role="group" style="white-space:nowrap;">
+          <a href="{{ route('products', array_merge(request()->query(), ['category' => 'all'])) }}"
+            class="btn btn-outline-primary {{ !request('category') || request('category') === 'all' ? 'active' : '' }} text-nowrap">
+            All Items
+          </a>
+          @foreach($categories as $category)
+          <a href="{{ route('products', array_merge(request()->query(), ['category' => $category])) }}"
+            class="btn btn-outline-primary {{ request('category') === $category ? 'active' : '' }} text-nowrap">
+            {{ $category }}
+          </a>
+          @endforeach
+        </div>
       </div>
     </div>
     @endif
@@ -224,6 +226,36 @@
 
 
 @push('styles')
+@push('styles')
+<style>
+  /* Category Filter Horizontal Scroll for Mobile */
+  .category-scroll-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100vw;
+  }
+  .category-scroll-wrapper .btn-group {
+    flex-wrap: nowrap !important;
+    white-space: nowrap;
+  }
+  .category-scroll-wrapper .btn {
+    white-space: nowrap;
+  }
+  @media (max-width: 576px) {
+    .category-scroll-wrapper {
+      width: 100vw;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+    .category-scroll-wrapper .btn-group {
+      width: max-content;
+      min-width: 100%;
+    }
+  }
+ </style>
 <style>
   /* Search Box Styles */
   .search-form .input-group {

@@ -91,8 +91,10 @@
   <div class="container text-center">
     <h2 class="display-5 fw-bold mb-4">Rasakan Kualitas Durian Terbaik</h2>
     <p class="lead mb-4">Kunjungi Sentra Durian Tegal dan rasakan sendiri kelezatan durian pilihan dari kebun terbaik di Tegal.</p>
-    <a href="{{ route('contact') }}" class="btn btn-light btn-lg me-3">Hubungi Kami</a>
-    <a href="{{ route('products') }}" class="btn btn-outline-light btn-lg">Lihat Produk Kami</a>
+    <div class="d-grid gap-3 d-md-flex justify-content-center">
+      <a href="{{ route('contact') }}" class="btn btn-light btn-lg">Hubungi Kami</a>
+      <a href="{{ route('products') }}" class="btn btn-outline-light btn-lg">Lihat Produk Kami</a>
+    </div>
   </div>
 </section>
 @endsection
