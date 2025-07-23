@@ -210,10 +210,10 @@
       <div class="col-lg-8">
         <h1 class="display-4 fw-bold mb-4">{{ cms_content('home_hero_title', 'Selamat Datang') }}</h1>
         <p class="lead mb-4">{{ cms_content('home_hero_subtitle', 'Sentra Durian Tegal adalah pusat informasi dan distribusi durian unggulan langsung dari kebun terbaik di Tegal. Kami berkomitmen menyediakan durian berkualitas tinggi untuk konsumsi pribadi maupun kebutuhan bisnis Anda.') }}</p>
-        <div class="d-flex gap-3">
-          <a href="{{ route('products') }}" class="btn btn-primary btn-lg">Lihat Produk</a>
-          <a href="{{ route('contact') }}" class="btn btn-outline-light btn-lg">Hubungi Kami</a>
-        </div>
+<div class="d-flex gap-3 justify-content-start justify-content-md-start justify-content-lg-start justify-content-xl-start justify-content-xxl-start justify-content-center flex-column flex-sm-row align-items-center">
+  <a href="{{ route('products') }}" class="btn btn-primary btn-lg w-100 w-sm-auto mb-2 mb-sm-0 me-sm-3">Lihat Produk</a>
+  <a href="{{ route('contact') }}" class="btn btn-outline-light btn-lg w-100 w-sm-auto">Hubungi Kami</a>
+</div>
       </div>
       <div class="col-lg-4">
         @php
