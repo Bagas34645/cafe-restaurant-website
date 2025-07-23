@@ -5,6 +5,10 @@
 @section('content')
 <div class="d-flex justify-content-between align-items-center mb-4">
   <h1 class="h3">Product Management</h1>
+  <form action="{{ route('admin.products.index') }}" method="GET" class="d-flex align-items-center gap-2" style="max-width: 350px;">
+    <input type="text" name="search" class="form-control" placeholder="Search products..." value="{{ request('search') }}" autocomplete="off">
+    <button type="submit" class="btn btn-outline-secondary"><i class="fas fa-search"></i></button>
+  </form>
   <a href="{{ route('admin.products.create') }}" class="btn btn-primary">
     <i class="fas fa-plus me-2"></i>Add New Product
   </a>

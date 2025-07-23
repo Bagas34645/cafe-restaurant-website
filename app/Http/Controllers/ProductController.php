@@ -41,7 +41,17 @@ class ProductController extends Controller
      */
     public function adminIndex()
     {
-        $products = Product::latest()->paginate(10);
+        $query = Product::query();
+        // Search functionality for admin
+        if (request()->filled('search')) {
+            $searchTerm = request('search');
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('description', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('category', 'LIKE', "%{$searchTerm}%");
+            });
+        }
+        $products = $query->latest()->paginate(10)->appends(request()->query());
         return view('admin.products.index', compact('products'));
     }
 

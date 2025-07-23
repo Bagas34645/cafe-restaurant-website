@@ -315,7 +315,7 @@
           <a href="https://wa.me/6281234567890?text=Halo,%20saya%20ingin%20membeli%20produk%20{{ urlencode($product->name) }}" target="_blank" class="btn btn-success btn-lg">
             <i class="fab fa-whatsapp me-2"></i>WhatsApp
           </a>
-          <a href="https://www.tokopedia.com/yourstore" target="_blank" class="btn btn-lg" style="background:#fff; border:2px solid #03AC0E; color:#03AC0E; font-weight:600;">
+          <a href="https://www.tokopedia.com/" target="_blank" class="btn btn-lg" style="background:#fff; border:2px solid #03AC0E; color:#03AC0E; font-weight:600;">
             <img src="{{ asset('images/Tokopedia_Mascot.png') }}" alt="Tokopedia" style="height: 28px; width: 28px; margin-right: 8px; vertical-align: middle;">
             <img src="{{ asset('images/Tokopedia_Logo.png') }}" alt="Tokopedia Logo" style="height: 28px; vertical-align: middle;">
           </a>
