@@ -8,11 +8,7 @@ use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CartController;
-use App\Http\Controllers\CheckoutController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\CustomerAuthController;
-use App\Http\Controllers\Admin\OrderController;
+
 
 use App\Http\Controllers\ContentController;
 
@@ -28,53 +24,7 @@ Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
-// Cart Routes
-Route::prefix('cart')->name('cart.')->group(function () {
-    Route::get('/', [CartController::class, 'index'])->name('index');
-    Route::get('/count', [CartController::class, 'count'])->name('count');
 
-    // Protected cart actions (require customer login)
-    Route::middleware('customer')->group(function () {
-        Route::post('/add', [CartController::class, 'add'])->name('add');
-        Route::patch('/{id}', [CartController::class, 'update'])->name('update');
-        Route::delete('/{id}', [CartController::class, 'remove'])->name('remove');
-        Route::delete('/', [CartController::class, 'clear'])->name('clear');
-    });
-});
-
-// Checkout Routes
-Route::prefix('checkout')->name('checkout.')->group(function () {
-    Route::get('/', [CheckoutController::class, 'index'])->name('index');
-    Route::post('/', [CheckoutController::class, 'store'])->name('store');
-    Route::get('/success/{orderNumber}', [CheckoutController::class, 'success'])->name('success');
-});
-
-// Payment Routes
-Route::prefix('payment')->name('payment.')->group(function () {
-    Route::get('/midtrans/{orderId}', [PaymentController::class, 'midtrans'])->name('midtrans');
-    Route::get('/midtrans/finish', [PaymentController::class, 'finish'])->name('midtrans.finish');
-    Route::get('/midtrans/unfinish', [PaymentController::class, 'unfinish'])->name('midtrans.unfinish');
-    Route::get('/midtrans/error', [PaymentController::class, 'error'])->name('midtrans.error');
-    Route::get('/success', [PaymentController::class, 'success'])->name('success');
-    Route::get('/failed', [PaymentController::class, 'failed'])->name('failed');
-});
-
-// Midtrans notification webhook (no CSRF protection needed)
-Route::post('/payment/midtrans/notification', [PaymentController::class, 'notification'])->name('payment.midtrans.notification');
-
-// Customer Authentication Routes
-Route::get('/login', [CustomerAuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [CustomerAuthController::class, 'login']);
-Route::get('/register', [CustomerAuthController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [CustomerAuthController::class, 'register']);
-Route::post('/logout', [CustomerAuthController::class, 'logout'])->name('logout');
-
-// Customer Profile Routes (protected)
-Route::middleware('customer')->group(function () {
-    Route::get('/profile', [CustomerAuthController::class, 'profile'])->name('profile');
-    Route::patch('/profile', [CustomerAuthController::class, 'updateProfile'])->name('profile.update');
-    Route::get('/orders/history', [CustomerAuthController::class, 'orderHistory'])->name('orders.history');
-});
 
 // Admin Authentication Routes
 Route::get('/admin/login', [AuthController::class, 'showLoginForm'])->name('admin.login');
@@ -103,13 +53,7 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
     Route::patch('contacts/{contact}/mark-read', [ContactController::class, 'markAsRead'])->name('contacts.mark-read');
     Route::delete('contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
 
-    // Order Management
-    Route::get('orders/export/csv', [OrderController::class, 'export'])->name('orders.export');
-    Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
-    Route::get('orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-    Route::patch('orders/{order}/status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
-    Route::patch('orders/{order}/confirm-payment', [OrderController::class, 'confirmPayment'])->name('orders.confirm-payment');
-    Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+
 
     // Content Management
     Route::resource('contents', ContentController::class);

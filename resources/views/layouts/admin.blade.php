@@ -306,11 +306,7 @@
             <i class="fas fa-envelope me-2"></i>Contact Messages
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}" href="{{ route('admin.orders.index') }}">
-            <i class="fas fa-shopping-cart me-2"></i>Order Management
-          </a>
-        </li>
+        <!-- Order Management dihapus dari sidebar admin -->
         <li class="nav-item">
           <a class="nav-link {{ request()->routeIs('admin.contents.*') ? 'active' : '' }}" href="{{ route('admin.contents.index') }}">
             <i class="fas fa-edit me-2"></i>Content Management
@@ -374,11 +370,7 @@
               <i class="fas fa-envelope me-2"></i>Contact Messages
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('admin.orders.*') ? 'active' : '' }}" href="{{ route('admin.orders.index') }}">
-              <i class="fas fa-shopping-cart me-2"></i>Order Management
-            </a>
-          </li>
+          <!-- Order Management dihapus dari sidebar admin (mobile) -->
           <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('admin.contents.*') ? 'active' : '' }}" href="{{ route('admin.contents.index') }}">
               <i class="fas fa-edit me-2"></i>Content Management

@@ -663,47 +663,26 @@
               <i class="fas fa-envelope me-1"></i><span>Kontak</span>
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link position-relative {{ Str::startsWith(Route::currentRouteName(), 'cart.') ? 'active' : '' }}" href="{{ route('cart.index') }}">
-              <i class="fas fa-shopping-cart cart-icon-empty me-1"></i>
-              <span class="cart-icon-full" style="display: none;">
-                <i class="fas fa-exclamation-circle"></i>
-                <i class="fas fa-shopping-cart"></i>
-              </span>
-              <span>Keranjang</span>
-            </a>
-          </li>
+          <!-- Keranjang di navbar dihapus sesuai permintaan -->
         </ul>
 
         <ul class="navbar-nav ms-auto">
           @guest
-          <li class="nav-item me-1">
-            <a class="nav-link btn btn-outline-success btn-sm px-2 py-1" href="{{ route('login') }}">
-              <i class="fas fa-sign-in-alt me-1"></i><span>Login</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-success btn-sm px-2 py-1" href="{{ route('register') }}">
-              <i class="fas fa-user-plus me-1"></i><span>Daftar</span>
-            </a>
-          </li>
+          <!-- Tombol login dan register di navbar dihapus sesuai permintaan -->
           @else
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle {{ in_array(Route::currentRouteName(), ['profile', 'orders.history']) ? 'active' : '' }}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-user me-1"></i><span class="d-md-inline d-none">{{ Auth::user()->name }}</span><span class="d-md-none">User</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
-              <li><a class="dropdown-item {{ Route::currentRouteName() == 'profile' ? 'active' : '' }}" href="{{ route('profile') }}">
-                  <i class="fas fa-user-circle"></i>Profil
-                </a></li>
-              <li><a class="dropdown-item {{ Route::currentRouteName() == 'orders.history' ? 'active' : '' }}" href="{{ route('orders.history') }}">
-                  <i class="fas fa-history"></i>Riwayat Pesanan
+              <li><a class="dropdown-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
+                  <i class="fas fa-user-cog"></i>Admin Panel
                 </a></li>
               <li>
                 <hr class="dropdown-divider">
               </li>
               <li>
-                <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                <form action="{{ route('admin.logout') }}" method="POST" class="d-inline">
                   @csrf
                   <button type="submit" class="dropdown-item">
                     <i class="fas fa-sign-out-alt"></i>Logout

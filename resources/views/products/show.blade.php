@@ -131,74 +131,18 @@
         @endif
 
         <!-- Add to Cart Section -->
-        @auth('web')
-        @if($product->isInStock())
-        <div class="add-to-cart mb-4">
-          <form action="{{ route('cart.add') }}" method="POST" id="addToCartForm">
-            @csrf
-            <input type="hidden" name="product_id" value="{{ $product->id }}">
-
-            <div class="row g-2 mb-3">
-              <div class="col-4">
-                <div class="input-group">
-                  <button type="button" class="btn btn-outline-secondary" onclick="changeQuantity(-1)">-</button>
-                  <input type="number" id="quantity" name="quantity" class="form-control text-center"
-                    value="1" min="1" max="{{ $product->stock_quantity }}">
-                  <button type="button" class="btn btn-outline-secondary" onclick="changeQuantity(1)">+</button>
-                </div>
-              </div>
-              <div class="col-8">
-                <button type="submit" class="btn btn-success w-100">
-                  <i class="fas fa-cart-plus me-2"></i>Tambah ke Keranjang
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-        @endif
-        @else
-        <div class="login-prompt mb-4">
-          <div class="alert alert-info">
-            <i class="fas fa-info-circle me-2"></i>
-            <a href="{{ route('login') }}" class="alert-link">Login</a> untuk menambahkan produk ke keranjang
-          </div>
-        </div>
-        @endauth
+        <!-- Add to Cart Section removed as requested -->
 
         <!-- Action Buttons -->
         <div class="action-buttons">
           <div class="d-grid gap-2 d-md-flex">
+            <button class="btn btn-success flex-fill me-2" onclick="openBuyNowModal()">
+              <i class="fas fa-shopping-cart me-2"></i>Beli Sekarang
+            </button>
             <button class="btn btn-outline-primary flex-fill" onclick="shareProduct()">
               <i class="fas fa-share-alt me-2"></i>Bagikan
             </button>
-            <button class="btn btn-outline-secondary flex-fill" onclick="addToWishlist()">
-              <i class="fas fa-heart me-2"></i>Favorit
-            </button>
           </div>
-        </div>
-
-        <!-- Rating Input -->
-        <div class="rating-input mt-4">
-          <input type="radio" id="star5" name="rating" value="5">
-          <label for="star5" title="5 stars">
-            <i class="fas fa-star"></i>
-          </label>
-          <input type="radio" id="star4" name="rating" value="4">
-          <label for="star4" title="4 stars">
-            <i class="fas fa-star"></i>
-          </label>
-          <input type="radio" id="star3" name="rating" value="3">
-          <label for="star3" title="3 stars">
-            <i class="fas fa-star"></i>
-          </label>
-          <input type="radio" id="star2" name="rating" value="2">
-          <label for="star2" title="2 stars">
-            <i class="fas fa-star"></i>
-          </label>
-          <input type="radio" id="star1" name="rating" value="1">
-          <label for="star1" title="1 star">
-            <i class="fas fa-star"></i>
-          </label>
         </div>
       </div>
     </div>
@@ -230,12 +174,6 @@
           </button>
         </li>
         @endif
-        <li class="nav-item" role="presentation">
-          <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews"
-            type="button" role="tab" aria-controls="reviews" aria-selected="false">
-            Review ({{ $product->total_reviews }})
-          </button>
-        </li>
       </ul>
 
       <div class="tab-content mt-3" id="productTabsContent">
@@ -363,6 +301,29 @@
   </div>
   @endif
 </div>
+<!-- Buy Now Modal -->
+<div class="modal fade" id="buyNowModal" tabindex="-1" aria-labelledby="buyNowModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="buyNowModalLabel">Pilih Platform Pembelian</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="mb-4">Silakan pilih platform untuk membeli produk ini:</p>
+        <div class="d-grid gap-3">
+          <a href="https://wa.me/6281234567890?text=Halo,%20saya%20ingin%20membeli%20produk%20{{ urlencode($product->name) }}" target="_blank" class="btn btn-success btn-lg">
+            <i class="fab fa-whatsapp me-2"></i>WhatsApp
+          </a>
+          <a href="https://www.tokopedia.com/yourstore" target="_blank" class="btn btn-lg" style="background:#fff; border:2px solid #03AC0E; color:#03AC0E; font-weight:600;">
+            <img src="{{ asset('images/Tokopedia_Mascot.png') }}" alt="Tokopedia" style="height: 28px; width: 28px; margin-right: 8px; vertical-align: middle;">
+            <img src="{{ asset('images/Tokopedia_Logo.png') }}" alt="Tokopedia Logo" style="height: 28px; vertical-align: middle;">
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <style>
   .thumbnail-img.active {
@@ -477,53 +438,10 @@
     // Implement wishlist functionality
     alert('Fitur wishlist akan segera hadir!');
   }
-
-  // Add to cart form submission
-  document.getElementById('addToCartForm')?.addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const formData = new FormData(this);
-
-    fetch('{{ route("cart.add") }}', {
-        method: 'POST',
-        body: formData,
-        headers: {
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-        }
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          // Show success message
-          const alert = document.createElement('div');
-          alert.className = 'alert alert-success alert-dismissible fade show';
-          alert.innerHTML = `
-                <i class="fas fa-check-circle me-2"></i>
-                Produk berhasil ditambahkan ke keranjang!
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            `;
-
-          document.querySelector('.add-to-cart').insertBefore(alert, document.querySelector('#addToCartForm'));
-
-          // Update cart count if exists
-          const cartCount = document.querySelector('.cart-count');
-          if (cartCount && data.cartCount) {
-            cartCount.textContent = data.cartCount;
-          }
-
-          // Auto dismiss after 3 seconds
-          setTimeout(() => {
-            alert.remove();
-          }, 3000);
-        } else {
-          // Show error message
-          alert('Gagal menambahkan produk ke keranjang: ' + (data.message || 'Unknown error'));
-        }
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Terjadi kesalahan saat menambahkan produk ke keranjang');
-      });
-  });
+  function openBuyNowModal() {
+    var modal = new bootstrap.Modal(document.getElementById('buyNowModal'));
+    modal.show();
+  }
+  // ...existing code...
 </script>
 @endsection
