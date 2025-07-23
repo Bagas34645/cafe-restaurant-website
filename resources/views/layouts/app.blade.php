@@ -450,12 +450,22 @@
         border-top: 1px solid rgba(255, 255, 255, 0.1);
         margin-top: 0.5rem;
         padding-top: 0.5rem;
+        z-index: 1051;
+        background: #1C5B40;
+        overflow: visible !important;
       }
 
       /* Prevent horizontal scroll on mobile */
       .container-fluid {
         max-width: 100%;
         overflow-x: hidden;
+        overflow: visible !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+      }
+
+      .navbar {
+        overflow: visible !important;
       }
     }
 
@@ -607,32 +617,32 @@
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
             <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" href="{{ route('home') }}">
-              <i class="fas fa-home me-1"></i><span class="d-lg-inline d-none">Beranda</span>
+              <i class="fas fa-home me-1"></i><span>Beranda</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link {{ Route::currentRouteName() == 'about' ? 'active' : '' }}" href="{{ route('about') }}">
-              <i class="fas fa-info-circle me-1"></i><span class="d-lg-inline d-none">Tentang</span>
+              <i class="fas fa-info-circle me-1"></i><span>Tentang</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link {{ Route::currentRouteName() == 'gallery' ? 'active' : '' }}" href="{{ route('gallery') }}">
-              <i class="fas fa-images me-1"></i><span class="d-lg-inline d-none">Galeri</span>
+              <i class="fas fa-images me-1"></i><span>Galeri</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link {{ Route::currentRouteName() == 'products' ? 'active' : '' }}" href="{{ route('products') }}">
-              <i class="fas fa-box me-1"></i><span class="d-lg-inline d-none">Produk</span>
+              <i class="fas fa-box me-1"></i><span>Produk</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link {{ Route::currentRouteName() == 'reviews' ? 'active' : '' }}" href="{{ route('reviews') }}">
-              <i class="fas fa-star me-1"></i><span class="d-lg-inline d-none">Testimoni</span>
+              <i class="fas fa-star me-1"></i><span>Testimoni</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link {{ Route::currentRouteName() == 'contact' ? 'active' : '' }}" href="{{ route('contact') }}">
-              <i class="fas fa-envelope me-1"></i><span class="d-lg-inline d-none">Kontak</span>
+              <i class="fas fa-envelope me-1"></i><span>Kontak</span>
             </a>
           </li>
           <li class="nav-item">
@@ -642,7 +652,7 @@
                 <i class="fas fa-exclamation-circle"></i>
                 <i class="fas fa-shopping-cart"></i>
               </span>
-              <span class="d-lg-inline d-none">Keranjang</span>
+              <span>Keranjang</span>
             </a>
           </li>
         </ul>
@@ -651,12 +661,12 @@
           @guest
           <li class="nav-item me-1">
             <a class="nav-link btn btn-outline-success btn-sm px-2 py-1" href="{{ route('login') }}">
-              <i class="fas fa-sign-in-alt me-1"></i><span class="d-sm-inline d-none">Login</span>
+              <i class="fas fa-sign-in-alt me-1"></i><span>Login</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link btn btn-success btn-sm px-2 py-1" href="{{ route('register') }}">
-              <i class="fas fa-user-plus me-1"></i><span class="d-sm-inline d-none">Daftar</span>
+              <i class="fas fa-user-plus me-1"></i><span>Daftar</span>
             </a>
           </li>
           @else
