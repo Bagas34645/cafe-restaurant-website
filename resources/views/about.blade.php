@@ -92,7 +92,7 @@
     <h2 class="display-5 fw-bold mb-4">Rasakan Kualitas Durian Terbaik</h2>
     <p class="lead mb-4">Kunjungi Sentra Durian Tegal dan rasakan sendiri kelezatan durian pilihan dari kebun terbaik di Tegal.</p>
     <a href="{{ route('contact') }}" class="btn btn-light btn-lg me-3">Hubungi Kami</a>
-    <a href="{{ route('products') }}" class="btn btn-outline-light btn-lg">Lihat Produk Durian</a>
+    <a href="{{ route('products') }}" class="btn btn-outline-light btn-lg">Lihat Produk Kami</a>
   </div>
 </section>
 @endsection
