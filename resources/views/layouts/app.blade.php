@@ -15,10 +15,28 @@
   <link href="{{ asset('css/eco-nature-theme.css') }}" rel="stylesheet">
   <!-- Custom CSS -->
   <style>
+    @media (max-width: 991.98px) {
+      .navbar-collapse {
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.3s, transform 0.3s;
+      }
+      .navbar-collapse.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .navbar-collapse .navbar-nav > li {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
     /* Prevent horizontal overflow */
     body {
       overflow-x: hidden;
     }
+
+    /* Animasi isi menu pada mobile navbar (hamburger menu) dihandle oleh .navbar-collapse */
 
     .navbar {
       width: 100%;
