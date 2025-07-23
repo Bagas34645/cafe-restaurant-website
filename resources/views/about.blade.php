@@ -83,53 +83,8 @@
   </div>
 </section>
 
-<!-- Chef's Section -->
-<section class="py-5">
-  <div class="container">
-    <div class="text-center mb-5">
-      <h2 class="display-5 fw-bold">Tim Ahli Kami</h2>
-      <p class="lead text-muted">Para profesional berpengalaman di balik kualitas durian terbaik</p>
-    </div>
-
-    <div class="row">
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card border-0 text-center">
-          <img src="{{ asset('images/team-pak-budi.jpg') }}"
-            alt="Pak Budi - Ahli Durian" class="card-img-top rounded-circle mx-auto mt-3" style="width: 150px; height: 150px; object-fit: cover;">
-          <div class="card-body">
-            <h5 class="card-title">Pak Budi Santoso</h5>
-            <p class="text-muted">Ahli Durian Senior</p>
-            <p class="card-text">Dengan pengalaman lebih dari 20 tahun dalam budidaya durian, Pak Budi ahli dalam menilai kualitas dan kematangan durian terbaik.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card border-0 text-center">
-          <img src="{{ asset('images/team-ibu-sari.jpg') }}"
-            alt="Ibu Sari - Manajer Operasional" class="card-img-top rounded-circle mx-auto mt-3" style="width: 150px; height: 150px; object-fit: cover;">
-          <div class="card-body">
-            <h5 class="card-title">Ibu Sari Wulandari</h5>
-            <p class="text-muted">Manajer Operasional</p>
-            <p class="card-text">Ibu Sari mengawasi seluruh operasional distribusi dan memastikan setiap pelanggan mendapat pelayanan terbaik dan durian berkualitas.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-4 col-md-6 mb-4">
-        <div class="card border-0 text-center">
-          <img src="{{ asset('images/team-mas-andi.jpg') }}"
-            alt="Mas Andi - Koordinator Petani" class="card-img-top rounded-circle mx-auto mt-3" style="width: 150px; height: 150px; object-fit: cover;">
-          <div class="card-body">
-            <h5 class="card-title">Mas Andi Prasetyo</h5>
-            <p class="text-muted">Koordinator Petani</p>
-            <p class="card-text">Mas Andi menjalin hubungan erat dengan petani durian di seluruh Tegal untuk memastikan pasokan durian terbaik sepanjang musim.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- Spacer antara Our Mission dan Call to Action -->
+<div style="height: 48px;"></div>
 
 <!-- Call to Action -->
 <section class="py-5 bg-primary text-white">
