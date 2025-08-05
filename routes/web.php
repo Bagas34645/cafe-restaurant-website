@@ -12,17 +12,19 @@ use App\Http\Controllers\AuthController;
 
 use App\Http\Controllers\ContentController;
 
-// Public Routes
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/about', [HomeController::class, 'about'])->name('about');
-Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
-Route::get('/products', [ProductController::class, 'index'])->name('products');
-Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
-Route::get('/api/products/search', [ProductController::class, 'search'])->name('products.search');
-Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews');
-Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
-Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+// Public Routes with visitor logging
+Route::middleware(['log.visitor'])->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/about', [HomeController::class, 'about'])->name('about');
+    Route::get('/gallery', [GalleryController::class, 'index'])->name('gallery');
+    Route::get('/products', [ProductController::class, 'index'])->name('products');
+    Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+    Route::get('/api/products/search', [ProductController::class, 'search'])->name('products.search');
+    Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews');
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+    Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
+});
 
 
 
@@ -57,4 +59,7 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
 
     // Content Management
     Route::resource('contents', ContentController::class);
+
+    // Visitor Statistics
+    Route::get('visitors', [\App\Http\Controllers\Admin\VisitorController::class, 'index'])->name('visitors.index');
 });

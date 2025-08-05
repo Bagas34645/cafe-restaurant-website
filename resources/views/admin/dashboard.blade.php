@@ -75,6 +75,10 @@
       </div>
     </div>
   </div>
+
+  <div class="col-12 mb-4">
+    @include('admin.partials.visitors_chart')
+  </div>
 </div>
 
 <!-- Second Row of Stats -->
