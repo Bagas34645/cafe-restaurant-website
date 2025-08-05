@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Kontak - Rajane Duren')
+@section('title', 'Kontak Sentra Durian Tegal | Jual Durian Tegal & Konsultasi')
+@section('meta_description', 'Hubungi Sentra Durian Tegal untuk pemesanan, konsultasi, dan informasi jual durian Tegal. Layanan ramah, harga terbaik, dan durian segar berkualitas.')
+@section('meta_robots', 'index, follow')
 
 @section('content')
 <!-- Contact Header -->

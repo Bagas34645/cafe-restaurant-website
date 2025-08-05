@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
-@section('title', 'Galeri - Rajane Duren')
+@section('title', 'Galeri Sentra Durian Tegal | Jual Durian Tegal & Suasana Restoran')
+
+@section('meta_description', 'Galeri Sentra Durian Tegal menampilkan suasana restoran, produk durian, dan bibit unggul. Lihat bukti kualitas dan layanan jual durian Tegal terbaik.')
+@section('meta_robots', 'index, follow')
 
 @section('content')
   <!-- Gallery Header -->

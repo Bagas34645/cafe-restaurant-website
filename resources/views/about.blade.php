@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Tentang Kami - Rajane Duren')
+@section('title', 'Tentang Sentra Durian Tegal | Jual Durian Tegal & Bibit Unggul')
+@section('meta_description', 'Tentang Sentra Durian Tegal, pusat jual durian Tegal dan bibit durian unggul. Komitmen kami menghadirkan durian segar, harga terbaik, dan pelayanan ramah di Tegal.')
+@section('meta_robots', 'index, follow')
 
 @section('content')
 <!-- About Hero Section -->

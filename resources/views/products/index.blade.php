@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Produk - Rajane Duren')
+@section('title', 'Jual Durian Tegal | Produk Durian & Bibit Unggul Tegal')
+@section('meta_description', 'Jual durian Tegal, bibit durian unggul, dan produk olahan durian terbaik. Pesan durian segar langsung dari Sentra Durian Tegal, harga terjangkau, kualitas premium.')
+@section('meta_robots', 'index, follow')
 
 @section('content')
 <!-- Menu Header -->

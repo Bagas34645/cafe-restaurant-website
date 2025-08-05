@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title', 'Beranda - Rajane Duren')
+@section('title', 'Jual Durian Tegal | Sentra Durian Tegal - Pusat Durian & Bibit Unggul')
+@section('meta_description', 'Jual durian segar, bibit durian unggul, dan kuliner durian terbaik di Tegal. Sentra Durian Tegal melayani pembelian durian langsung, harga terjangkau, kualitas premium. Pesan durian Tegal sekarang!')
+@section('meta_robots', 'index, follow')
 
 @push('styles')
 <style>
@@ -208,8 +210,8 @@
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-8">
-        <h1 class="display-4 fw-bold mb-4">{{ cms_content('home_hero_title', 'Selamat Datang') }}</h1>
-        <p class="lead mb-4">{{ cms_content('home_hero_subtitle', 'Sentra Durian Tegal adalah pusat informasi dan distribusi durian unggulan langsung dari kebun terbaik di Tegal. Kami berkomitmen menyediakan durian berkualitas tinggi untuk konsumsi pribadi maupun kebutuhan bisnis Anda.') }}</p>
+        <h1 class="display-4 fw-bold mb-4">{{ cms_content('home_hero_title', 'Jual Durian Tegal Segar & Berkualitas') }}</h1>
+        <p class="lead mb-4">{{ cms_content('home_hero_subtitle', 'Sentra Durian Tegal adalah pusat jual durian Tegal segar, bibit durian unggul, dan kuliner durian terbaik langsung dari kebun pilihan. Kami berkomitmen menyediakan durian berkualitas tinggi untuk konsumsi pribadi maupun kebutuhan bisnis Anda.') }}</p>
 <div class="d-flex gap-3 justify-content-start justify-content-md-start justify-content-lg-start justify-content-xl-start justify-content-xxl-start justify-content-center flex-column flex-sm-row align-items-center">
   <a href="{{ route('products') }}" class="btn btn-primary btn-lg w-100 w-sm-auto mb-2 mb-sm-0 me-sm-3">Lihat Produk</a>
   <a href="{{ route('contact') }}" class="btn btn-outline-light btn-lg w-100 w-sm-auto">Hubungi Kami</a>
